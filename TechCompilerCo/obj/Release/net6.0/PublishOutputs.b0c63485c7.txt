@@ -1,0 +1,7 @@
+C:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\PubTmp\Out\TechCompilerCo.exe
+C:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+C:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\PubTmp\Out\TechCompilerCo.dll
+C:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\PubTmp\Out\TechCompilerCo.deps.json
+C:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\PubTmp\Out\TechCompilerCo.runtimeconfig.json
+C:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\PubTmp\Out\TechCompilerCo.pdb
