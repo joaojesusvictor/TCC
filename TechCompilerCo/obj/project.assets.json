@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\user\\.nuget\\packages\\": {}
+    "C:\\Users\\joao_\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
+      "projectUniqueName": "D:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
       "projectName": "TechCompilerCo",
-      "projectPath": "C:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
-      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Projetos\\TCC\\TechCompilerCo\\obj\\",
+      "projectPath": "D:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
+      "packagesPath": "C:\\Users\\joao_\\.nuget\\packages\\",
+      "outputPath": "D:\\Projetos\\TCC\\TechCompilerCo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\joao_\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -64,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
