@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "4em+ehZa8sYfZcNa2kN9g5HklsgzxJDHDbqAHlUORAK4zNqUfueze2zxtgw/Xz6u499+0BPEC2ujeDCnTD3Nxw==",
+  "dgSpecHash": "/i+6+CpY0YQujLk1xfUnBJOlpgrBue29T3ZRhe7nOug/t+A1s9LeVrnWD3XKyy07EK3tRE3DWJw5XEtEzpRupA==",
   "success": true,
   "projectFilePath": "D:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\joao_\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512"
+  ],
   "logs": []
 }
