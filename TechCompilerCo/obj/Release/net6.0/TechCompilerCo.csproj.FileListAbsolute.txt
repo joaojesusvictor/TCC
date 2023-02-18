@@ -55,3 +55,6 @@ D:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\refint\TechCompilerCo.dll
 D:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\TechCompilerCo.pdb
 D:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\TechCompilerCo.genruntimeconfig.cache
 D:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\ref\TechCompilerCo.dll
+D:\Projetos\TCC\TechCompilerCo\bin\Release\net6.0\libman.json
+D:\Projetos\TCC\TechCompilerCo\bin\Release\net6.0\Dapper.dll
+D:\Projetos\TCC\TechCompilerCo\obj\Release\net6.0\TechCompilerCo.csproj.CopyComplete
