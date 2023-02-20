@@ -4,34 +4,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Dapper;
 
 namespace TechCompilerCo.Repositorys
 {
-    public class LoginRepository : IRepository<Login>
+    public class LoginRepository : BaseRepository
     {
+        private string _sqlTran = "";
+
         public LoginRepository()
         {
 
         }
 
-        public void Add(Login obj)
+        //public async Task<Login> GetFuncionarioAsync(string login, string senha)
+        //{
+        //    var p = new ParametrosTran()
+        //    {
+        //        Modo = 4,
+        //        Login = login,
+        //        Senha = senha
+        //    };
+
+        //    return await UsarSql(async conn =>
+        //    {
+        //        return await conn.QueryFirstOrDefaultAsync<Login>(_sqlTran, p);
+        //    });
+        //}
+
+        public class Login
         {
-            throw new NotImplementedException();
+            public string? Usuario { get; set; }        //Reclama se a prop nao é anulavel
+            public string? Senha { get; set; }
         }
 
-        public void Delete(Login obj)
+        private class ParametrosTran
         {
-            throw new NotImplementedException();
+            public int Modo { get; set; }
+            public string Login { get; set; }
+            public string Senha { get; set; }
         }
-
-        public void Update(Login obj)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Login
-    {
-
     }
 }
