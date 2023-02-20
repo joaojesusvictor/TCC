@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TechCompilerCo.Models;
+using TechCompilerCo.Repositorys;
 
 namespace TechCompilerCo.Controllers
 {
     public class LoginController : Controller
     {
         private readonly ILogger<LoginController> _logger;
+        //private LoginRepository _loginRepository;
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController(ILogger<LoginController> logger /*, LoginRepository loginRepository*/)
         {
             _logger = logger;
+            //_loginRepository = loginRepository;
         }
 
         public IActionResult Index(string msgErro = "")
@@ -24,7 +27,7 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> ValidarLogin(LoginViewModel model)
         {
-            string msgErro = string.Empty;
+            string msgErro = "";
 
             if (string.IsNullOrEmpty(model.Usuario))
             {
@@ -40,7 +43,12 @@ namespace TechCompilerCo.Controllers
                 return View(nameof(Index), new { msg = msgErro });
             }
 
-            return View(nameof(Index));
+            return View(nameof(Menu));
+        }
+
+        public IActionResult Menu()
+        {
+            return View();
         }
     }
 }

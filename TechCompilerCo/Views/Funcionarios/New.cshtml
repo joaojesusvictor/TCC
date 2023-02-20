@@ -1,0 +1,62 @@
+﻿@model TechCompilerCo.Models.FuncionariosViewModel
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <span><b>SUA</b></span><br />
+        <span><b>MECÂNICA</b></span>
+    </div>
+
+    <div class="col-md-6" style="text-align: right; font-size: 20px">
+        <span><b>Cadastro de Funcionários</b></span>
+    </div>
+</div>
+
+<br />
+
+@if (!string.IsNullOrEmpty(Model.MsgErro))
+{
+    @*<div class="row">
+        <div class="alert alert-block alert-sucess" style="background-color: limegreen" id="divSucesso">
+        <h4 class="alert-heading" style="color: white">
+        <i class="fa fa-check-square-o"></i>
+        Sucesso!
+        </h4>
+        <p id="sucessoLogin" style="color: white">
+        @Model.MsgErro
+        <a href="#" target="_blank"></a>
+        </p>
+        </div>
+        </div>*@
+
+    <div class="row">
+        <div class="alert alert-block alert-danger" style="background-color: red" id="divErro">
+            <h4 class="alert-heading" style="color: white">
+                <i class="fa fa-times"></i>
+                Erro!
+            </h4>
+            <p id="errorLogin" style="color: white">
+                @Model.MsgErro
+                <a href="#" target="_blank"></a>
+            </p>
+        </div>
+    </div>
+}
+
+<br />
+<br />
+
+@using (Html.BeginForm("Create", "Funcionarios", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <partial name="_Form.cshtml" />
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin-left: 5px"><i class="fa fa-check"></i> Salvar</button>
+            <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+        </div>
+    </div>
+}

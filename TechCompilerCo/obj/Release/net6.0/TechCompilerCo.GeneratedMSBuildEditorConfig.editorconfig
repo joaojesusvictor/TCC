@@ -16,6 +16,22 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Projetos\TCC\TechCompilerCo
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Projetos/TCC/TechCompilerCo/Views/Funcionarios/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Funcionarios/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Funcionarios/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXE5ldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Funcionarios/_Form.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXF9Gb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projetos/TCC/TechCompilerCo/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -26,6 +42,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Login/Menu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTWVudS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Shared/Error.cshtml]

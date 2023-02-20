@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TechCompilerCo.Repositorys
 {
     public interface IRepository<T> where T : class
-    {;
+    {
         void Add(T obj);
         void Update(T obj);
         void Delete(T obj);
