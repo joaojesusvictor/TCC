@@ -40,22 +40,24 @@
     <div class="row">
         <table class="table">
             <thead>
-                @if (Model.UsuarioAdm)
-                {
-                <th></th>
-                }
-            <th>
-                Nome
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Cpf
-            </th>
-            <th>
-                Telefone
-            </th>
+                <tr>
+                    @if (Model.UsuarioAdm)
+                    {
+                        <th></th>
+                    }
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Cpf
+                    </th>
+                    <th>
+                        Telefone
+                    </th>
+                </tr>
             </thead>
             <tbody>
                 @foreach (var f in Model.Funcionarios)
@@ -64,12 +66,12 @@
                         @if (Model.UsuarioAdm)
                         {
                             <td>
-                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Funcionarios", new { id = f.IdFuncionario } )"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-xs btn-danger" href="@Url.Action("Delete", "Funcionarios", new { id = f.IdFuncionario } )"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Funcionarios", new { id = f.CodigoFuncionario } )"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-xs btn-danger" href="@Url.Action("Delete", "Funcionarios", new { id = f.CodigoFuncionario } )"><i class="fa fa-trash"></i></a>
                             </td>
                         }
                         <td>
-                            @f.Nome
+                            @f.NomeFuncionario
                         </td>
                         <td>
                             @f.Email
@@ -78,7 +80,7 @@
                             @f.Cpf
                         </td>
                         <td>
-                            @f.Telefone
+                            @f.Telefone1
                         </td>
                     </tr>
                 }

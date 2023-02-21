@@ -29,11 +29,11 @@ namespace TechCompilerCo.Controllers
             //{
             //    viewModel.Funcionarios.Add(new FuncionarioViewModel()
             //    {
-            //        IdFuncionario = f.IdFuncionario,
-            //        Nome = f.Nome,
+            //        CodigoFuncionario = f.CodigoFuncionario,
+            //        NomeFuncionario = f.NomeFuncionario,
             //        Email = f.Email,
             //        Cpf = f.Cpf,
-            //        Telefone = f.Telefone
+            //        Telefone1 = f.Telefone1
             //    });
             //}
 
