@@ -14,7 +14,7 @@ namespace TechCompilerCo.Repositorys
     {
         protected string _connectionString;
 
-        private string _sqlEncript = "";
+        private string _sqlEncript = "EXEC GER_EncriptarDecriptar_GET @Valor, @Acao";
 
         public BaseRepository()
         {
@@ -47,7 +47,6 @@ namespace TechCompilerCo.Repositorys
         //{
         //    var p = new ParametrosTran()
         //    {
-        //        Modo = 4,
         //        Valor = valor,
         //        Acao = acao
         //    };
@@ -60,12 +59,11 @@ namespace TechCompilerCo.Repositorys
 
         public class Encript
         {
-
+            public string Resultado { get; set; }
         }
 
         private class ParametrosTran
         {
-            public int Modo { get; set; }
             public string Valor { get; set; }
             public string Acao { get; set; }
         }

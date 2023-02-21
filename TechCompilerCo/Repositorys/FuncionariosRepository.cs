@@ -11,7 +11,7 @@ namespace TechCompilerCo.Repositorys
 {
     public class FuncionariosRepository : BaseRepository
     {
-        private string _sqlTran = "";
+        private string _sqlTran = "EXEC Func_Funcionarios_TRAN @Modo, @CodigoFuncionario, @NomeFuncionario, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Cpf, @Sexo, @Telefone1, @Cargo, @UsuarioTran";
 
         public FuncionariosRepository()
         {
@@ -36,7 +36,7 @@ namespace TechCompilerCo.Repositorys
         //    var p = new ParametrosTran()
         //    {
         //        Modo = 4,
-        //        IdFuncionario = id
+        //        CodigoFuncionario = id
         //    };
 
         //    return await UsarSql(async conn =>
@@ -45,21 +45,16 @@ namespace TechCompilerCo.Repositorys
         //    });
         //}
 
-        //public async Task CreateAsync(FuncionariosViewModel model)
+        //public async Task<int> CreateAsync(FuncionariosViewModel model)
         //{
         //    var p = new ParametrosTran()
         //    {
         //        Modo = 1,
-        //        IdFuncionario = model.IdFuncionario,
-        //        UsuarioAdm = model.UsuarioAdm,
-        //        DataCadastro = null,
-        //        DataUltimaAlteracao = null,
-        //        UsuarioCadastrou = _currentUser.IdUsuario,
-        //        UsuarioUltimaAlteracao = null,
-        //        Nome = model.Nome,
-        //        Email = model.Email,
+        //        CodigoFuncionario = model.CodigoFuncionario,
+        //        UsuarioTran = _currentUser.IdUsuario,
+        //        NomeFuncionario = model.NomeFuncionario,
         //        DataNascimento = model.DataNascimento,
-        //        Telefone = model.Telefone,
+        //        Telefone1 = model.Telefone1,
         //        Cpf = model.Cpf,
         //        Cep = model.Cep,
         //        Endereco = model.Endereco,
@@ -67,31 +62,28 @@ namespace TechCompilerCo.Repositorys
         //        Complemento = model.Complemento,
         //        Bairro = model.Bairro,
         //        Cidade = model.Cidade,
-        //        Estado = model.Estado,
-        //        Pais = model.Pais
+        //        Uf = model.Uf,
+        //        Pais = model.Pais,
+        //        Sexo = model.Sexo,
+        //        Cargo = model.Cargo
         //    };
 
-        //    await UsarSql(async conn =>
+        //    return await UsarSql(async conn =>
         //    {
-        //        return await conn.ExecuteAsync(_sqlTran, p);
+        //        return await conn.GetFirstAsync<int>(_sqlTran, p);
         //    });
         //}
 
-        //public async Task UpdateAsync(FuncionariosViewModel model)
+        //public async Task<int> UpdateAsync(FuncionariosViewModel model)
         //{
         //    var p = new ParametrosTran()
         //    {
         //        Modo = 2,
-        //        IdFuncionario = model.IdFuncionario,
-        //        UsuarioAdm = model.UsuarioAdm,
-        //        DataCadastro = model.DataCadastro,
-        //        //DataUltimaAlteracao = DateTime.Now,
-        //        UsuarioCadastrou = model.UsuarioCadastrou,
-        //        UsuarioUltimaAlteracao = _currentUser.IdUsuario,
-        //        Nome = model.Nome,
-        //        Email = model.Email,
+        //        CodigoFuncionario = model.CodigoFuncionario,
+        //        UsuarioTran = _currentUser.IdUsuario,
+        //        NomeFuncionario = model.NomeFuncionario,
         //        DataNascimento = model.DataNascimento,
-        //        Telefone = model.Telefone,
+        //        Telefone1 = model.Telefone1,
         //        Cpf = model.Cpf,
         //        Cep = model.Cep,
         //        Endereco = model.Endereco,
@@ -99,13 +91,15 @@ namespace TechCompilerCo.Repositorys
         //        Complemento = model.Complemento,
         //        Bairro = model.Bairro,
         //        Cidade = model.Cidade,
-        //        Estado = model.Estado,
-        //        Pais = model.Pais
+        //        Uf = model.Uf,
+        //        Pais = model.Pais,
+        //        Sexo = model.Sexo,
+        //        Cargo = model.Cargo
         //    };
 
-        //    await UsarSql(async conn =>
+        //    return await UsarSql(async conn =>
         //    {
-        //        return await conn.ExecuteAsync(_sqlTran, p);
+        //        return await conn.ExecuteAsync<int>(_sqlTran, p);
         //    });
         //}
 
@@ -114,7 +108,7 @@ namespace TechCompilerCo.Repositorys
         //    var p = new ParametrosTran()
         //    {
         //        Modo = 3,
-        //        IdFuncionario = id
+        //        CodigoFuncionario = id
         //    };
 
         //    await UsarSql(async conn =>
@@ -125,15 +119,14 @@ namespace TechCompilerCo.Repositorys
 
         public class Funcionario                        //Reclama se a prop nao é anulavel
         {
-            public int IdFuncionario { get; set; }
-            public DateTime DataCadastro { get; set; }
+            public int CodigoFuncionario { get; set; }
+            public DateTime DataInclusao { get; set; }
             public DateTime DataUltimaAlteracao { get; set; }
-            public string UsuarioCadastrou { get; set; }
+            public string UsuarioIncluiu { get; set; }
             public string UsuarioUltimaAlteracao { get; set; }
-            public string Nome { get; set; }
-            public string Email { get; set; }
+            public string NomeFuncionario { get; set; }
             public DateTime DataNascimento { get; set; }
-            public string Telefone { get; set; }
+            public string Telefone1 { get; set; }
             public string Cpf { get; set; }
             public string Cep { get; set; }
             public string Endereco { get; set; }
@@ -141,23 +134,19 @@ namespace TechCompilerCo.Repositorys
             public string Complemento { get; set; }
             public string Bairro { get; set; }
             public string Cidade { get; set; }
-            public string Estado { get; set; }
+            public string Uf { get; set; }
             public string Pais { get; set; }
+            public string Sexo { get; set; }
+            public string Email { get; set; }
         }
 
         private class ParametrosTran
         {
             public int Modo { get; set; }
-            public bool UsuarioAdm { get; set; }
-            public int IdFuncionario { get; set; }
-            public DateTime? DataCadastro { get; set; }
-            public DateTime? DataUltimaAlteracao { get; set; }
-            public string UsuarioCadastrou { get; set; }
-            public string UsuarioUltimaAlteracao { get; set; }
-            public string Nome { get; set; }
-            public string Email { get; set; }
+            public int CodigoFuncionario { get; set; }
+            public string NomeFuncionario { get; set; }
             public DateTime DataNascimento { get; set; }
-            public string Telefone { get; set; }
+            public string Telefone1 { get; set; }
             public string Cpf { get; set; }
             public string Cep { get; set; }
             public string Endereco { get; set; }
@@ -165,8 +154,11 @@ namespace TechCompilerCo.Repositorys
             public string Complemento { get; set; }
             public string Bairro { get; set; }
             public string Cidade { get; set; }
-            public string Estado { get; set; }
+            public string Uf { get; set; }
             public string Pais { get; set; }
+            public string Sexo { get; set; }
+            public string Cargo { get; set; }
+            public int UsuarioTran { get; set; }
         }
     }
 }
