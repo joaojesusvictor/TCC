@@ -1,71 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Data.SqlClient;
 using Dapper;
+using TechCompilerCo.Models;
+using static TechCompilerCo.Repositorys.FuncionariosRepository;
 
 namespace TechCompilerCo.Repositorys
 {
     public class BaseRepository
     {
-        protected string _connectionString;
+        private DbSession _db;
 
         private string _sqlEncript = "EXEC GER_EncriptarDecriptar_GET @Valor, @Acao";
 
-        public BaseRepository()
+        public BaseRepository(DbSession dbSession)
         {
-
+            _db = dbSession;
         }
 
-        //protected async Task<T> UsarSql<T>(Func<IDbConnection, Task<T>> getData)
-        //{
-        //    try
-        //    {
-        //        using (var connection = new SqlConnection(_connectionString))
-        //        {
-        //            await connection.OpenAsync();
-        //            var data = await getData(connection);
+        public async Task<Encript> EncriptDecriptAsync(string valor, string acao)
+        {
+            var p = new ParametrosTran()
+            {
+                Valor = valor,
+                Acao = acao
+            };
 
-        //            return data;
-        //        }
-        //    }
-        //    catch (TimeoutException ex)
-        //    {
-        //        throw new Exception(String.Format("{0}.WithConnection() experienced a SQL timeout", GetType().FullName), ex);
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        throw new Exception(String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)", GetType().FullName), ex);
-        //    }
-        //}
+            using (var conn = _db.Connection)
+            {
+                Encript resultado = await conn.QueryFirstAsync<Encript>(_sqlEncript, p);
 
-        //public async Task<Encript> EncriptDecriptAsync(string valor, string acao)
-        //{
-        //    var p = new ParametrosTran()
-        //    {
-        //        Valor = valor,
-        //        Acao = acao
-        //    };
-
-        //    return await UsarSql(async conn =>
-        //    {
-        //        return await conn.QueryFirstOrDefaultAsync<Encript>(_sqlEncript, p);
-        //    });
-        //}
+                return resultado;
+            }
+        }
 
         public class Encript
         {
-            public string Resultado { get; set; }
+            public string? Resultado { get; set; }
         }
 
         private class ParametrosTran
         {
-            public string Valor { get; set; }
-            public string Acao { get; set; }
+            public string? Valor { get; set; }
+            public string? Acao { get; set; }
         }
     }
 }

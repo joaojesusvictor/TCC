@@ -137,31 +137,6 @@
 <body>
     <main class="container">
 
-        @if (Model.MsgErro != "")
-        {
-            @*<div class="alert alert-block alert-sucess" style="background-color: limegreen" id="divSucesso">
-        <h4 class="alert-heading" style="color: white">
-        <i class="fa fa-check-square-o"></i>
-        Sucesso!
-        </h4>
-        <p id="sucessoLogin" style="color: white">
-        @Model.MsgErro
-        <a href="#" target="_blank"></a>
-        </p>
-        </div>*@
-
-            <div class="alert alert-block alert-danger" style="background-color: red" id="divErro">
-                <h4 class="alert-heading" style="color: white">
-                    <i class="fa fa-times"></i>
-                    Erro!
-                </h4>
-                <p id="errorLogin" style="color: white">
-                    @Model.MsgErro
-                    <a href="#" target="_blank"></a>
-                </p>
-            </div>
-        }
-
         <h2>Login</h2>
 
         @using (Html.BeginForm("ValidarLogin", "Login", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
@@ -174,6 +149,14 @@
                 <input type="password" asp-for="Senha" placeholder="Entre com sua senha">
                 <div class="underline"></div>
             </div>
+
+            @if (!string.IsNullOrEmpty(Model.MsgErro))
+            {
+                <p id="errorLogin" style="color: white">
+                    @Model.MsgErro
+                    <a href="#" target="_blank"></a>
+                </p>
+            }
 
             <input type="submit" value="Continue">
         }

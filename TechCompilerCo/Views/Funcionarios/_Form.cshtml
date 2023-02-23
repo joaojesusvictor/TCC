@@ -12,7 +12,7 @@
 
                 <div class="col-md-6">
                     <label class="form-label">Data de Cadastro</label>
-                    <input asp-for="DataInclusao" value="@Model.StrDataInclusao" type="date" class="form-control" readonly />
+                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
                 </div>
             </div>
         }
@@ -24,7 +24,7 @@
 
         <div class="col-md-6">
             <label class="form-label">Data Nascimento</label>
-            <input asp-for="DataNascimento" value="@Model.StrDataNascimento" type="date" class="form-control" />
+            <input asp-for="DataNascimento" type="date" class="form-control" />
         </div>
 
         <div class="row">
@@ -57,9 +57,15 @@
     </div>
 
     <div class="col-md-6">
-        <div class="col-md-6">
-            <label class="form-label">Cep</label>
-            <input asp-for="Cep" class="form-control" />
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Cep</label>
+                <input asp-for="Cep" class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <a class="btn btn-sm btn-primary" onclick="buscarCep()">Localizar Cep</a>
+            </div>
         </div>
 
         <div class="col-md-12">

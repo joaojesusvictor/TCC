@@ -181,7 +181,8 @@ End
 ELSE IF @Modo = 5 -- Consulta Varios Funcionarios
 Begin
 		Select	*
-		From	Funcionario
+		From	Funcionario F left join
+				Usuario U on f.CodigoFuncionario = u.CodigoFuncionario
 		Where	Ativo = 1
 End 
 GO
