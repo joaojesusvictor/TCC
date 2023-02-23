@@ -7,12 +7,12 @@ namespace TechCompilerCo.Controllers
     public class LoginController : Controller
     {
         private readonly ILogger<LoginController> _logger;
-        //private LoginRepository _loginRepository;
+        private LoginRepository _loginRepository;
 
-        public LoginController(ILogger<LoginController> logger /*, LoginRepository loginRepository*/)
+        public LoginController(ILogger<LoginController> logger, LoginRepository loginRepository)
         {
             _logger = logger;
-            //_loginRepository = loginRepository;
+            _loginRepository = loginRepository;
         }
 
         public IActionResult Index(string msgErro = "")
@@ -33,14 +33,14 @@ namespace TechCompilerCo.Controllers
             {
                 msgErro = "O Login é necessário!";
 
-                return View(nameof(Index), new { msg = msgErro });
+                return RedirectToAction(nameof(Index), new { msg = msgErro });
             }
 
             if (string.IsNullOrEmpty(model.Senha))
             {
                 msgErro = "A Senha é necessária!";
 
-                return View(nameof(Index), new { msg = msgErro });
+                return RedirectToAction(nameof(Index), new { msg = msgErro });
             }
 
             return View(nameof(Menu));

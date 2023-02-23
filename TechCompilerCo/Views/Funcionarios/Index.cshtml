@@ -20,7 +20,7 @@
     <br />
     <br />
 
-    <div class="row">
+    <div class="row col-md-12">
         <div class="col-md-1">
             <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "Funcionarios")"><i class="fa fa-table"></i> Excel</a>
         </div>
@@ -31,6 +31,10 @@
                 <a class="btn btn-sm btn-primary" href="@Url.Action("New", "Funcionarios" )"><i class="fa fa-plus-circle"></i> Novo</a>
             </div>
         }
+
+        <div class="col-md-9">
+            <a href="@Url.Action("Menu", "Login")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
     </div>
 
     <br />
@@ -38,7 +42,7 @@
     <br />
 
     <div class="row">
-        <table class="table">
+        <table class="table" id="myTable">
             <thead>
                 <tr>
                     @if (Model.UsuarioAdm)
@@ -67,7 +71,27 @@
                         {
                             <td>
                                 <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Funcionarios", new { id = f.CodigoFuncionario } )"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-xs btn-danger" href="@Url.Action("Delete", "Funcionarios", new { id = f.CodigoFuncionario } )"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@f.CodigoFuncionario, @f.NomeFuncionario)"><i class="fa fa-trash"></i></a>
+
+                                @*<button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="ModalExcluir-@f.CodigoFuncionario"><i class="fa fa-trash"></i></button>
+
+                                <div id="ModalExcluir-@f.CodigoFuncionario" class="modal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Excluir Funcionário</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Deseja realmente excluir o funcionário @f.NomeFuncionario?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <a onclick="excluir(@f.CodigoFuncionario)" class="btn btn-danger">Excluir</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
                             </td>
                         }
                         <td>
@@ -86,16 +110,39 @@
                 }
             </tbody>
         </table>
-    </div>
+    </div>    
+</div>
 
-    <br />
-    <br />
-    <br />
+@*<div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Excluir Funcionário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir o funcionário?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a onclick="excluir()" class="btn btn-danger">Excluir</a>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div id="dialogExcluir" title="Excluir Funcionário">
+
+    <input type="hidden" id="CodigoFuncionarioModal" />
 
     <div class="row">
-        <div class="col-md-12">
-            <a href="@Url.Action("Menu", "Login")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        <div class="col-md-12" style="margin-bottom:20px">
+            <label id="msgExcluir"></label>
         </div>
+    </div>
+    <div class="form-actions">
+        <button onclick="$('#dialogExcluir').dialog('close');" class="btn btn-default pull-right" type="button">Cancelar</button> &nbsp;
+        <a onclick="excluir($('#CodigoFuncionarioModal').val())" class="btn btn-danger">Excluir</a>
     </div>
 </div>
 
@@ -108,7 +155,51 @@
                     "url": "//cdn.datatables.net/plugin-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                 }
             });
+
+            $('#dialogExcluir').dialog({
+                autoOpen: false,
+                maxWidth: 600,
+                width: $(window).width() * 0.5,
+                height: $(window).height() * 0.4,
+                modal: true
+            });
         });
+
+        function abrirModalExcluir(id, nome) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#dialogExcluir').dialog('open');
+
+            $('#CodigoFuncionarioModal').val(id);
+
+            $('#msgExcluir').text("Deseja realmente excluir o funcionário " + nome + " ?");
+        }
+
+        function reprovar(idEtapa, motivo) {
+            $.ajax({
+                url: 'MotivoRecusa',
+                type: 'POST',
+                data: {
+                    idEtapa: idEtapa,
+                    motivo: motivo
+                },
+                success: function (s) {
+                    document.location.reload(true);
+                },
+                error: function (e) {
+                    $('#dialogMotivoRecusa').scrollTop(0);
+
+                    if (e.status == 400) {
+                        $('#errorRecusa').text(e.responseJSON.detail);
+                    }
+
+                    $('#divErroRecusa').show();
+
+                    setTimeout(function () {
+                        $('#divErroRecusa').hide();
+                    }, 3000);
+                }
+            });
+        }
     </script>
 
 }

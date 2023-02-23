@@ -53,10 +53,62 @@
 {
     <partial name="_Form.cshtml" />
 
+    <br />
+    
     <div class="row">
         <div class="col-md-12">
             <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin-left: 5px"><i class="fa fa-check"></i> Salvar</button>
             <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
         </div>
     </div>
+}
+
+@section Scripts{
+
+    <script>
+
+        function buscarCep() {
+
+            let valorCep = $('#Cep').val();
+
+            let cepFormat = valorCep.replaceAll(".", "").replaceAll("-", "");
+
+            if (cepFormat == "" || cepFormat.length > 8) {
+
+                alert("Cep inválido !!!");
+                $('#Cep').val();
+                return null;
+
+            } else {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "https://viacep.com.br/ws/" + cepFormat + "/json/",
+                    cache: false,
+                    dataType: 'json',
+                    success: function (data) {
+
+                        console.log(data);
+
+                        if (data.erro) {
+                            alert("Cep não encontrado!");
+                            return null;
+                        }
+
+                        $('#Endereco').val(data.logradouro);
+                        $('#Bairro').val(data.bairro);
+                        $('#Cidade').val(data.localidade);
+                        $('#Uf').val(data.uf);
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("Erro ao consultar o CEP. Mensagem:" + errorThrown);
+                        alert("Cep não encontrado!");
+                    }
+                });
+            }
+        }
+
+    </script>
+
 }

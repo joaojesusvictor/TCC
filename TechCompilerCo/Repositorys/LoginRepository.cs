@@ -5,16 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Dapper;
+using TechCompilerCo.Models;
 
 namespace TechCompilerCo.Repositorys
 {
-    public class LoginRepository : BaseRepository
+    public class LoginRepository
     {
+        private DbSession _db;
         private string _sqlTran = "";
 
-        public LoginRepository()
+        public LoginRepository(DbSession dbSession)
         {
-
+            _db = dbSession;
         }
 
         //public async Task<Login> GetFuncionarioAsync(string login, string senha)
@@ -41,8 +43,8 @@ namespace TechCompilerCo.Repositorys
         private class ParametrosTran
         {
             public int Modo { get; set; }
-            public string Login { get; set; }
-            public string Senha { get; set; }
+            public string? Login { get; set; }
+            public string? Senha { get; set; }
         }
     }
 }

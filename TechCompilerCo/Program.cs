@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using TechCompilerCo.Models;
+using TechCompilerCo.Repositorys;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<DbSession>();
+builder.Services.AddTransient<BaseRepository, BaseRepository>();
+builder.Services.AddTransient<LoginRepository, LoginRepository>();
+builder.Services.AddTransient<FuncionariosRepository, FuncionariosRepository>();
 
 var app = builder.Build();
 
