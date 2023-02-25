@@ -31,6 +31,7 @@ Create Table Usuario(
 	Email varchar(100) not null,
 	Senha varchar(1000) not null,
 	UsuarioAdm bit not null,
+	Ativo bit not null,
 	DataInclusao datetime not null,
 	UsuarioIncluiu varchar(100) not null,
 	DataUltimaAlteracao datetime null,

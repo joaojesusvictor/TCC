@@ -103,7 +103,6 @@ namespace TechCompilerCo.Controllers
             return View(viewModel);
         }
 
-        [HttpPut]
         public async Task<IActionResult> Update(FuncionariosViewModel model)
         {
             string msgErro = "";
@@ -119,11 +118,10 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete(FuncionariosViewModel model)
+                
+        public async Task<IActionResult> Delete(int id)
         {
-            //await _funcionariosRepository.DeleteAsync(model.CodigoFuncionario);
+            await _funcionariosRepository.DeleteAsync(id);
 
             return RedirectToAction(nameof(Index));
         }

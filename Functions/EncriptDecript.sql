@@ -1,6 +1,6 @@
 if exists(select * from sysobjects where name='EncriptDecript')
 	begin
-		drop function Encript
+		drop function EncriptDecript
 	end
 go
 
@@ -11,7 +11,7 @@ AS
 /********************************************************************
  ** Descricao:	Esta funcao encripta/desencripta uma string
   ********************************************************************
-  select dbo.Encript()  
+  select dbo.EncriptDecript('21-0A-0A-06-42-06-19-21-29-29-4B-3F-06-19', 'D')  
   
  ********************************************************************
  ** Data:		Autor:		Descricao:

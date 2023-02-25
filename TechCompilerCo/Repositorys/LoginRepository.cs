@@ -12,31 +12,36 @@ namespace TechCompilerCo.Repositorys
     public class LoginRepository
     {
         private DbSession _db;
-        private string _sqlTran = "";
+        private string _sqlTran = "EXEC Func_Usuarios_TRAN @Modo, @Login, @Senha";
 
         public LoginRepository(DbSession dbSession)
         {
             _db = dbSession;
         }
 
-        //public async Task<Login> GetFuncionarioAsync(string login, string senha)
-        //{
-        //    var p = new ParametrosTran()
-        //    {
-        //        Modo = 4,
-        //        Login = login,
-        //        Senha = senha
-        //    };
+        public async Task<bool> GetValidacaoAsync(string login, string senha)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 4,
+                Login = login,
+                Senha = senha
+            };
 
-        //    return await UsarSql(async conn =>
-        //    {
-        //        return await conn.QueryFirstOrDefaultAsync<Login>(_sqlTran, p);
-        //    });
-        //}
+            //return await UsarSql(async conn =>
+            //{
+            //    return await conn.QueryFirstOrDefaultAsync<Login>(_sqlTran, p);
+            //});
+
+            using var conn = _db.Connection;
+            bool result = await conn.QueryFirstAsync<bool>(_sqlTran, p);
+
+            return result;
+        }
 
         public class Login
         {
-            public string? Usuario { get; set; }        //Reclama se a prop nao é anulavel
+            public string? Usuario { get; set; }
             public string? Senha { get; set; }
         }
 
