@@ -183,7 +183,7 @@ Begin
 		Select	*
 		From	Funcionario F left join
 				Usuario U on f.CodigoFuncionario = u.CodigoFuncionario
-		Where	Ativo = 1
+		Where	F.Ativo = 1
 End 
 GO
  

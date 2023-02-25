@@ -449,6 +449,54 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.map"
     },
     {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\jquery-ui.js",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\jquery-ui.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\jquery-ui.min.js",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\jquery-ui.min.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\images\\ui-icons_444444_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\images\\ui-icons_444444_256x240.png"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\images\\ui-icons_555555_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\images\\ui-icons_555555_256x240.png"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\images\\ui-icons_777620_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\images\\ui-icons_777620_256x240.png"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\images\\ui-icons_777777_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\images\\ui-icons_777777_256x240.png"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\images\\ui-icons_cc0000_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\images\\ui-icons_cc0000_256x240.png"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\images\\ui-icons_ffffff_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\images\\ui-icons_ffffff_256x240.png"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\jquery-ui.css",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\jquery-ui.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\jquery-ui.min.css",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\jquery-ui.min.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\theme.css",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\theme.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\jqueryui\\themes\\base\\theme.min.css",
+      "PackagePath": "staticwebassets\\lib\\jqueryui\\themes\\base\\theme.min.css"
+    },
+    {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\twitter-bootstrap\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\twitter-bootstrap\\css\\bootstrap-grid.css"
     },

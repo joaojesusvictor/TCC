@@ -28,9 +28,9 @@ namespace TechCompilerCo.Repositorys
             };
 
             using var conn = _db.Connection;
-            IEnumerable<Funcionario> funcionarios = await conn.QueryAsync<Funcionario>(_sqlTran, p);
+            IEnumerable<Funcionario> results = await conn.QueryAsync<Funcionario>(_sqlTran, p);
 
-            return funcionarios;
+            return results;
         }
 
         public async Task<Funcionario> GetFuncionarioAsync(int id)
@@ -42,9 +42,9 @@ namespace TechCompilerCo.Repositorys
             };
 
             using var conn = _db.Connection;
-            Funcionario funcionario = await conn.QueryFirstOrDefaultAsync<Funcionario>(_sqlTran, p);
+            Funcionario result = await conn.QueryFirstOrDefaultAsync<Funcionario>(_sqlTran, p);
 
-            return funcionario;
+            return result;
         }
 
         public async Task<int> CreateAsync(FuncionariosViewModel model)
@@ -71,9 +71,9 @@ namespace TechCompilerCo.Repositorys
             };
 
             using var conn = _db.Connection;
-            int funcionarios = await conn.QueryFirstAsync<int>(_sqlTran, p);
+            int result = await conn.QueryFirstAsync<int>(_sqlTran, p);
 
-            return funcionarios;
+            return result;
         }
 
         public async Task<int> UpdateAsync(FuncionariosViewModel model)
@@ -100,9 +100,9 @@ namespace TechCompilerCo.Repositorys
             };
 
             using var conn = _db.Connection;
-            int funcionario = await conn.QueryFirstAsync<int>(_sqlTran, p);
+            int result = await conn.QueryFirstAsync<int>(_sqlTran, p);
 
-            return funcionario;
+            return result;
         }
 
         public async Task DeleteAsync(int id)
