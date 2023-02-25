@@ -16,36 +16,6 @@
 </div>
 
 <br />
-
-@if (!string.IsNullOrEmpty(Model.MsgErro))
-{
-    @*<div class="row">
-        <div class="alert alert-block alert-sucess" style="background-color: limegreen" id="divSucesso">
-        <h4 class="alert-heading" style="color: white">
-        <i class="fa fa-check-square-o"></i>
-        Sucesso!
-        </h4>
-        <p id="sucessoLogin" style="color: white">
-        @Model.MsgErro
-        <a href="#" target="_blank"></a>
-        </p>
-        </div>
-        </div>*@
-
-    <div class="row">
-        <div class="alert alert-block alert-danger" style="background-color: red" id="divErro">
-            <h4 class="alert-heading" style="color: white">
-                <i class="fa fa-times"></i>
-                Erro!
-            </h4>
-            <p id="errorLogin" style="color: white">
-                @Model.MsgErro
-                <a href="#" target="_blank"></a>
-            </p>
-        </div>
-    </div>
-}
-
 <br />
 <br />
 
@@ -61,54 +31,4 @@
             <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
         </div>
     </div>
-}
-
-@section Scripts{
-
-    <script>
-
-        function buscarCep() {
-
-            let valorCep = $('#Cep').val();
-
-            let cepFormat = valorCep.replaceAll(".", "").replaceAll("-", "");
-
-            if (cepFormat == "" || cepFormat.length > 8) {
-
-                alert("Cep inválido !!!");
-                $('#Cep').val();
-                return null;
-
-            } else {
-
-                $.ajax({
-                    type: 'GET',
-                    url: "https://viacep.com.br/ws/" + cepFormat + "/json/",
-                    cache: false,
-                    dataType: 'json',
-                    success: function (data) {
-
-                        console.log(data);
-
-                        if (data.erro) {
-                            alert("Cep não encontrado!");
-                            return null;
-                        }
-
-                        $('#Endereco').val(data.logradouro);
-                        $('#Bairro').val(data.bairro);
-                        $('#Cidade').val(data.localidade);
-                        $('#Uf').val(data.uf);
-
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log("Erro ao consultar o CEP. Mensagem:" + errorThrown);
-                        alert("Cep não encontrado!");
-                    }
-                });
-            }
-        }
-
-    </script>
-
 }

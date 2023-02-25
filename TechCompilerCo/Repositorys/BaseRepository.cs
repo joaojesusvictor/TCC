@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Web;
 using Dapper;
 using TechCompilerCo.Models;
-using static TechCompilerCo.Repositorys.FuncionariosRepository;
 
 namespace TechCompilerCo.Repositorys
 {
@@ -33,12 +32,10 @@ namespace TechCompilerCo.Repositorys
                 Acao = acao
             };
 
-            using (var conn = _db.Connection)
-            {
-                Encript resultado = await conn.QueryFirstAsync<Encript>(_sqlEncript, p);
+            using var conn = _db.Connection;
+            Encript resultado = await conn.QueryFirstAsync<Encript>(_sqlEncript, p);
 
-                return resultado;
-            }
+            return resultado;
         }
 
         public class Encript
