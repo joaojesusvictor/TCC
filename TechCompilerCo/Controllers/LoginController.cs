@@ -4,7 +4,7 @@ using TechCompilerCo.Repositorys;
 
 namespace TechCompilerCo.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         private readonly ILogger<LoginController> _logger;
         private LoginRepository _loginRepository;
@@ -15,41 +15,10 @@ namespace TechCompilerCo.Controllers
             _loginRepository = loginRepository;
         }
 
-        //public IActionResult Index(string msgErro = "")
-        //{
-        //    var viewModel = new LoginViewModel
-        //    {
-        //        MsgErro = msgErro
-        //    };
-
-        //    return View(viewModel);
-        //}
-
         public IActionResult Index()
         {
             return View();
         }
-
-        //public async Task<IActionResult> ValidarLogin(LoginViewModel model)
-        //{
-        //    string msgErro = "";
-
-        //    if (string.IsNullOrEmpty(model.Usuario))
-        //    {
-        //        msgErro = "O Login é necessário!";
-
-        //        return RedirectToAction(nameof(Index), new { msg = msgErro });
-        //    }
-
-        //    if (string.IsNullOrEmpty(model.Senha))
-        //    {
-        //        msgErro = "A Senha é necessária!";
-
-        //        return RedirectToAction(nameof(Index), new { msg = msgErro });
-        //    }
-
-        //    return View(nameof(Menu));
-        //}
 
         [HttpGet]
         public async Task<object> ValidarLogin(string login, string senha)

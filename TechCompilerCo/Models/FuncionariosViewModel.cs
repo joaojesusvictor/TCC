@@ -26,7 +26,6 @@
         public string? Pais { get; set; }
         public string? Sexo { get; set; }
         public string? Cargo { get; set; }
-        public string? MsgErro { get; set; }
         public bool ModoEdit { get; set; }
 
         public List<FuncionarioViewModel> Funcionarios { get; set; } = new List<FuncionarioViewModel>();

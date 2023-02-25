@@ -28,11 +28,6 @@ namespace TechCompilerCo.Repositorys
                 Senha = senha
             };
 
-            //return await UsarSql(async conn =>
-            //{
-            //    return await conn.QueryFirstOrDefaultAsync<Login>(_sqlTran, p);
-            //});
-
             using var conn = _db.Connection;
             bool result = await conn.QueryFirstAsync<bool>(_sqlTran, p);
 

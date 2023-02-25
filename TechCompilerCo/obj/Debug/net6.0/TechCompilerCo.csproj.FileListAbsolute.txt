@@ -105,3 +105,4 @@ D:\Projetos\TCC\TechCompilerCo\obj\Debug\net6.0\refint\TechCompilerCo.dll
 D:\Projetos\TCC\TechCompilerCo\obj\Debug\net6.0\TechCompilerCo.pdb
 D:\Projetos\TCC\TechCompilerCo\obj\Debug\net6.0\TechCompilerCo.genruntimeconfig.cache
 D:\Projetos\TCC\TechCompilerCo\obj\Debug\net6.0\ref\TechCompilerCo.dll
+D:\Projetos\TCC\TechCompilerCo\bin\Debug\net6.0\Newtonsoft.Json.dll

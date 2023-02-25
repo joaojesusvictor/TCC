@@ -6,7 +6,7 @@ using TechCompilerCo.Repositorys;
 
 namespace TechCompilerCo.Controllers
 {
-    public class FuncionariosController : Controller
+    public class FuncionariosController : BaseController
     {
         private readonly ILogger<FuncionariosController> _logger;
         private FuncionariosRepository _funcionariosRepository;
@@ -41,37 +41,30 @@ namespace TechCompilerCo.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> New(string msg = "")
+        public async Task<IActionResult> New()
         {
-            var viewModel = new FuncionariosViewModel()
-            {
-                MsgErro = msg
-            };
+            var viewModel = new FuncionariosViewModel(){};
 
             return View(viewModel);
         }
 
         public async Task<IActionResult> Create(FuncionariosViewModel model)
         {
-            string msgErro = "";
-
             if (!CpfValido(model.Cpf))
             {
-                msgErro = "Este CPF não é válido!";
+                AddNotification("Este CPF não é válido!");
 
-                return RedirectToAction(nameof(New), new { msg = msgErro });
+                return RedirectToAction(nameof(New));
             }
 
             await _funcionariosRepository.CreateAsync(model);
 
-            //AlertSuccess("");
-
-            //AddNotification("");
+            AlertSuccess("Funcionário incluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Edit(int id, string msg = "")
+        public async Task<IActionResult> Edit(int id)
         {
             FuncionariosRepository.Funcionario funcionario = await _funcionariosRepository.GetFuncionarioAsync(id);
 
@@ -96,25 +89,24 @@ namespace TechCompilerCo.Controllers
                 Uf = funcionario.Uf,
                 Pais = funcionario.Pais,
                 Sexo = funcionario.Sexo,
-                Cargo = funcionario.Cargo,
-                MsgErro = msg
+                Cargo = funcionario.Cargo
             };
 
             return View(viewModel);
         }
 
         public async Task<IActionResult> Update(FuncionariosViewModel model)
-        {
-            string msgErro = "";
-            
+        {            
             if (!CpfValido(model.Cpf))
             {
-                msgErro = "Este CPF não é válido!";
+                AddNotification("Este CPF não é válido!");
 
-                return RedirectToAction(nameof(Edit), new { id = model.CodigoFuncionario, msg = msgErro });
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoFuncionario });
             }
 
             await _funcionariosRepository.UpdateAsync(model);
+
+            AlertSuccess("Funcionário alterado com sucesso!");
 
             return RedirectToAction(nameof(Index));
         }
@@ -123,45 +115,9 @@ namespace TechCompilerCo.Controllers
         {
             await _funcionariosRepository.DeleteAsync(id);
 
+            AlertSuccess("Funcionário excluído com sucesso!");
+
             return RedirectToAction(nameof(Index));
-        }
-
-        public static bool CpfValido(string cpf)
-        {
-            if (string.IsNullOrWhiteSpace(cpf)) return false;
-
-            var multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            var multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            string tempCpf;
-            string digito;
-            int soma;
-            int resto;
-            cpf = cpf.Trim();
-            cpf = cpf.Replace(".", "").Replace("-", "");
-            if (cpf.Length != 11)
-                return false;
-            tempCpf = cpf.Substring(0, 9);
-            soma = 0;
-
-            for (int i = 0; i < 9; i++)
-                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
-            resto = soma % 11;
-            if (resto < 2)
-                resto = 0;
-            else
-                resto = 11 - resto;
-            digito = resto.ToString();
-            tempCpf = tempCpf + digito;
-            soma = 0;
-            for (int i = 0; i < 10; i++)
-                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
-            resto = soma % 11;
-            if (resto < 2)
-                resto = 0;
-            else
-                resto = 11 - resto;
-            digito = digito + resto.ToString();
-            return cpf.EndsWith(digito);
-        }
+        }        
     }
 }

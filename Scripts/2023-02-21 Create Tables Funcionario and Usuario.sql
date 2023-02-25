@@ -12,7 +12,7 @@ Create Table Funcionario(
 	Pais varchar(50) not null,
 	DataNascimento datetime not null,
 	Cpf varchar(20) not null,
-	Sexo varchar(1) null,
+	Sexo varchar(1) not null,
 	Telefone1 varchar(20) not null,	
 	Telefone2 varchar(20) null,
 	Telefone3 varchar(20) null,
