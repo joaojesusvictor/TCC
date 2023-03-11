@@ -117,6 +117,8 @@
 <body>
     <main class="container">
 
+        <partial name="/Views/Shared/_Notifications.cshtml" />
+
         <div class="row">
             <div class="col-md-6">
                 <h2>Login</h2>
@@ -126,7 +128,7 @@
             </div>
         </div>
 
-        <form>
+        <form action="@Url.Action("ValidarLogin", "Login")" class="form-horizontal" method="post" novalidate="novalidate">
             <div class="input-field">
                 <input type="text" asp-for="Usuario" placeholder="Entre com seu login">
                 <div class="underline"></div>
@@ -138,38 +140,27 @@
 
             <br />
 
-            <p id="msgError" style="color: red"><b></b></p>
-
             <a id="BtnEntrar" class="btn btn-sm btn-primary">Entrar</a>
         </form>
     </main>
 </body>
 </html>
 
+<script src="~/js/site.js" asp-append-version="true"></script>
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script type="text/javascript">
 
+    $(document).on('keypress', function (e) {
+        if (e.which == 13) {
+            $('#BtnEntrar').trigger('click');
+        }
+    });
+
     $('#BtnEntrar').click(function () {
-        $.ajax({
-            type: 'GET',
-            url: '/Login/ValidarLogin?login=' + $('#Usuario').val() + '&senha=' + $('#Senha').val(),
-            dataType: 'json',
-            success: function (returnedData) {
-                if (returnedData.msg == 'Sucesso') {
-                    window.location.href = '/Login/Menu';
-                }
-                else {
-                    $('#msgError').show();
 
-                    $('#msgError b').text(returnedData.msg);
+        $('form').submit();
 
-                    setTimeout(function () {
-                        $('#msgError').hide();
-                    }, 3000);
-                }
-            }
-        });
     });
 
 </script>

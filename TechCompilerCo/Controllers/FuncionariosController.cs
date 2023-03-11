@@ -8,12 +8,10 @@ namespace TechCompilerCo.Controllers
 {
     public class FuncionariosController : BaseController
     {
-        private readonly ILogger<FuncionariosController> _logger;
         private FuncionariosRepository _funcionariosRepository;
 
-        public FuncionariosController(ILogger<FuncionariosController> logger, FuncionariosRepository funcionariosRepository)
+        public FuncionariosController(FuncionariosRepository funcionariosRepository)
         {
-            _logger = logger;
             _funcionariosRepository = funcionariosRepository;
         }
 
@@ -52,14 +50,14 @@ namespace TechCompilerCo.Controllers
         {
             if (!CpfValido(model.Cpf))
             {
-                AddNotification("Este CPF não é válido!");
+                MostraMsgErro("Este CPF não é válido!");
 
                 return RedirectToAction(nameof(New));
             }
 
             await _funcionariosRepository.CreateAsync(model);
 
-            AlertSuccess("Funcionário incluído com sucesso!");
+            MostraMsgSucesso("Funcionário incluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
         }
@@ -99,14 +97,14 @@ namespace TechCompilerCo.Controllers
         {            
             if (!CpfValido(model.Cpf))
             {
-                AddNotification("Este CPF não é válido!");
+                MostraMsgErro("Este CPF não é válido!");
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoFuncionario });
             }
 
             await _funcionariosRepository.UpdateAsync(model);
 
-            AlertSuccess("Funcionário alterado com sucesso!");
+            MostraMsgSucesso("Funcionário alterado com sucesso!");
 
             return RedirectToAction(nameof(Index));
         }
@@ -115,7 +113,7 @@ namespace TechCompilerCo.Controllers
         {
             await _funcionariosRepository.DeleteAsync(id);
 
-            AlertSuccess("Funcionário excluído com sucesso!");
+            MostraMsgSucesso("Funcionário excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
         }        

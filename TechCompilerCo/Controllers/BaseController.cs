@@ -21,12 +21,12 @@ namespace TechCompilerCo.Controllers
             _uiAlerts = new List<UiAlert>();
         }
 
-        protected void AddNotification(string message, string property = "")
+        protected void MostraMsgErro(string message, string property = "")
         {
             _domainNotifications.Add(new Notification(message, property));
         }
 
-        protected void AlertSuccess(string message)
+        protected void MostraMsgSucesso(string message)
         {
             _uiAlerts.Add(UiAlert.AlertSuccess(message));
         }
