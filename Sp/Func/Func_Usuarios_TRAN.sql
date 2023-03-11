@@ -55,7 +55,14 @@ Declare	@NomeUsuarioTRAN			Varchar(30)	,
 -- Constante para exibição de mensagens
 select @NomeTabela = 'Tabela de Usuario.'
 
-IF @Modo = 4 -- Valida Login
+If @Modo = 4 -- Get Dados Usuario
+Begin
+	select	*
+	from	Usuario
+	where	LoginUsuario = @Login
+End
+
+Else IF @Modo = 5 -- Valida Login
 Begin
 	if exists(select * from Usuario where LoginUsuario = @Login and Senha = dbo.EncriptDecript(@Senha, 'E'))
 		Begin

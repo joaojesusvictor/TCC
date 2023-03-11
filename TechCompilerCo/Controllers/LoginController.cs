@@ -1,62 +1,88 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TechCompilerCo.Helper;
 using TechCompilerCo.Models;
 using TechCompilerCo.Repositorys;
+using static TechCompilerCo.Repositorys.LoginRepository;
 
 namespace TechCompilerCo.Controllers
 {
     public class LoginController : BaseController
     {
-        private readonly ILogger<LoginController> _logger;
+        private readonly ISessao _sessao;
         private LoginRepository _loginRepository;
 
-        public LoginController(ILogger<LoginController> logger, LoginRepository loginRepository)
+        public LoginController(LoginRepository loginRepository, ISessao sessao)
         {
-            _logger = logger;
             _loginRepository = loginRepository;
+            _sessao = sessao;
         }
 
         public IActionResult Index()
         {
+            if (_sessao.BuscarSessaoUsuario() != null) //Se usuário já estiver logado, redirecionar para Menu.
+                return RedirectToAction(nameof(Menu));
+
             return View();
         }
 
-        [HttpGet]
-        public async Task<object> ValidarLogin(string login, string senha)
+        [HttpPost]
+        public async Task<IActionResult> ValidarLogin(LoginViewModel model)
         {
-            string msgErro = "";
-            bool valido = false;
-
-            if (string.IsNullOrEmpty(login))
+            if (string.IsNullOrEmpty(model.Usuario))
             {
-                msgErro = "O Login é necessário!";
+                MostraMsgErro("O Login é necessário!");
 
-                return Json(new { msg = msgErro });
+                return RedirectToAction(nameof(Index));
             }
-
-            if (string.IsNullOrEmpty(senha))
+            else if (string.IsNullOrEmpty(model.Senha))
             {
-                msgErro = "A Senha é necessária!";
+                MostraMsgErro("A Senha é necessária!");
 
-                return Json(new { msg = msgErro });
-            }
-
-            valido = await _loginRepository.GetValidacaoAsync(login, senha);
-
-            if (valido)
-            {
-                msgErro = "Sucesso";
-
-                return Json(new { msg = msgErro });
+                return RedirectToAction(nameof(Index));
             }
             else
-                msgErro = "Login e/ou Senha inválidos!";
+            {
+                bool valido = await _loginRepository.GetValidacaoAsync(model.Usuario, model.Senha);
 
-            return Json(new { msg = msgErro });
+                if (!valido)
+                {
+                    MostraMsgErro("Login e/ou Senha inválidos!");
+
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
+            return RedirectToAction(nameof(Menu), new { login = model.Usuario });
         }
 
-        public IActionResult Menu()
+        public async Task<IActionResult> Menu(string login)
         {
-            return View();
+            UsuarioViewModel novoUsuario = new();
+
+            if (_sessao.BuscarSessaoUsuario() == null)
+            {
+                novoUsuario = await _loginRepository.GetUsuarioAsync(login);
+
+                if (novoUsuario == null)
+                {
+                    MostraMsgErro("Login e/ou Senha inválidos!");
+
+                    return RedirectToAction(nameof(Index));
+                }
+
+                _sessao.CriarSessaoUsuario(novoUsuario);
+            }
+            else
+                novoUsuario = _sessao.BuscarSessaoUsuario();
+
+            return View(novoUsuario);
+        }
+
+        public IActionResult Sair()
+        {
+            _sessao.RemoverSessaoUsuario();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

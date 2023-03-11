@@ -19,11 +19,25 @@ namespace TechCompilerCo.Repositorys
             _db = dbSession;
         }
 
-        public async Task<bool> GetValidacaoAsync(string login, string senha)
+        public async Task<UsuarioViewModel> GetUsuarioAsync(string login)
         {
             var p = new ParametrosTran()
             {
                 Modo = 4,
+                Login = login
+            };
+
+            using var conn = _db.Connection;
+            UsuarioViewModel result = await conn.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
+
+            return result;
+        }
+
+        public async Task<bool> GetValidacaoAsync(string login, string senha)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 5,
                 Login = login,
                 Senha = senha
             };
