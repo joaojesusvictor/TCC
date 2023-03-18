@@ -1,27 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using System.Reflection;
+using TechCompilerCo.Filters;
+using TechCompilerCo.Helper;
 using TechCompilerCo.Models;
 using TechCompilerCo.Repositorys;
 
 namespace TechCompilerCo.Controllers
 {
+    [PaginaParaUsuarioLogado]
+
     public class FuncionariosController : BaseController
     {
         private FuncionariosRepository _funcionariosRepository;
+        private readonly ISessao _sessao;
 
-        public FuncionariosController(FuncionariosRepository funcionariosRepository)
+        public FuncionariosController(FuncionariosRepository funcionariosRepository, ISessao sessao)
         {
             _funcionariosRepository = funcionariosRepository;
+            _sessao = sessao;
         }
 
         public async Task<IActionResult> Index()
         {
             IEnumerable<FuncionariosRepository.Funcionario> funcionarios = await _funcionariosRepository.GetFuncionariosAsync();
+            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new FuncionariosViewModel()
             {
-                UsuarioAdm = true
+                UsuarioAdm = usuario.UsuarioAdm,
+                CodigoUsuario = usuario.CodigoUsuario
             };
 
             foreach (var f in funcionarios)
@@ -41,7 +49,13 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> New()
         {
-            var viewModel = new FuncionariosViewModel(){};
+            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+
+            var viewModel = new FuncionariosViewModel()
+            {
+                UsuarioAdm = usuario.UsuarioAdm,
+                CodigoUsuario = usuario.CodigoUsuario
+            };
 
             return View(viewModel);
         }
@@ -55,7 +69,14 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(New));
             }
 
-            await _funcionariosRepository.CreateAsync(model);
+            int gravado = await _funcionariosRepository.CreateAsync(model);
+
+            if (gravado == 0)
+            {
+                MostraMsgErro("Já existe um Funcionário com este CPF.");
+
+                return RedirectToAction(nameof(New));
+            }
 
             MostraMsgSucesso("Funcionário incluído com sucesso!");
 
@@ -65,6 +86,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             FuncionariosRepository.Funcionario funcionario = await _funcionariosRepository.GetFuncionarioAsync(id);
+            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new FuncionariosViewModel()
             {
@@ -87,7 +109,9 @@ namespace TechCompilerCo.Controllers
                 Uf = funcionario.Uf,
                 Pais = funcionario.Pais,
                 Sexo = funcionario.Sexo,
-                Cargo = funcionario.Cargo
+                Cargo = funcionario.Cargo,
+                UsuarioAdm = usuario.UsuarioAdm,
+                CodigoUsuario = usuario.CodigoUsuario
             };
 
             return View(viewModel);
@@ -102,7 +126,14 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoFuncionario });
             }
 
-            await _funcionariosRepository.UpdateAsync(model);
+            int gravado = await _funcionariosRepository.UpdateAsync(model);
+
+            if(gravado == 0)
+            {
+                MostraMsgErro("Já existe um Funcionário com este CPF.");
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoFuncionario });
+            }
 
             MostraMsgSucesso("Funcionário alterado com sucesso!");
 
@@ -111,7 +142,11 @@ namespace TechCompilerCo.Controllers
                 
         public async Task<IActionResult> Delete(int id)
         {
-            await _funcionariosRepository.DeleteAsync(id);
+            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+
+            int codigoUsuario = usuario.CodigoUsuario;
+
+            await _funcionariosRepository.DeleteAsync(id, codigoUsuario);
 
             MostraMsgSucesso("Funcionário excluído com sucesso!");
 

@@ -181,32 +181,144 @@
       "PackagePath": "staticwebassets\\TechCompilerCo.bundle.scp.css"
     },
     {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\all.css",
+      "PackagePath": "staticwebassets\\css\\all.css"
+    },
+    {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\all.min.css",
       "PackagePath": "staticwebassets\\css\\all.min.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\brands.css",
+      "PackagePath": "staticwebassets\\css\\brands.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\brands.min.css",
+      "PackagePath": "staticwebassets\\css\\brands.min.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\fontawesome.css",
+      "PackagePath": "staticwebassets\\css\\fontawesome.css"
     },
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\fontawesome.min.css",
       "PackagePath": "staticwebassets\\css\\fontawesome.min.css"
     },
     {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\regular.css",
+      "PackagePath": "staticwebassets\\css\\regular.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\regular.min.css",
+      "PackagePath": "staticwebassets\\css\\regular.min.css"
+    },
+    {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\solid.css",
+      "PackagePath": "staticwebassets\\css\\solid.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\solid.min.css",
+      "PackagePath": "staticwebassets\\css\\solid.min.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\svg-with-js.css",
+      "PackagePath": "staticwebassets\\css\\svg-with-js.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\svg-with-js.min.css",
+      "PackagePath": "staticwebassets\\css\\svg-with-js.min.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\v4-font-face.css",
+      "PackagePath": "staticwebassets\\css\\v4-font-face.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\v4-font-face.min.css",
+      "PackagePath": "staticwebassets\\css\\v4-font-face.min.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\v4-shims.css",
+      "PackagePath": "staticwebassets\\css\\v4-shims.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\v4-shims.min.css",
+      "PackagePath": "staticwebassets\\css\\v4-shims.min.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\v5-font-face.css",
+      "PackagePath": "staticwebassets\\css\\v5-font-face.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\v5-font-face.min.css",
+      "PackagePath": "staticwebassets\\css\\v5-font-face.min.css"
     },
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\all.js",
+      "PackagePath": "staticwebassets\\js\\all.js"
+    },
+    {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\all.min.js",
       "PackagePath": "staticwebassets\\js\\all.min.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\brands.js",
+      "PackagePath": "staticwebassets\\js\\brands.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\brands.min.js",
+      "PackagePath": "staticwebassets\\js\\brands.min.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\conflict-detection.js",
+      "PackagePath": "staticwebassets\\js\\conflict-detection.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\conflict-detection.min.js",
+      "PackagePath": "staticwebassets\\js\\conflict-detection.min.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\fontawesome.js",
+      "PackagePath": "staticwebassets\\js\\fontawesome.js"
     },
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\fontawesome.min.js",
       "PackagePath": "staticwebassets\\js\\fontawesome.min.js"
     },
     {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\regular.js",
+      "PackagePath": "staticwebassets\\js\\regular.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\regular.min.js",
+      "PackagePath": "staticwebassets\\js\\regular.min.js"
+    },
+    {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\solid.js",
+      "PackagePath": "staticwebassets\\js\\solid.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\solid.min.js",
+      "PackagePath": "staticwebassets\\js\\solid.min.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\v4-shims.js",
+      "PackagePath": "staticwebassets\\js\\v4-shims.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\v4-shims.min.js",
+      "PackagePath": "staticwebassets\\js\\v4-shims.min.js"
     },
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\bootstrap\\LICENSE",
@@ -1023,6 +1135,38 @@
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\lib\\twitter-bootstrap\\scss\\vendor\\_rfs.scss",
       "PackagePath": "staticwebassets\\lib\\twitter-bootstrap\\scss\\vendor\\_rfs.scss"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\webfonts\\fa-brands-400.ttf",
+      "PackagePath": "staticwebassets\\webfonts\\fa-brands-400.ttf"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\webfonts\\fa-brands-400.woff2",
+      "PackagePath": "staticwebassets\\webfonts\\fa-brands-400.woff2"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\webfonts\\fa-regular-400.ttf",
+      "PackagePath": "staticwebassets\\webfonts\\fa-regular-400.ttf"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\webfonts\\fa-regular-400.woff2",
+      "PackagePath": "staticwebassets\\webfonts\\fa-regular-400.woff2"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\webfonts\\fa-solid-900.ttf",
+      "PackagePath": "staticwebassets\\webfonts\\fa-solid-900.ttf"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\webfonts\\fa-solid-900.woff2",
+      "PackagePath": "staticwebassets\\webfonts\\fa-solid-900.woff2"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\webfonts\\fa-v4compatibility.ttf",
+      "PackagePath": "staticwebassets\\webfonts\\fa-v4compatibility.ttf"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\webfonts\\fa-v4compatibility.woff2",
+      "PackagePath": "staticwebassets\\webfonts\\fa-v4compatibility.woff2"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.TechCompilerCo.Microsoft.AspNetCore.StaticWebAssets.props",

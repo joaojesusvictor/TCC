@@ -31,9 +31,13 @@
                 <a class="btn btn-sm btn-primary" href="@Url.Action("New", "Funcionarios" )"><i class="fa fa-plus-circle"></i> Novo</a>
             </div>
         }
+        else
+        {
+            <span class="col-md-2"></span>
+        }
 
-        <div class="col-md-9">
-            <a href="@Url.Action("Menu", "Login")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        <div class="col-md-9 pull-right">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
         </div>
     </div>
 
@@ -42,7 +46,7 @@
     <br />
 
     <div class="row">
-        <table class="table col-md-12 col-sm-3" id="MinhaIndex">
+        <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
             <thead>
                 <tr>
                     @if (Model.UsuarioAdm)
@@ -114,31 +118,6 @@
 
     <script type="text/javascript" asp-append-version="true">
         $(document).ready(function () {
-            $('#MinhaIndex').DataTable({
-                language: {
-                    processing: "Processando...",
-                    search: "Pesquisar:",
-                    lengthMenu: "_MENU_ resultados por página",
-                    info: "Mostrando de _START_ até _END_ <br/> _TOTAL_ registros no total",
-                    infoEmpty: "Mostrando de 0 até 0 <br/> 0 registros no total",
-                    infoFiltered: "(filtrados de _MAX_ registros no total)",
-                    infoPostFix: "",
-                    loadingRecords: "Carregando...",
-                    zeroRecords: "Nenhum registro encontrado",
-                    emptyTable: "Nenhum registro encontrado",
-                    paginate: {
-                        first: "Primeiro",
-                        previous: "Anterior",
-                        next: "Próximo",
-                        last: "Último"
-                    },
-                    aria: {
-                        sortAscending: "Ordenar colunas de forma ascendente",
-                        sortDescending: "Ordenar colunas de forma descendente"
-                    }
-                }
-            });
-
             $('#dialogExcluir').dialog({
                 autoOpen: false,
                 maxWidth: 500,

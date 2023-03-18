@@ -8,19 +8,21 @@ namespace TechCompilerCo.Controllers
 {
     public class LoginController : BaseController
     {
-        private readonly ISessao _sessao;
         private LoginRepository _loginRepository;
+        private readonly ISessao _sessao;
+        private BaseRepository _baseRepository;
 
-        public LoginController(LoginRepository loginRepository, ISessao sessao)
+        public LoginController(LoginRepository loginRepository, ISessao sessao, BaseRepository baseRepository)
         {
             _loginRepository = loginRepository;
             _sessao = sessao;
+            _baseRepository = baseRepository;
         }
 
         public IActionResult Index()
         {
             if (_sessao.BuscarSessaoUsuario() != null) //Se usuário já estiver logado, redirecionar para Menu.
-                return RedirectToAction(nameof(Menu));
+                return RedirectToAction("Index", "Home");
 
             return View();
         }
@@ -34,53 +36,27 @@ namespace TechCompilerCo.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            else if (string.IsNullOrEmpty(model.Senha))
+
+            if (string.IsNullOrEmpty(model.Senha))
             {
                 MostraMsgErro("A Senha é necessária!");
 
                 return RedirectToAction(nameof(Index));
             }
-            else
+
+            UsuarioViewModel novoUsuario = await _loginRepository.GetUsuarioAsync(model.Usuario);
+
+            if(novoUsuario != null)
             {
-                bool valido = await _loginRepository.GetValidacaoAsync(model.Usuario, model.Senha);
-
-                if (!valido)
+                if (novoUsuario.SenhaValida(model.Senha))
                 {
-                    MostraMsgErro("Login e/ou Senha inválidos!");
+                    _sessao.CriarSessaoUsuario(novoUsuario);
 
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Home");
                 }
             }
 
-            return RedirectToAction(nameof(Menu), new { login = model.Usuario });
-        }
-
-        public async Task<IActionResult> Menu(string login)
-        {
-            UsuarioViewModel novoUsuario = new();
-
-            if (_sessao.BuscarSessaoUsuario() == null)
-            {
-                novoUsuario = await _loginRepository.GetUsuarioAsync(login);
-
-                if (novoUsuario == null)
-                {
-                    MostraMsgErro("Login e/ou Senha inválidos!");
-
-                    return RedirectToAction(nameof(Index));
-                }
-
-                _sessao.CriarSessaoUsuario(novoUsuario);
-            }
-            else
-                novoUsuario = _sessao.BuscarSessaoUsuario();
-
-            return View(novoUsuario);
-        }
-
-        public IActionResult Sair()
-        {
-            _sessao.RemoverSessaoUsuario();
+            MostraMsgErro("Login e/ou Senha inválidos!");
 
             return RedirectToAction(nameof(Index));
         }

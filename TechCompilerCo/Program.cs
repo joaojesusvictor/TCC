@@ -15,6 +15,7 @@ builder.Services.AddScoped<ISessao, Sessao>();
 builder.Services.AddTransient<BaseRepository, BaseRepository>();
 builder.Services.AddTransient<LoginRepository, LoginRepository>();
 builder.Services.AddTransient<FuncionariosRepository, FuncionariosRepository>();
+builder.Services.AddTransient<ClientesRepository, ClientesRepository>();
 
 builder.Services.AddSession(o =>
 {

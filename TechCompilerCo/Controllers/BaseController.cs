@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System.Reflection;
+using System.Text;
+using TechCompilerCo.Filters;
 using TechCompilerCo.Models;
 using TechCompilerCo.Repositorys;
 using TechCompilerCo.Util.Helpers;
@@ -111,7 +113,7 @@ namespace TechCompilerCo.Controllers
             valor = valor.Replace(".", "").Replace("-", "").Replace("/", "").Replace(" ", "");
 
             return valor;
-        }
+        }        
 
         //public FileStreamResult CriarPlanilhaExcel<T>(IEnumerable<T> rows, string nomeArquivo, bool primeiraColunaOn = true)
         //{

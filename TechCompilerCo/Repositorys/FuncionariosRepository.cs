@@ -12,12 +12,12 @@ namespace TechCompilerCo.Repositorys
 {
     public class FuncionariosRepository
     {
-        private DbSession _db;
+        private readonly IDbConnection _db;
         private string _sqlTran = "EXEC Func_Funcionarios_TRAN @Modo, @CodigoFuncionario, @NomeFuncionario, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Cpf, @Sexo, @Telefone1, @Cargo, @UsuarioTran";
 
-        public FuncionariosRepository(DbSession dbSession)
-        {            
-            _db = dbSession;
+        public FuncionariosRepository()
+        {
+            _db = new DbSession().SqlConnection();
         }
 
         public async Task<IEnumerable<Funcionario>> GetFuncionariosAsync()
@@ -27,8 +27,13 @@ namespace TechCompilerCo.Repositorys
                 Modo = 5
             };
 
-            using var conn = _db.Connection;
-            IEnumerable<Funcionario> results = await conn.QueryAsync<Funcionario>(_sqlTran, p);
+            IEnumerable<Funcionario> results = new List<Funcionario>();
+
+            using (_db)
+            {
+                results = await _db.QueryAsync<Funcionario>(_sqlTran, p);
+                _db.Dispose();
+            }
 
             return results;
         }
@@ -41,8 +46,13 @@ namespace TechCompilerCo.Repositorys
                 CodigoFuncionario = id
             };
 
-            using var conn = _db.Connection;
-            Funcionario result = await conn.QueryFirstOrDefaultAsync<Funcionario>(_sqlTran, p);
+            Funcionario result = new();
+
+            using (_db)
+            {
+                result = await _db.QueryFirstOrDefaultAsync<Funcionario>(_sqlTran, p);
+                _db.Dispose();
+            }
 
             return result;
         }
@@ -53,7 +63,7 @@ namespace TechCompilerCo.Repositorys
             {
                 Modo = 1,
                 CodigoFuncionario = model.CodigoFuncionario,
-                UsuarioTran = 1,
+                UsuarioTran = model.CodigoUsuario,
                 NomeFuncionario = model.NomeFuncionario,
                 DataNascimento = model.DataNascimento,
                 Telefone1 = model.Telefone1,
@@ -70,8 +80,13 @@ namespace TechCompilerCo.Repositorys
                 Cargo = model.Cargo
             };
 
-            using var conn = _db.Connection;
-            int result = await conn.QueryFirstAsync<int>(_sqlTran, p);
+            int result = 0;
+
+            using (_db)
+            {
+                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
+                _db.Dispose();
+            }
 
             return result;
         }
@@ -82,7 +97,7 @@ namespace TechCompilerCo.Repositorys
             {
                 Modo = 2,
                 CodigoFuncionario = model.CodigoFuncionario,
-                UsuarioTran = 1,
+                UsuarioTran = model.CodigoUsuario,
                 NomeFuncionario = model.NomeFuncionario,
                 DataNascimento = model.DataNascimento,
                 Telefone1 = model.Telefone1,
@@ -97,24 +112,33 @@ namespace TechCompilerCo.Repositorys
                 Pais = model.Pais,
                 Sexo = model.Sexo,
                 Cargo = model.Cargo
-            };
+            };;
 
-            using var conn = _db.Connection;
-            int result = await conn.QueryFirstAsync<int>(_sqlTran, p);
+            int result = 0;
+
+            using (_db)
+            {
+                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
+                _db.Dispose();
+            }
 
             return result;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, int codigoUsuario)
         {
             var p = new ParametrosTran()
             {
                 Modo = 3,
-                CodigoFuncionario = id
+                CodigoFuncionario = id,
+                UsuarioTran = codigoUsuario
             };
 
-            using var conn = _db.Connection;
-            await conn.ExecuteAsync(_sqlTran, p);
+            using (_db)
+            {
+                await _db.ExecuteAsync(_sqlTran, p);
+                _db.Dispose();
+            }
         }
 
         public class Funcionario

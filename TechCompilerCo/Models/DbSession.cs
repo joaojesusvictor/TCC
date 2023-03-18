@@ -1,20 +1,30 @@
 ﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
 using TechCompilerCo.Repositorys;
 
 namespace TechCompilerCo.Models
 {
-    public class DbSession
+    public class DbSession /*: IDisposable*/
     {
-        public IDbConnection Connection { get; set; }
+        //public IDbConnection Connection { get; }
 
-        public DbSession(IConfiguration configuration)
+        //public DbSession(IConfiguration configuration)
+        //{
+        //    Connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
+        //    Connection.Open();
+        //}
+
+        ////public void Dipose() => Connection?.Dispose();
+
+        //public void Dispose()
+        //{
+        //    Connection?.Dispose();
+        //}
+
+        public IDbConnection SqlConnection()
         {
-            Connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
-
-            Connection.Open();
+            return new SqlConnection("Server=DESKTOP-IRV7A0M;Initial Catalog=TccProducao;Integrated Security=True;TrustServerCertificate=true;");
         }
-
-        public void Dipose() => Connection?.Dispose();
     }
 }
