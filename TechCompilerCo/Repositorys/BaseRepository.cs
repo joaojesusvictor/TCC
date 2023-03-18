@@ -15,13 +15,14 @@ namespace TechCompilerCo.Repositorys
 {
     public class BaseRepository
     {
-        private DbSession _db;
-
+        //private DbSession _db;
+        private readonly IDbConnection _db;
         private string _sqlEncript = "EXEC GER_EncriptarDecriptar_GET @Valor, @Acao";
 
-        public BaseRepository(DbSession dbSession)
+        public BaseRepository(/*DbSession dbSession*/)
         {
-            _db = dbSession;
+            //_db = dbSession;
+            _db = new DbSession().SqlConnection();
         }
 
         public async Task<Encript> EncriptDecriptAsync(string valor, string acao)
@@ -32,10 +33,27 @@ namespace TechCompilerCo.Repositorys
                 Acao = acao
             };
 
-            using var conn = _db.Connection;
-            Encript resultado = await conn.QueryFirstAsync<Encript>(_sqlEncript, p);
+            //using var conn = _db.Connection;
+            //Encript resultado = await conn.QueryFirstAsync<Encript>(_sqlEncript, p);
+            //conn.Close();
 
-            return resultado;
+            //return resultado;
+
+            //using (var conn = _db.Connection)
+            //{
+            //    Encript result = await conn.QueryFirstAsync<Encript>(_sqlEncript, p);
+            //    return result;
+            //}
+
+            Encript result = new Encript();
+
+            using (_db)
+            {
+                result = await _db.QueryFirstOrDefaultAsync<Encript>(_sqlEncript, p);
+                _db.Dispose();
+            }
+
+            return result;
         }
 
         public class Encript

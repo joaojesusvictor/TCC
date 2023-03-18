@@ -11,7 +11,8 @@ GO
 CREATE PROCEDURE dbo.Func_Usuarios_TRAN
 	@Modo			integer					,
 	@Login			varchar(100)	= NULL	,
-	@Senha			varchar(1000)	= NULL
+	@Senha			varchar(1000)	= NULL	,
+	@UsuarioTran	int				= NULL
 AS
  
 /************************
@@ -40,38 +41,23 @@ declare @rowsaffected				integer,
 		@NomeTabela					VarChar(80)
 		
 -- Variável para obter o nome do usuário que vai transacionar a tabela		
-Declare	@NomeUsuarioTRAN			Varchar(30)	,
-		@TextoLog					VarChar(100),
-		@ProcedureName				VarChar(80)	,
-		@DataLog					datetime
+Declare	@NomeUsuarioTRAN			Varchar(30)
 		
---if	ISNULL(@UsuarioTran,'') <> '' 
---begin
---	select	@NomeUsuarioTRAN		=	NomeFuncionario 
---	from	Funcionario	
---	where	CodigoFuncionario		=	@UsuarioTran
---end
+if	ISNULL(@UsuarioTran,'') <> '' 
+begin
+	select	@NomeUsuarioTRAN	=	NomeUsuario 
+	from	Usuario	
+	where	CodigoUsuario		=	@UsuarioTran
+end
 
 -- Constante para exibição de mensagens
 select @NomeTabela = 'Tabela de Usuario.'
 
 If @Modo = 4 -- Get Dados Usuario
 Begin
-	select	*
+	select	*, dbo.EncriptDecript(Senha, 'D') SenhaDecript
 	from	Usuario
 	where	LoginUsuario = @Login
-End
-
-Else IF @Modo = 5 -- Valida Login
-Begin
-	if exists(select * from Usuario where LoginUsuario = @Login and Senha = dbo.EncriptDecript(@Senha, 'E'))
-		Begin
-			select 1
-		End
-	else
-		Begin
-			select 0
-		End
 End
 GO
  

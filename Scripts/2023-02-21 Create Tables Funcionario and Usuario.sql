@@ -38,3 +38,29 @@ Create Table Usuario(
 	UsuarioUltimaAlteracao varchar(100) null,
 	CodigoFuncionario int foreign key references Funcionario(CodigoFuncionario)
 );
+
+Create Table Cliente(
+	CodigoCliente int identity(1,1) primary key,
+	DataCadastro datetime not null,
+	NomeCliente varchar(100) not null,
+	Cep varchar(10) null,
+	Endereco varchar(200) null,
+	Numero int null,
+	Complemento varchar(100) null,
+	Bairro varchar(100) null,
+	Cidade varchar(100) null,
+	Uf varchar(2) null,
+	Pais varchar(50) null,
+	DataNascimento datetime null,
+	Cpf varchar(20) not null,
+	Sexo varchar(1) null,
+	Email varchar(100) null,
+	Telefone1 varchar(20) not null,	
+	Telefone2 varchar(20) null,
+	Telefone3 varchar(20) null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null
+);

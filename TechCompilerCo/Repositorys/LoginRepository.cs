@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,14 @@ namespace TechCompilerCo.Repositorys
 {
     public class LoginRepository
     {
-        private DbSession _db;
-        private string _sqlTran = "EXEC Func_Usuarios_TRAN @Modo, @Login, @Senha";
+        //private DbSession _db;
+        private readonly IDbConnection _db;
+        private string _sqlTran = "EXEC Func_Usuarios_TRAN @Modo, @Login, @Senha, @UsuarioTran";
 
-        public LoginRepository(DbSession dbSession)
+        public LoginRepository(/*DbSession dbSession*/)
         {
-            _db = dbSession;
+            //_db = dbSession;
+            _db = new DbSession().SqlConnection();
         }
 
         public async Task<UsuarioViewModel> GetUsuarioAsync(string login)
@@ -27,23 +30,24 @@ namespace TechCompilerCo.Repositorys
                 Login = login
             };
 
-            using var conn = _db.Connection;
-            UsuarioViewModel result = await conn.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
+            //using var conn = _db.Connection;
+            //UsuarioViewModel result = await conn.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
 
-            return result;
-        }
+            //return result;
 
-        public async Task<bool> GetValidacaoAsync(string login, string senha)
-        {
-            var p = new ParametrosTran()
+            //using (var conn = _db.Connection)
+            //{
+            //    UsuarioViewModel result = await conn.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
+            //    return result;
+            //}
+
+            UsuarioViewModel result = new UsuarioViewModel();
+
+            using (_db)
             {
-                Modo = 5,
-                Login = login,
-                Senha = senha
-            };
-
-            using var conn = _db.Connection;
-            bool result = await conn.QueryFirstAsync<bool>(_sqlTran, p);
+                result = await _db.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
+                _db.Dispose();
+            }
 
             return result;
         }
@@ -59,6 +63,7 @@ namespace TechCompilerCo.Repositorys
             public int Modo { get; set; }
             public string? Login { get; set; }
             public string? Senha { get; set; }
+            public string? UsuarioTran { get; set; }
         }
     }
 }

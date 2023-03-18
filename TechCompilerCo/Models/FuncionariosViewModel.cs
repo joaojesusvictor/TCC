@@ -4,6 +4,7 @@
     {
         public bool UsuarioAdm { get; set; }
         public int CodigoFuncionario { get; set; }
+        public int CodigoUsuario { get; set; }
         public DateTime? DataInclusao { get; set; }
         public string? StrDataInclusao => DataInclusao == null ? "" : DataInclusao?.ToString("d");
         public DateTime? DataUltimaAlteracao { get; set; }

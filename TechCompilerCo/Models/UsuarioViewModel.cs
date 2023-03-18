@@ -7,6 +7,7 @@
         public string? LoginUsuario { get; set; }
         public string? Email { get; set; }
         public string? Senha { get; set; }
+        public string? SenhaDecript { get; set; }
         public bool UsuarioAdm { get; set; }
         public DateTime DataInclusao { get; set; }
         public string? UsuarioIncluiu { get; set; }
@@ -14,5 +15,10 @@
         public string? UsuarioAlterou { get; set; }
         public int CodigoFuncionario { get; set; }
         public bool Ativo { get; set; }
+
+        public bool SenhaValida(string senha)
+        {
+            return SenhaDecript == senha;
+        }
     }
 }

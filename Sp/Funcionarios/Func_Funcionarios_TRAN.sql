@@ -61,9 +61,9 @@ Declare	@NomeUsuarioTRAN			Varchar(30)	,
 		
 if	ISNULL(@UsuarioTran,'') <> '' 
 begin
-	select	@NomeUsuarioTRAN		=	NomeFuncionario 
-	from	Funcionario	
-	where	CodigoFuncionario		=	@UsuarioTran
+	select	@NomeUsuarioTRAN	=	NomeUsuario 
+	from	Usuario	
+	where	CodigoUsuario		=	@UsuarioTran
 end
 
 -- Constante para exibição de mensagens
@@ -184,7 +184,7 @@ Begin
 		From	Funcionario F left join
 				Usuario U on f.CodigoFuncionario = u.CodigoFuncionario
 		Where	F.Ativo = 1
-End 
+End
 GO
  
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.Func_Funcionarios_TRAN') and sysstat & 0xf = 4)
