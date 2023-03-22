@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "w5kc7sGJgkWLu8gGVsp1EaiUDvEDOzChP2onajJjFEo=",
+  "Hash": "eaHRDbjfB2mkhKXS6X7/BWuWz6UJPSFpkEv7hxh+500=",
   "Source": "TechCompilerCo",
   "BasePath": "_content/TechCompilerCo",
   "Mode": "Default",
@@ -901,6 +901,23 @@
       "OriginalItemSpec": "wwwroot\\css\\fontawesome.min.css"
     },
     {
+      "Identity": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\jquery.dataTables.min.css",
+      "SourceId": "TechCompilerCo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\",
+      "BasePath": "_content/TechCompilerCo",
+      "RelativePath": "css/jquery.dataTables.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\jquery.dataTables.min.css"
+    },
+    {
       "Identity": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\regular.css",
       "SourceId": "TechCompilerCo",
       "SourceType": "Discovered",
@@ -933,6 +950,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\regular.min.css"
+    },
+    {
+      "Identity": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\responsive.dataTables.min.css",
+      "SourceId": "TechCompilerCo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\",
+      "BasePath": "_content/TechCompilerCo",
+      "RelativePath": "css/responsive.dataTables.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\responsive.dataTables.min.css"
     },
     {
       "Identity": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\site.css",
@@ -1241,6 +1275,23 @@
       "OriginalItemSpec": "wwwroot\\js\\conflict-detection.min.js"
     },
     {
+      "Identity": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\dataTables.responsive.min.js",
+      "SourceId": "TechCompilerCo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\",
+      "BasePath": "_content/TechCompilerCo",
+      "RelativePath": "js/dataTables.responsive.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\dataTables.responsive.min.js"
+    },
+    {
       "Identity": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\fontawesome.js",
       "SourceId": "TechCompilerCo",
       "SourceType": "Discovered",
@@ -1273,6 +1324,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\fontawesome.min.js"
+    },
+    {
+      "Identity": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\jquery.dataTables.min.js",
+      "SourceId": "TechCompilerCo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\",
+      "BasePath": "_content/TechCompilerCo",
+      "RelativePath": "js/jquery.dataTables.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\jquery.dataTables.min.js"
     },
     {
       "Identity": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\regular.js",

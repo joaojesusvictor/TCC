@@ -26,7 +26,8 @@ $(document).ready(function () {
                 sortAscending: "Ordenar colunas de forma ascendente",
                 sortDescending: "Ordenar colunas de forma descendente"
             }
-        }
+        },
+        responsive: true
     });
 });
 
