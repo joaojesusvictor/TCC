@@ -205,12 +205,20 @@
       "PackagePath": "staticwebassets\\css\\fontawesome.min.css"
     },
     {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\jquery.dataTables.min.css",
+      "PackagePath": "staticwebassets\\css\\jquery.dataTables.min.css"
+    },
+    {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\regular.css",
       "PackagePath": "staticwebassets\\css\\regular.css"
     },
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\regular.min.css",
       "PackagePath": "staticwebassets\\css\\regular.min.css"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\responsive.dataTables.min.css",
+      "PackagePath": "staticwebassets\\css\\responsive.dataTables.min.css"
     },
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\css\\site.css",
@@ -285,12 +293,20 @@
       "PackagePath": "staticwebassets\\js\\conflict-detection.min.js"
     },
     {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\dataTables.responsive.min.js",
+      "PackagePath": "staticwebassets\\js\\dataTables.responsive.min.js"
+    },
+    {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\fontawesome.js",
       "PackagePath": "staticwebassets\\js\\fontawesome.js"
     },
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\fontawesome.min.js",
       "PackagePath": "staticwebassets\\js\\fontawesome.min.js"
+    },
+    {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\jquery.dataTables.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery.dataTables.min.js"
     },
     {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\regular.js",
