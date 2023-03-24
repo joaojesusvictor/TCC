@@ -9,6 +9,7 @@ using TechCompilerCo.Filters;
 using TechCompilerCo.Models;
 using TechCompilerCo.Repositorys;
 using TechCompilerCo.Util.Helpers;
+using System.Text.RegularExpressions;
 
 namespace TechCompilerCo.Controllers
 {
@@ -113,7 +114,20 @@ namespace TechCompilerCo.Controllers
             valor = valor.Replace(".", "").Replace("-", "").Replace("/", "").Replace(" ", "");
 
             return valor;
-        }        
+        }
+
+        public static bool EmailValido(string email, bool podeVazio = false)
+        {
+            if (podeVazio)
+            {
+                if (string.IsNullOrEmpty(email))
+                    return true;
+            }
+
+            Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
+
+            return emailRegex.IsMatch(email);
+        }
 
         //public FileStreamResult CriarPlanilhaExcel<T>(IEnumerable<T> rows, string nomeArquivo, bool primeiraColunaOn = true)
         //{
