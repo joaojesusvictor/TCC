@@ -70,6 +70,13 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(New));
             }
 
+            if (!EmailValido(model.Email, true))
+            {
+                MostraMsgErro("O E-mail precisa ser válido");
+
+                return RedirectToAction(nameof(New));
+            }
+
             int gravado = await _clientesRepository.CreateAsync(model);
 
             if (gravado == 0)
@@ -123,6 +130,13 @@ namespace TechCompilerCo.Controllers
             if (!CpfValido(model.Cpf))
             {
                 MostraMsgErro("Este CPF não é válido!");
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+            }
+
+            if (!EmailValido(model.Email, true))
+            {
+                MostraMsgErro("O E-mail precisa ser válido");
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
             }
