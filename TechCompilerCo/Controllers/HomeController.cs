@@ -20,7 +20,7 @@ namespace TechCompilerCo.Controllers
 
         public IActionResult Index()
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             TempData["CodigoUsuario"] = usuario.CodigoUsuario;
             TempData["NomeUsuario"] = usuario.NomeUsuario;
