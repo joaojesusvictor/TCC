@@ -112,7 +112,7 @@ namespace TechCompilerCo.Repositorys
                 Pais = model.Pais,
                 Sexo = model.Sexo,
                 Cargo = model.Cargo
-            };;
+            };
 
             int result = 0;
 

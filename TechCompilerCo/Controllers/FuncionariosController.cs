@@ -8,7 +8,7 @@ using TechCompilerCo.Repositorys;
 
 namespace TechCompilerCo.Controllers
 {
-    [PaginaParaUsuarioLogado]
+    [SomenteAdm]
 
     public class FuncionariosController : BaseController
     {
