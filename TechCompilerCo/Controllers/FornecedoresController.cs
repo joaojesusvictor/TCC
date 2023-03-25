@@ -24,7 +24,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<FornecedoresRepository.Fornecedor> fornecedores = await _fornecedoresRepository.GetFornecedoresAsync();
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new FornecedoresViewModel()
             {
@@ -50,7 +50,7 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> New()
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new FornecedoresViewModel()
             {
@@ -86,7 +86,7 @@ namespace TechCompilerCo.Controllers
 
             if (!EmailValido(model.Email))
             {
-                MostraMsgErro("O E-mail precisa ser válido");
+                MostraMsgErro("O Email precisa ser válido");
 
                 return RedirectToAction(nameof(New));
             }
@@ -108,7 +108,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             FornecedoresRepository.Fornecedor fornecedor = await _fornecedoresRepository.GetFornecedorAsync(id);
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new FornecedoresViewModel()
             {
@@ -163,7 +163,7 @@ namespace TechCompilerCo.Controllers
 
             if (!EmailValido(model.Email))
             {
-                MostraMsgErro("O E-mail precisa ser válido");
+                MostraMsgErro("O Email precisa ser válido");
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoFornecedor });
             }
@@ -184,7 +184,7 @@ namespace TechCompilerCo.Controllers
                 
         public async Task<IActionResult> Delete(int id)
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 

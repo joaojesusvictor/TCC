@@ -30,12 +30,12 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Telefone</label>
-                <input asp-for="Telefone1" class="form-control" required />
+                <input asp-for="Telefone1" maxlength="20" class="form-control" required />
             </div>
 
             <div class="col-md-6">
                 <label class="form-label">Cpf</label>
-                <input asp-for="Cpf" class="form-control" required  />
+                <input asp-for="Cpf" maxlength="20" class="form-control" required  />
             </div>
         </div>
 
@@ -51,7 +51,7 @@
 
             <div class="col-md-6">
                 <label class="form-label">Cargo</label>
-                <input asp-for="Cargo" class="form-control" required  />
+                <input asp-for="Cargo" maxlength="100" class="form-control" required  />
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Cep</label>
-                <input asp-for="Cep" class="form-control" required  />
+                <input asp-for="Cep" maxlength="10" class="form-control" required  />
             </div>
 
             <div class="col-md-4">
@@ -71,7 +71,7 @@
 
         <div class="col-md-12">
             <label class="form-label">Endereço</label>
-            <input asp-for="Endereco" class="form-control" required  />
+            <input asp-for="Endereco" maxlength="200" class="form-control" required  />
         </div>
 
         <div class="row">
@@ -82,31 +82,31 @@
 
             <div class="col-md-6">
                 <label class="form-label">Complemento</label>
-                <input asp-for="Complemento" class="form-control" />
+                <input asp-for="Complemento" maxlength="100" class="form-control" />
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Bairro</label>
-                <input asp-for="Bairro" class="form-control" required />
+                <input asp-for="Bairro" maxlength="100" class="form-control" required />
             </div>
 
             <div class="col-md-6">
                 <label class="form-label">Cidade</label>
-                <input asp-for="Cidade" class="form-control" required />
+                <input asp-for="Cidade" maxlength="100" class="form-control" required />
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Estado</label>
-                <input asp-for="Uf" class="form-control" required />
+                <input asp-for="Uf" maxlength="2" class="form-control" required />
             </div>
 
             <div class="col-md-6">
                 <label class="form-label">Pais</label>
-                <input asp-for="Pais" class="form-control" required />
+                <input asp-for="Pais" maxlength="50" class="form-control" required />
             </div>
         </div>
     </div>

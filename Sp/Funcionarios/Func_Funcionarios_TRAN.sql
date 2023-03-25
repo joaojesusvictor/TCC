@@ -181,6 +181,13 @@ Begin
 				Usuario U on f.CodigoFuncionario = u.CodigoFuncionario
 		Where	F.Ativo = 1
 End
+
+ELSE IF @Modo = 6 -- Combo Funcionarios
+Begin
+	Select	CodigoFuncionario, NomeFuncionario
+	From	Funcionario
+	Where	Ativo = 1
+End
 GO
  
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.Func_Funcionarios_TRAN') and sysstat & 0xf = 4)

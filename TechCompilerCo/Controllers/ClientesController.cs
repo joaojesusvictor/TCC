@@ -25,7 +25,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<ClientesRepository.Cliente> clientes = await _clientesRepository.GetClientesAsync();
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ClientesViewModel()
             {
@@ -50,7 +50,7 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> New()
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ClientesViewModel()
             {
@@ -94,7 +94,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ClientesRepository.Cliente cliente = await _clientesRepository.GetClienteAsync(id);
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ClientesViewModel()
             {
@@ -157,7 +157,7 @@ namespace TechCompilerCo.Controllers
                 
         public async Task<IActionResult> Delete(int id)
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 
