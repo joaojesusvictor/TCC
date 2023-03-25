@@ -54,10 +54,7 @@ declare @rowsaffected				integer,
 		@NomeTabela					VarChar(80)
 		
 -- Variável para obter o nome do usuário que vai transacionar a tabela		
-Declare	@NomeUsuarioTRAN			Varchar(30)	,
-		@TextoLog					VarChar(100),
-		@ProcedureName				VarChar(80)	,
-		@DataLog					datetime
+Declare	@NomeUsuarioTRAN			Varchar(30)	
 		
 if	ISNULL(@UsuarioTran,'') <> '' 
 begin
@@ -175,7 +172,6 @@ Begin
 		From	Funcionario
 		Where	CodigoFuncionario = @CodigoFuncionario
 		and		Ativo = 1
-
 End
 
 ELSE IF @Modo = 5 -- Consulta Varios Funcionarios

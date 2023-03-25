@@ -62,12 +62,22 @@
         <br />
 
         <div class="row">
-            <div class="col-md-2">
-                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Funcionarios")';">
+            @if (Convert.ToBoolean(TempData["UsuarioAdm"]))
+            {
+                <div class="col-md-2">
+                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Funcionarios")';">
                     <span class="tituloMenus">Funcionários</span> <br />
                     <i class="fa fa-people-group iconMenus"></i>
+                    </div>
                 </div>
-            </div>
+
+                <div class="col-md-2">
+                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Fornecedores")';">
+                    <span class="tituloMenus">Fornecedores</span> <br />
+                    <i class="fa fa-money-bill iconMenus"></i>
+                    </div>
+                </div>
+            }
 
             <div class="col-md-2">
                 <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Clientes")';">

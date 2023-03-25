@@ -22,7 +22,9 @@ namespace TechCompilerCo.Controllers
         {
             UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
 
+            TempData["CodigoUsuario"] = usuario.CodigoUsuario;
             TempData["NomeUsuario"] = usuario.NomeUsuario;
+            TempData["UsuarioAdm"] = usuario.UsuarioAdm;
 
             return View();
         }

@@ -64,3 +64,28 @@ Create Table Cliente(
 	DataUltimaAlteracao datetime null,
 	UsuarioUltimaAlteracao varchar(100) null
 );
+
+Create Table Fornecedor(
+	CodigoFornecedor int identity(1,1) primary key,
+	DataCadastro datetime not null,
+	RazaoSocial varchar(100) not null,
+	NomeFantasia varchar(100) not null,
+	Documento varchar(20) not null,
+	Cep varchar(10) not null,
+	Endereco varchar(200) not null,
+	Numero int not null,
+	Complemento varchar(100) null,
+	Bairro varchar(100) not null,
+	Cidade varchar(100) not null,
+	Uf varchar(2) not null,
+	Pais varchar(50) not null,
+	Telefone1 varchar(20) not null,	
+	Telefone2 varchar(20) null,
+	Telefone3 varchar(20) null,
+	Email varchar(100) not null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null
+);

@@ -16,6 +16,7 @@ builder.Services.AddTransient<BaseRepository, BaseRepository>();
 builder.Services.AddTransient<LoginRepository, LoginRepository>();
 builder.Services.AddTransient<FuncionariosRepository, FuncionariosRepository>();
 builder.Services.AddTransient<ClientesRepository, ClientesRepository>();
+builder.Services.AddTransient<FornecedoresRepository, FornecedoresRepository>();
 
 builder.Services.AddSession(o =>
 {
