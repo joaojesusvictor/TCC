@@ -67,6 +67,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(UsuariosViewModel model)
         {
+            bool existeLogin = await _usuariosRepository.ValidaUsuarioLoginAsync(model.CodigoFuncionario);
+
+            if (existeLogin) 
+            {
+                MostraMsgErro("Este Funcionário já possui login!");
+
+                return RedirectToAction(nameof(New));
+            }
+
             if (!EmailValido(model.Email))
             {
                 MostraMsgErro("O Email precisa ser válido");
