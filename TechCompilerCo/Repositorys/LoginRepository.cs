@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,10 +64,11 @@ namespace TechCompilerCo.Repositorys
 
             UsuarioLogadoViewModel result = new UsuarioLogadoViewModel();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
+                conn.Open();
+
                 result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
-                _db.Dispose();
             }
 
             return result;
@@ -81,10 +83,11 @@ namespace TechCompilerCo.Repositorys
                 Senha = senha
             };
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
+                conn.Open();
+
                 await _db.ExecuteAsync(_sqlTran, p);
-                _db.Dispose();
             }
         }
 

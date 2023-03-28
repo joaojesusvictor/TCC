@@ -84,7 +84,7 @@ Begin
 									Output inserted.CodigoUsuario
 		
 					Values		(	(select NomeFuncionario from Funcionario where CodigoFuncionario = @CodigoFuncionario),
-									@Login, @Senha, @Email, @UsuarioAdm, 1, GETDATE(), @NomeUsuarioTRAN, @UsuarioTran )
+									@Login, @Senha, @Email, @UsuarioAdm, 1, GETDATE(), @NomeUsuarioTRAN, @CodigoFuncionario )
 				end
 		end
 	else
@@ -187,6 +187,18 @@ Begin
 		Begin
 			select 0
 		End
+End
+
+ELSE IF @Modo = 10 -- Valida se Funcionario já tem Login
+Begin
+	if exists(select * from Usuario where CodigoFuncionario = @CodigoFuncionario and Ativo = 1)
+		begin
+			select 1
+		end
+	else
+		begin
+			select 0
+		end
 End
 GO
  

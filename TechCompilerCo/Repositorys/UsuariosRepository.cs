@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -120,6 +121,26 @@ namespace TechCompilerCo.Repositorys
                 await _db.ExecuteAsync(_sqlTran, p);
                 _db.Dispose();
             }
+        }
+
+        public async Task<bool> ValidaUsuarioLoginAsync(int codigoFuncionario)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 10,
+                CodigoFuncionario = codigoFuncionario
+            };
+
+            bool result = false;
+
+            using (var conn = new SqlConnection(_db.ConnectionString))
+            {
+                conn.Open();
+
+                result = await _db.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
+            }
+
+            return result;
         }
 
         public class Usuario

@@ -97,7 +97,7 @@ namespace TechCompilerCo.Controllers
 
                 if(emailEnviado)
                 {
-                    await _loginRepository.AtualizaSenha(usuarioRedefinicao.CodigoUsuario, novaSenha);
+                    await _loginRepository.AtualizaSenha(usuarioRedefinicao.CodigoUsuario, novaSenha.GerarHash()) ;
 
                     MostraMsgSucesso("Enviamos para seu Email cadastrado a nova senha");
                 }
