@@ -4,9 +4,9 @@ namespace TechCompilerCo.Helper
 {
     public interface ISessao
     {
-        void CriarSessaoUsuario(UsuarioLogadoViewModel usuario);
+        void CriarSessaoUsuario(UsuarioViewModel usuario);
         void RemoverSessaoUsuario();
 
-        UsuarioLogadoViewModel BuscarSessaoUsuario();
+        UsuarioViewModel BuscarSessaoUsuario();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +14,7 @@ namespace TechCompilerCo.Repositorys
     {
         //private DbSession _db;
         private readonly IDbConnection _db;
-        private string _sqlTran = "EXEC Func_Usuarios_TRAN @Modo, @Login, @Senha, @UsuarioTran, @CodigoUsuario, @NomeUsuario, @Email, @UsuarioAdm, @CodigoFuncionario, @NovaSenha";
+        private string _sqlTran = "EXEC Func_Usuarios_TRAN @Modo, @Login, @Senha, @UsuarioTran";
 
         public LoginRepository(/*DbSession dbSession*/)
         {
@@ -23,7 +22,7 @@ namespace TechCompilerCo.Repositorys
             _db = new DbSession().SqlConnection();
         }
 
-        public async Task<UsuarioLogadoViewModel> GetUsuarioAsync(string login)
+        public async Task<UsuarioViewModel> GetUsuarioAsync(string login)
         {
             var p = new ParametrosTran()
             {
@@ -42,70 +41,11 @@ namespace TechCompilerCo.Repositorys
             //    return result;
             //}
 
-            UsuarioLogadoViewModel result = new UsuarioLogadoViewModel();
+            UsuarioViewModel result = new UsuarioViewModel();
 
             using (_db)
             {
-                result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
-                _db.Dispose();
-            }
-
-            return result;
-        }
-
-        public async Task<UsuarioLogadoViewModel> BuscarUsuarioRedefinirSenhaAsync(string login, string email)
-        {
-            var p = new ParametrosTran()
-            {
-                Modo = 4,
-                Login = login,
-                Email = email
-            };
-
-            UsuarioLogadoViewModel result = new UsuarioLogadoViewModel();
-
-            using (var conn = new SqlConnection(_db.ConnectionString))
-            {
-                conn.Open();
-
-                result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
-            }
-
-            return result;
-        }
-
-        public async Task AtualizaSenha(int codigoUsuario, string senha)
-        {
-            var p = new ParametrosTran()
-            {
-                Modo = 8,
-                CodigoUsuario = codigoUsuario,
-                Senha = senha
-            };
-
-            using (var conn = new SqlConnection(_db.ConnectionString))
-            {
-                conn.Open();
-
-                await _db.ExecuteAsync(_sqlTran, p);
-            }
-        }
-
-        public async Task<bool> RedefineSenha(int codigoUsuario, string senhaAtual, string novaSenha)
-        {
-            var p = new ParametrosTran()
-            {
-                Modo = 9,
-                CodigoUsuario = codigoUsuario,
-                Senha = senhaAtual,
-                NovaSenha= novaSenha
-            };
-
-            bool result = false;
-
-            using (_db)
-            {
-                result = await _db.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
+                result = await _db.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
                 _db.Dispose();
             }
 
@@ -116,7 +56,6 @@ namespace TechCompilerCo.Repositorys
         {
             public string? Usuario { get; set; }
             public string? Senha { get; set; }
-            public string? Email { get; set; }
         }
 
         private class ParametrosTran
@@ -124,13 +63,7 @@ namespace TechCompilerCo.Repositorys
             public int Modo { get; set; }
             public string? Login { get; set; }
             public string? Senha { get; set; }
-            public string? NovaSenha { get; set; }
-            public string? Email { get; set; }
             public string? UsuarioTran { get; set; }
-            public int CodigoUsuario { get; set; }
-            public string? NomeUsuario { get; set; }
-            public bool UsuarioAdm { get; set; }
-            public int CodigoFuncionario { get; set; }
         }
     }
 }

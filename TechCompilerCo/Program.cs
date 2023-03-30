@@ -12,13 +12,10 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddScoped<DbSession>();
 builder.Services.AddScoped<ISessao, Sessao>();
-builder.Services.AddScoped<IEmail, Email>();
 builder.Services.AddTransient<BaseRepository, BaseRepository>();
 builder.Services.AddTransient<LoginRepository, LoginRepository>();
 builder.Services.AddTransient<FuncionariosRepository, FuncionariosRepository>();
 builder.Services.AddTransient<ClientesRepository, ClientesRepository>();
-builder.Services.AddTransient<FornecedoresRepository, FornecedoresRepository>();
-builder.Services.AddTransient<UsuariosRepository, UsuariosRepository>();
 
 builder.Services.AddSession(o =>
 {

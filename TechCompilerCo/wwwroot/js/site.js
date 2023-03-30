@@ -60,7 +60,6 @@ function buscarCep() {
                 $('#Bairro').val(data.bairro);
                 $('#Cidade').val(data.localidade);
                 $('#Uf').val(data.uf);
-                $('#Pais').val('Brasil');
 
             },
             error: function (jqXHR, textStatus, errorThrown) {

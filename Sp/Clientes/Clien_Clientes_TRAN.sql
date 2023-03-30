@@ -172,6 +172,7 @@ Begin
 		From	Cliente
 		Where	CodigoCliente = @CodigoCliente
 		and		Ativo = 1
+
 End
 
 ELSE IF @Modo = 5 -- Consulta Varios Clientes

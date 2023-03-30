@@ -1,4 +1,4 @@
-﻿@model UsuarioLogadoViewModel
+﻿@model UsuarioViewModel
 
 <a class="navbar-brand">Olá, @Model.NomeUsuario!</a>
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -8,7 +8,7 @@
 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
     <ul class="navbar-nav flex-grow-1">
         <li class="nav-item">
-            <a class="nav-link text-dark" href="@Url.Action("Index", "Home")">Menus</a>
+            <a class="nav-link text-dark" href="@Url.Action("Menu", "Login")">Menus</a>
         </li>
     </ul>
 </div>

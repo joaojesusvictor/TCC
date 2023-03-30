@@ -46,8 +46,6 @@
 
 <body>
     <div class="container" style="padding-top: 50px">
-        <partial name="/Views/Shared/_Notifications.cshtml" />
-
         <div class="row">
             <div class="col-md-4" style="text-align:center; font-size: 20px">
                 <a>Olá, @TempData["NomeUsuario"]!</a>
@@ -64,34 +62,17 @@
         <br />
 
         <div class="row">
-            @if (Convert.ToBoolean(TempData["UsuarioAdm"]))
-            {
-                <div class="col-md-2">
-                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Funcionarios")';">
+            <div class="col-md-2">
+                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Funcionarios")';">
                     <span class="tituloMenus">Funcionários</span> <br />
                     <i class="fa fa-people-group iconMenus"></i>
-                    </div>
                 </div>
-
-                <div class="col-md-2">
-                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Fornecedores")';">
-                    <span class="tituloMenus">Fornecedores</span> <br />
-                    <i class="fa fa-money-bill iconMenus"></i>
-                    </div>
-                </div>
-            }
+            </div>
 
             <div class="col-md-2">
                 <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Clientes")';">
                     <span class="tituloMenus">Clientes</span> <br />
                     <i class="fa fa-handshake iconMenus"></i>
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "AlterarSenha")';">
-                    <span class="tituloMenus">Alterar Senha</span> <br />
-                    <i class="fa fa-refresh iconMenus"></i>
                 </div>
             </div>
         </div>

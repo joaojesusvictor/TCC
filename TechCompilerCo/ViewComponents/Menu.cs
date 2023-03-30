@@ -13,7 +13,7 @@ namespace TechCompilerCo.ViewComponents
 
             if (string.IsNullOrEmpty(sessaoUsuario)) return null;
 
-            UsuarioLogadoViewModel usuario = JsonConvert.DeserializeObject<UsuarioLogadoViewModel>(sessaoUsuario);
+            UsuarioViewModel usuario = JsonConvert.DeserializeObject<UsuarioViewModel>(sessaoUsuario);
 
             return View(usuario);
         }

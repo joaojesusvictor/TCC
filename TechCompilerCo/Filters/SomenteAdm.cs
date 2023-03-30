@@ -18,7 +18,7 @@ namespace TechCompilerCo.Filters
             }
             else
             {
-                UsuariosViewModel usuario = JsonConvert.DeserializeObject<UsuariosViewModel>(sessaoUsuario);
+                UsuarioViewModel usuario = JsonConvert.DeserializeObject<UsuarioViewModel>(sessaoUsuario);
 
                 if (usuario == null)
                 {

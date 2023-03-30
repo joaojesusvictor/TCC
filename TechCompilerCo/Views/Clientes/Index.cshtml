@@ -25,9 +25,16 @@
             <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "Clientes")"><i class="fa fa-table"></i> Excel</a>
         </div>
 
-        <div class="col-md-2">
-            <a class="btn btn-sm btn-primary" href="@Url.Action("New", "Clientes" )"><i class="fa fa-plus-circle"></i> Novo</a>
-        </div>
+        @if (Model.UsuarioAdm)
+        {
+            <div class="col-md-2">
+                <a class="btn btn-sm btn-primary" href="@Url.Action("New", "Clientes" )"><i class="fa fa-plus-circle"></i> Novo</a>
+            </div>
+        }
+        else
+        {
+            <span class="col-md-2"></span>
+        }
 
         <div class="col-md-9">
             <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
@@ -42,7 +49,10 @@
         <table class="table col-md-12 col-sm-3" id="MinhaIndex">
             <thead>
                 <tr>
-                    <th></th>
+                    @if (Model.UsuarioAdm)
+                    {
+                        <th></th>
+                    }
                     <th>
                         Nome
                     </th>
@@ -61,10 +71,13 @@
                 @foreach (var f in Model.Clientes)
                 {
                     <tr>
-                        <td>
-                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Clientes", new { id = f.CodigoCliente } )"><i class="fa fa-edit"></i></a>
-                            <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@f.CodigoCliente)"><i class="fa fa-trash"></i></a>
-                        </td>
+                        @if (Model.UsuarioAdm)
+                        {
+                            <td>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Clientes", new { id = f.CodigoCliente } )"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@f.CodigoCliente)"><i class="fa fa-trash"></i></a>
+                            </td>
+                        }
                         <td>
                             @f.NomeCliente
                         </td>
