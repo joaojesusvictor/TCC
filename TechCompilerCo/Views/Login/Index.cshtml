@@ -111,7 +111,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TechCompilerCo.styles.css" asp-append-version="true" />
-    <title>Login Page - TechCompilerCo</title>
+    <title>Login - TechCompilerCo</title>
 </head>
 
 <body>
@@ -140,6 +140,10 @@
 
             <br />
 
+            <a href="@Url.Action("RedefinirSenha", "Login")" style="font-size: 14px">Esqueci minha senha</a>
+
+            <br />
+
             <a id="BtnEntrar" class="btn btn-sm btn-primary">Entrar</a>
         </form>
     </main>
@@ -162,5 +166,9 @@
         $('form').submit();
 
     });
+
+    setTimeout(function () {
+        $('.alert').hide();
+    }, 3000);
 
 </script>
