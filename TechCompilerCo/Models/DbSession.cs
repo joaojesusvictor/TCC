@@ -24,7 +24,7 @@ namespace TechCompilerCo.Models
 
         public IDbConnection SqlConnection()
         {
-            return new SqlConnection("Server=DESKTOP-IRV7A0M;Initial Catalog=TccProducao;Integrated Security=True;TrustServerCertificate=true;");
+            return new SqlConnection("Server=DESKTOP-NSQ1FMB;Initial Catalog=TccProducao;Integrated Security=True;TrustServerCertificate=true;");
         }
     }
 }
