@@ -89,3 +89,20 @@ Create Table Fornecedor(
 	DataUltimaAlteracao datetime null,
 	UsuarioUltimaAlteracao varchar(100) null
 );
+
+Create Table Produto(
+	CodigoProduto int identity(1,1) primary key,
+	Descricao varchar(150) not null,
+	Referencia varchar(50) null,
+	Localizacao varchar(100) null,
+	Marca varchar(100) null,
+	Categoria varchar(100) null,
+	ValorUnitario decimal not null,
+	Quantidade int not null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null,
+	CodigoFornecedor int foreign key references Fornecedor(CodigoFornecedor)
+);
