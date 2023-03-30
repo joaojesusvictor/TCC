@@ -8,7 +8,7 @@ using TechCompilerCo.Repositorys;
 
 namespace TechCompilerCo.Controllers
 {
-    [PaginaParaUsuarioLogado]
+    [SomenteAdm]
 
     public class FuncionariosController : BaseController
     {
@@ -24,7 +24,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<FuncionariosRepository.Funcionario> funcionarios = await _funcionariosRepository.GetFuncionariosAsync();
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new FuncionariosViewModel()
             {
@@ -49,7 +49,7 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> New()
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new FuncionariosViewModel()
             {
@@ -86,7 +86,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             FuncionariosRepository.Funcionario funcionario = await _funcionariosRepository.GetFuncionarioAsync(id);
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new FuncionariosViewModel()
             {
@@ -142,7 +142,7 @@ namespace TechCompilerCo.Controllers
                 
         public async Task<IActionResult> Delete(int id)
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 

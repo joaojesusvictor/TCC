@@ -20,6 +20,23 @@ namespace TechCompilerCo.Repositorys
             _db = new DbSession().SqlConnection();
         }
 
+        public async Task<IEnumerable<Combo>> ComboFuncionariosAsync()
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 6
+            };
+
+            var result = await _db.QueryAsync<Funcionario>(_sqlTran, p);
+
+            var combo = new List<Combo>();
+
+            foreach (var r in result)
+                combo.Add(new Combo() { Id = r.CodigoFuncionario.ToString(), Nome = r.NomeFuncionario });
+
+            return combo;
+        }
+
         public async Task<IEnumerable<Funcionario>> GetFuncionariosAsync()
         {
             var p = new ParametrosTran()
@@ -112,7 +129,7 @@ namespace TechCompilerCo.Repositorys
                 Pais = model.Pais,
                 Sexo = model.Sexo,
                 Cargo = model.Cargo
-            };;
+            };
 
             int result = 0;
 
@@ -139,6 +156,12 @@ namespace TechCompilerCo.Repositorys
                 await _db.ExecuteAsync(_sqlTran, p);
                 _db.Dispose();
             }
+        }
+
+        public class Combo
+        {
+            public string Id { get; set; }
+            public string Nome { get; set; }
         }
 
         public class Funcionario

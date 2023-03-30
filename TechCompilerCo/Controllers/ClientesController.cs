@@ -25,7 +25,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<ClientesRepository.Cliente> clientes = await _clientesRepository.GetClientesAsync();
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ClientesViewModel()
             {
@@ -50,7 +50,7 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> New()
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ClientesViewModel()
             {
@@ -66,6 +66,13 @@ namespace TechCompilerCo.Controllers
             if (!CpfValido(model.Cpf))
             {
                 MostraMsgErro("Este CPF não é válido!");
+
+                return RedirectToAction(nameof(New));
+            }
+
+            if (!EmailValido(model.Email, true))
+            {
+                MostraMsgErro("O E-mail precisa ser válido");
 
                 return RedirectToAction(nameof(New));
             }
@@ -87,7 +94,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             ClientesRepository.Cliente cliente = await _clientesRepository.GetClienteAsync(id);
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ClientesViewModel()
             {
@@ -127,6 +134,13 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
             }
 
+            if (!EmailValido(model.Email, true))
+            {
+                MostraMsgErro("O E-mail precisa ser válido");
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+            }
+
             int gravado = await _clientesRepository.UpdateAsync(model);
 
             if(gravado == 0)
@@ -143,7 +157,7 @@ namespace TechCompilerCo.Controllers
                 
         public async Task<IActionResult> Delete(int id)
         {
-            UsuarioViewModel usuario = _sessao.BuscarSessaoUsuario();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 

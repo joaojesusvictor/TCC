@@ -12,16 +12,16 @@ namespace TechCompilerCo.Helper
             _httpContext= httpContext;
         }
 
-        public UsuarioViewModel BuscarSessaoUsuario()
+        public UsuarioLogadoViewModel BuscarSessaoUsuario()
         {
             string logado = _httpContext.HttpContext.Session.GetString("sessaoUsuario");
 
             if (string.IsNullOrEmpty(logado)) return null;
 
-            return JsonConvert.DeserializeObject<UsuarioViewModel>(logado);
+            return JsonConvert.DeserializeObject<UsuarioLogadoViewModel>(logado);
         }
 
-        public void CriarSessaoUsuario(UsuarioViewModel usuario)
+        public void CriarSessaoUsuario(UsuarioLogadoViewModel usuario)
         {
             string valor = JsonConvert.SerializeObject(usuario);
 
