@@ -20,6 +20,26 @@ namespace TechCompilerCo.Repositorys
             _db = new DbSession().SqlConnection();
         }
 
+        public async Task<IEnumerable<BaseRepository.Combo>> ComboFornecedoresAsync(bool addBranco = false)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 6
+            };
+
+            var result = await _db.QueryAsync<Fornecedor>(_sqlTran, p);
+
+            var combo = new List<BaseRepository.Combo>();
+
+            foreach (var r in result)
+                combo.Add(new BaseRepository.Combo() { Id = r.CodigoFornecedor.ToString(), Nome = r.NomeFantasia });
+
+            if (addBranco)
+                combo.Insert(0, new BaseRepository.Combo());
+
+            return combo;
+        }
+
         public async Task<IEnumerable<Fornecedor>> GetFornecedoresAsync()
         {
             var p = new ParametrosTran()

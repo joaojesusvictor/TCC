@@ -67,6 +67,13 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(UsuariosViewModel model)
         {
+            if (model.CodigoFuncionario == 0)
+            {
+                MostraMsgErro("Selecione o Funcionário");
+
+                return RedirectToAction(nameof(New));
+            }
+
             bool existeLogin = await _usuariosRepository.ValidaUsuarioLoginAsync(model.CodigoFuncionario);
 
             if (existeLogin) 
@@ -122,6 +129,13 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(UsuariosViewModel model)
         {
+            if (model.CodigoFuncionario == 0)
+            {
+                MostraMsgErro("Selecione o Funcionário");
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoUsuario });
+            }
+
             if (!EmailValido(model.Email))
             {
                 MostraMsgErro("O Email precisa ser válido");

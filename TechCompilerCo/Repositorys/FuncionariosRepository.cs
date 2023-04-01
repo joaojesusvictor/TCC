@@ -20,7 +20,7 @@ namespace TechCompilerCo.Repositorys
             _db = new DbSession().SqlConnection();
         }
 
-        public async Task<IEnumerable<Combo>> ComboFuncionariosAsync()
+        public async Task<IEnumerable<TechCompilerCo.Repositorys.BaseRepository.Combo>> ComboFuncionariosAsync()
         {
             var p = new ParametrosTran()
             {
@@ -29,10 +29,10 @@ namespace TechCompilerCo.Repositorys
 
             var result = await _db.QueryAsync<Funcionario>(_sqlTran, p);
 
-            var combo = new List<Combo>();
+            var combo = new List<TechCompilerCo.Repositorys.BaseRepository.Combo>();
 
             foreach (var r in result)
-                combo.Add(new Combo() { Id = r.CodigoFuncionario.ToString(), Nome = r.NomeFuncionario });
+                combo.Add(new TechCompilerCo.Repositorys.BaseRepository.Combo() { Id = r.CodigoFuncionario.ToString(), Nome = r.NomeFuncionario });
 
             return combo;
         }
@@ -156,12 +156,6 @@ namespace TechCompilerCo.Repositorys
                 await _db.ExecuteAsync(_sqlTran, p);
                 _db.Dispose();
             }
-        }
-
-        public class Combo
-        {
-            public string Id { get; set; }
-            public string Nome { get; set; }
         }
 
         public class Funcionario

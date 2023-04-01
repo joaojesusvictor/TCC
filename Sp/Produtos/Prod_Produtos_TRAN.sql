@@ -16,7 +16,7 @@ CREATE PROCEDURE dbo.Prod_Produtos_TRAN
 	@Localizacao				varchar(100)	=	NULL,
 	@Marca						varchar(100)	=	NULL,
 	@Categoria					varchar(100)	=	NULL,
-	@ValorUnitario				decimal			=	NULL,
+	@ValorUnitario				decimal(18,2)	=	NULL,
 	@Quantidade					int				=	NULL,
 	@CodigoFornecedor			int				=	NULL,
 	@UsuarioTran				int				=	NULL
@@ -135,11 +135,24 @@ end
 
 ELSE IF @Modo = 3 -- Exclusao
 begin
-		Update	Produto 
-		set		Ativo = 0,
-				DataUltimaAlteracao = GETDATE(),
-				UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-		where	CodigoProduto = @CodigoProduto
+	declare @Qtd int;
+
+	set @Qtd = (select Quantidade from Produto where CodigoProduto = @CodigoProduto)
+
+	if @Qtd <= 0
+		Begin
+			Update	Produto 
+			set		Ativo = 0,
+					DataUltimaAlteracao = GETDATE(),
+					UsuarioUltimaAlteracao = @NomeUsuarioTRAN
+			where	CodigoProduto = @CodigoProduto
+
+			select 1
+		End
+	else
+		begin
+			select 0
+		End
 
 	    select @errorreturned = @@error     
         IF @errorreturned <> 0
