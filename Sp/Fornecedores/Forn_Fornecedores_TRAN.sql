@@ -177,6 +177,13 @@ Begin
 		From	Fornecedor
 		Where	Ativo = 1
 End
+
+ELSE IF @Modo = 6 -- Combo Fornecedores
+Begin
+	Select	CodigoFornecedor, NomeFantasia
+	From	Fornecedor
+	Where	Ativo = 1
+End
 GO
  
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('dbo.Forn_Fornecedores_TRAN') and sysstat & 0xf = 4)

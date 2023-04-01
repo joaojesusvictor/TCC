@@ -97,7 +97,7 @@ Create Table Produto(
 	Localizacao varchar(100) null,
 	Marca varchar(100) null,
 	Categoria varchar(100) null,
-	ValorUnitario decimal not null,
+	ValorUnitario decimal(18,2) not null,
 	Quantidade int not null,
 	Ativo bit not null,
 	DataInclusao datetime not null,

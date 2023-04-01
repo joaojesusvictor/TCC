@@ -56,6 +56,12 @@ namespace TechCompilerCo.Repositorys
             return result;
         }
 
+        public class Combo
+        {
+            public string Id { get; set; }
+            public string Nome { get; set; }
+        }
+
         public class Encript
         {
             public string? Resultado { get; set; }
