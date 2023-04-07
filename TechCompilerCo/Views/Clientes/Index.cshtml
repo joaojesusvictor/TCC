@@ -58,24 +58,24 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var f in Model.Clientes)
+                @foreach (var c in Model.Clientes)
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Clientes", new { id = f.CodigoCliente } )"><i class="fa fa-edit"></i></a>
-                            <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@f.CodigoCliente)"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Clientes", new { id = c.CodigoCliente } )"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@c.CodigoCliente)"><i class="fa fa-trash"></i></a>
                         </td>
                         <td>
-                            @f.NomeCliente
+                            @c.NomeCliente
                         </td>
                         <td>
-                            @f.Email
+                            @c.Email
                         </td>
                         <td>
-                            @f.Cpf
+                            @c.Cpf
                         </td>
                         <td>
-                            @f.Telefone1
+                            @c.Telefone1
                         </td>
                     </tr>
                 }

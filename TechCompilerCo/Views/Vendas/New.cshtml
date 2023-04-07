@@ -1,0 +1,34 @@
+﻿@model TechCompilerCo.Models.VendasViewModel
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <span><b>SUA</b></span><br />
+        <span><b>MECÂNICA</b></span>
+    </div>
+
+    <div class="col-md-6" style="text-align: right; font-size: 20px">
+        <span><b>Cadastro de Vendas</b></span>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("Create", "Vendas", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <partial name="_Form.cshtml" />
+
+    <br />
+    
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin-left: 5px"><i class="fa fa-check"></i> Salvar</button>
+            <a href="@Url.Action("Index", "Vendas")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+        </div>
+    </div>
+}

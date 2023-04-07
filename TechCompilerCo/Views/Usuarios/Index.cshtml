@@ -68,27 +68,27 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var f in Model.Usuarios)
+                @foreach (var u in Model.Usuarios)
                 {
                     <tr>
                         @if (Model.UsuarioAdmLogado)
                         {
                             <td>
-                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Usuarios", new { id = f.CodigoUsuario } )"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@f.CodigoUsuario)"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Usuarios", new { id = u.CodigoUsuario } )"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@u.CodigoUsuario)"><i class="fa fa-trash"></i></a>
                             </td>
                         }
                         <td>
-                            @f.NomeUsuario
+                            @u.NomeUsuario
                         </td>
                         <td>
-                            @f.LoginUsuario
+                            @u.LoginUsuario
                         </td>
                         <td>
-                            @f.Email
+                            @u.Email
                         </td>
                         <td>
-                            @Html.Raw(f.AdmSimNao)
+                            @Html.Raw(u.AdmSimNao)
                         </td>
                     </tr>
                 }

@@ -135,6 +135,10 @@ begin
 					UsuarioUltimaAlteracao = @NomeUsuarioTRAN
 			where	CodigoFuncionario = @CodigoFuncionario
 
+			update	Usuario
+			set		NomeUsuario = @NomeFuncionario
+			where	CodigoFuncionario = @CodigoFuncionario
+
 			select 1
 		end
 	else
