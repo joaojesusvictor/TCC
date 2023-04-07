@@ -58,24 +58,24 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var f in Model.Produtos)
+                @foreach (var p in Model.Produtos)
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Produtos", new { id = f.CodigoProduto } )"><i class="fa fa-edit"></i></a>
-                            <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@f.CodigoProduto)"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Produtos", new { id = p.CodigoProduto } )"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@p.CodigoProduto)"><i class="fa fa-trash"></i></a>
                         </td>
                         <td>
-                            @f.Referencia
+                            @p.Referencia
                         </td>
                         <td>
-                            @f.Descricao
+                            @p.Descricao
                         </td>
                         <td>
-                            R$ @f.ValorUnitario.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                            R$ @p.ValorUnitario.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
                         </td>
                         <td>
-                            @f.Quantidade
+                            @p.Quantidade
                         </td>
                     </tr>
                 }

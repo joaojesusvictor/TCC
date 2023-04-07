@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Dapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TechCompilerCo.Models;
 
 namespace TechCompilerCo.Repositorys
@@ -20,7 +21,7 @@ namespace TechCompilerCo.Repositorys
             _db = new DbSession().SqlConnection();
         }
 
-        public async Task<IEnumerable<BaseRepository.Combo>> ComboFornecedoresAsync(bool addBranco = false)
+        public async Task<IEnumerable<SelectListItem>> ComboFornecedoresAsync(bool addBranco = false)
         {
             var p = new ParametrosTran()
             {
@@ -29,13 +30,13 @@ namespace TechCompilerCo.Repositorys
 
             var result = await _db.QueryAsync<Fornecedor>(_sqlTran, p);
 
-            var combo = new List<BaseRepository.Combo>();
+            var combo = new List<SelectListItem>();
 
             foreach (var r in result)
-                combo.Add(new BaseRepository.Combo() { Id = r.CodigoFornecedor.ToString(), Nome = r.NomeFantasia });
+                combo.Add(new SelectListItem() { Value = r.CodigoFornecedor.ToString(), Text = r.NomeFantasia });
 
             if (addBranco)
-                combo.Insert(0, new BaseRepository.Combo());
+                combo.Insert(0, new SelectListItem());
 
             return combo;
         }

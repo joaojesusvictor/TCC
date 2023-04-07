@@ -57,7 +57,7 @@ namespace TechCompilerCo.Controllers
 
             var viewModel = new UsuariosViewModel()
             {
-                FuncionariosSelect = comboFuncionarios.ToSelectListItem(),
+                FuncionariosSelect = comboFuncionarios,
                 UsuarioAdmLogado = usuarioSessao.UsuarioAdm,
                 CodigoUsuarioLogado = usuarioSessao.CodigoUsuario
             };
@@ -112,7 +112,7 @@ namespace TechCompilerCo.Controllers
 
             var viewModel = new UsuariosViewModel()
             {
-                FuncionariosSelect = comboFuncionarios.ToSelectListItem(),
+                FuncionariosSelect = comboFuncionarios,
                 ModoEdit = true,
                 CodigoUsuario = id,
                 UsuarioAdmLogado = usuarioSessao.UsuarioAdm,

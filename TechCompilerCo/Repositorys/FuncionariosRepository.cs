@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Dapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TechCompilerCo.Models;
 
 namespace TechCompilerCo.Repositorys
@@ -20,7 +21,7 @@ namespace TechCompilerCo.Repositorys
             _db = new DbSession().SqlConnection();
         }
 
-        public async Task<IEnumerable<TechCompilerCo.Repositorys.BaseRepository.Combo>> ComboFuncionariosAsync()
+        public async Task<IEnumerable<SelectListItem>> ComboFuncionariosAsync(bool addBranco = false)
         {
             var p = new ParametrosTran()
             {
@@ -29,10 +30,13 @@ namespace TechCompilerCo.Repositorys
 
             var result = await _db.QueryAsync<Funcionario>(_sqlTran, p);
 
-            var combo = new List<TechCompilerCo.Repositorys.BaseRepository.Combo>();
+            var combo = new List<SelectListItem>();
 
             foreach (var r in result)
-                combo.Add(new TechCompilerCo.Repositorys.BaseRepository.Combo() { Id = r.CodigoFuncionario.ToString(), Nome = r.NomeFuncionario });
+                combo.Add(new SelectListItem() { Value = r.CodigoFuncionario.ToString(), Text = r.NomeFuncionario });
+
+            if (addBranco)
+                combo.Insert(0, new SelectListItem());
 
             return combo;
         }

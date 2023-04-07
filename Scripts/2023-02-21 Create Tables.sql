@@ -106,3 +106,17 @@ Create Table Produto(
 	UsuarioUltimaAlteracao varchar(100) null,
 	CodigoFornecedor int foreign key references Fornecedor(CodigoFornecedor)
 );
+
+Create Table Venda(
+	CodigoVenda int identity(1,1) primary key,
+	CodigoProduto int foreign key references Produto(CodigoProduto),
+	CodigoCliente int foreign key references Cliente(CodigoCliente),
+	Quantidade int not null,
+	Valor decimal(18,2) not null,
+	DataVenda datetime not null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null
+);

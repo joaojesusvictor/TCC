@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Dapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TechCompilerCo.Models;
 
 namespace TechCompilerCo.Repositorys
@@ -18,6 +19,26 @@ namespace TechCompilerCo.Repositorys
         public ClientesRepository()
         {
             _db = new DbSession().SqlConnection();
+        }
+
+        public async Task<IEnumerable<SelectListItem>> ComboClientesAsync(bool addBranco = false)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 5
+            };
+
+            var result = await _db.QueryAsync<Cliente>(_sqlTran, p);
+
+            var combo = new List<SelectListItem>();
+
+            foreach (var r in result)
+                combo.Add(new SelectListItem() { Value = r.CodigoCliente.ToString(), Text = r.NomeCliente });
+
+            if (addBranco)
+                combo.Insert(0, new SelectListItem());
+
+            return combo;
         }
 
         public async Task<IEnumerable<Cliente>> GetClientesAsync()

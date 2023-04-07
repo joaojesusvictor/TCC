@@ -56,7 +56,7 @@ namespace TechCompilerCo.Controllers
 
             var viewModel = new ProdutosViewModel()
             {
-                FornecedoresSelect= comboFornecedores.ToSelectListItem(),
+                FornecedoresSelect= comboFornecedores,
                 UsuarioAdm = usuario.UsuarioAdm,
                 CodigoUsuario = usuario.CodigoUsuario
             };
@@ -95,7 +95,7 @@ namespace TechCompilerCo.Controllers
 
             var viewModel = new ProdutosViewModel()
             {
-                FornecedoresSelect = comboFornecedores.ToSelectListItem(),
+                FornecedoresSelect = comboFornecedores,
                 ModoEdit = true,
                 CodigoProduto = id,
                 Referencia = produto.Referencia,

@@ -1,0 +1,153 @@
+﻿@model TechCompilerCo.Models.VendasViewModel
+
+@{
+    ViewData["Title"] = "Vendas";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-6">
+            <span><b>SUA</b></span><br />
+            <span><b>MECÂNICA</b></span>
+        </div>
+
+        <div class="col-md-6" style="text-align: right; font-size: 20px">
+            <span><b>Vendas</b></span>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row col-md-12">
+        <div class="col-md-1">
+            <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "Vendas")"><i class="fa fa-table"></i> Excel</a>
+        </div>
+
+        <div class="col-md-2">
+            <a class="btn btn-sm btn-primary" href="@Url.Action("New", "Vendas")"><i class="fa fa-plus-circle"></i> Novo</a>
+        </div>
+
+        <div class="col-md-9 pull-right">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Nome Cliente
+                    </th>
+                    <th>
+                        Descrição Produto
+                    </th>
+                    <th>
+                        Quantidade
+                    </th>
+                    <th>
+                        Preço
+                    </th>
+                    <th>
+                        Data Venda
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var v in Model.Vendas)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Vendas", new { id = @v.CodigoVenda } )"><i class="fa fa-edit"></i></a>
+
+                            @if (Model.UsuarioAdm)
+                            {
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@v.CodigoVenda)"><i class="fa fa-trash"></i></a>
+                            }
+                        </td>
+                        <td>
+                            @v.NomeCliente
+                        </td>
+                        <td>
+                            @v.DescricaoProduto
+                        </td>
+                        <td>
+                            @v.Quantidade
+                        </td>
+                        <td>
+                            R$ @v.Valor.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                        </td>
+                        <td>
+                            @v.DataVenda.ToString("d")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="dialogExcluir" title="Excluir Venda">
+
+    <input type="hidden" id="CodigoVendaModal" />
+
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom:20px">
+            <p>Deseja realmente excluir a venda?</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a onclick="excluir($('#CodigoVendaModal').val())" class="btn btn-danger pull-right">Excluir</a>
+            <button onclick="$('#dialogExcluir').dialog('close');" class="btn btn-default pull-right" style="margin-right: 5px" type="button">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript" asp-append-version="true">
+        $(document).ready(function () {
+            $('#dialogExcluir').dialog({
+                autoOpen: false,
+                maxWidth: 500,
+                width: $(window).width() * 0.5,
+                height: $(window).height() * 0.3,
+                modal: true
+            });
+        });
+
+        function abrirModalExcluir(id, nome) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#dialogExcluir').dialog('open');
+
+            $('#CodigoVendaModal').val(id);
+        }
+
+        function excluir(id) {
+            $.ajax({
+                url: '/Vendas/Delete',
+                type: 'POST',
+                data: {
+                    id: id
+                },
+                success: function (s) {
+                    document.location.reload();
+                    console.log('Sucesso!');
+                },
+                error: function (e) {
+                    alert('Erro ao Excluir Venda!');
+                    console.log(e);
+                }
+            });
+        }
+    </script>
+
+}
