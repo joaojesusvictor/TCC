@@ -18,6 +18,7 @@ CREATE PROCEDURE dbo.Prod_Produtos_TRAN
 	@Categoria					varchar(100)	=	NULL,
 	@ValorUnitario				decimal(18,2)	=	NULL,
 	@Quantidade					int				=	NULL,
+	@Validade					datetime		=	NULL,
 	@CodigoFornecedor			int				=	NULL,
 	@UsuarioTran				int				=	NULL
 AS
@@ -74,6 +75,8 @@ begin
 							Categoria = @Categoria,
 							ValorUnitario = @ValorUnitario,
 							Quantidade = @Quantidade,
+							QtdLimite = @Quantidade,
+							Validade = @Validade,
 							Ativo = 1,
 							DataUltimaAlteracao = GETDATE(),
 							UsuarioUltimaAlteracao = @NomeUsuarioTRAN,
@@ -85,12 +88,12 @@ begin
 			else
 				begin
 					insert Produto (
-									Descricao, Referencia, Localizacao, Marca, Categoria, ValorUnitario, Quantidade,
+									Descricao, Referencia, Localizacao, Marca, Categoria, ValorUnitario, Quantidade, QtdLimite, Validade,
 									Ativo, DataInclusao, UsuarioIncluiu, CodigoFornecedor )
 									Output inserted.CodigoProduto
 		
 					Values		(	
-									@Descricao, @Referencia, @Localizacao, @Marca, @Categoria, @ValorUnitario, @Quantidade,
+									@Descricao, @Referencia, @Localizacao, @Marca, @Categoria, @ValorUnitario, @Quantidade, @Quantidade, @Validade,
 									1, GETDATE(), @NomeUsuarioTRAN, @CodigoFornecedor )
 				end
 		end
@@ -112,6 +115,8 @@ begin
 					Categoria = @Categoria,
 					ValorUnitario = @ValorUnitario,
 					Quantidade = @Quantidade,
+					QtdLimite = @Quantidade,
+					Validade = @Validade,
 					Ativo = 1,
 					DataUltimaAlteracao = GETDATE(),
 					UsuarioUltimaAlteracao = @NomeUsuarioTRAN,
@@ -175,6 +180,14 @@ Begin
 		Select	*
 		From	Produto
 		Where	Ativo = 1
+End
+
+ELSE IF @Modo = 6 -- Combo Produtos
+Begin
+		Select	*
+		From	Produto
+		Where	Ativo = 1
+		and		Quantidade > 0
 End
 GO
  

@@ -38,11 +38,13 @@ namespace TechCompilerCo.Controllers
             {
                 viewModel.Produtos.Add(new ProdutoViewModel()
                 {
-                    CodigoProduto= p.CodigoProduto,
-                    Descricao= p.Descricao,
+                    CodigoProduto = p.CodigoProduto,
+                    Descricao = p.Descricao,
                     Referencia = p.Referencia,
                     ValorUnitario = p.ValorUnitario,
-                    Quantidade = p.Quantidade
+                    Quantidade = p.Quantidade,
+                    CorLinha = p.Quantidade <= 0 ? "red" : "",
+                    Validade = p.Validade
                 });
             }
 
@@ -105,6 +107,7 @@ namespace TechCompilerCo.Controllers
                 Categoria = produto.Categoria,
                 ValorUnitario = produto.ValorUnitario,
                 Quantidade = produto.Quantidade,
+                Validade = produto.Validade,
                 CodigoFornecedor = produto.CodigoFornecedor,
                 DataInclusao = produto.DataInclusao,
                 UsuarioAdm = usuario.UsuarioAdm,
@@ -136,7 +139,7 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
+
         public async Task<IActionResult> Delete(int id)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();

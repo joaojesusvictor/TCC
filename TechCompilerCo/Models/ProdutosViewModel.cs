@@ -15,6 +15,7 @@ namespace TechCompilerCo.Models
         public string? Categoria { get; set; }
         public decimal ValorUnitario { get; set; }
         public int Quantidade { get; set; }
+        public DateTime? Validade { get; set; }
         public bool Ativo { get; set; }
         public DateTime? DataInclusao { get; set; }
         public string? StrDataInclusao => DataInclusao == null ? "" : DataInclusao?.ToString("d");
@@ -37,6 +38,9 @@ namespace TechCompilerCo.Models
         public string? Categoria { get; set; }
         public decimal ValorUnitario { get; set; }
         public int Quantidade { get; set; }
+        public DateTime? Validade { get; set; }
+        public string? StrValidade => Validade == null ? "" : Validade?.ToString("dd-MM-yyyy");
+        public string? CorLinha { get; set; }
         public bool Ativo { get; set; }
         public DateTime DataInclusao { get; set; }
         public string? UsuarioIncluiu { get; set; }

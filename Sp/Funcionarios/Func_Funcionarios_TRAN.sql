@@ -12,6 +12,7 @@ CREATE PROCEDURE dbo.Func_Funcionarios_TRAN
 	@Modo						integer					,
 	@CodigoFuncionario			int				=	NULL,
 	@NomeFuncionario			varchar(100)	=	NULL,
+	@DataContratacao			datetime		=	NULL,
 	@Cep						varchar(10)		=	NULL,
 	@Endereco					varchar(200)	=	NULL,
 	@Numero						int				=	NULL,
@@ -74,6 +75,7 @@ begin
 				begin
 					Update	Funcionario
 					set		NomeFuncionario = @NomeFuncionario,
+							DataContratacao = @DataContratacao,
 							Cep = @Cep,
 							Endereco = @Endereco,
 							Numero = @Numero,
@@ -97,12 +99,12 @@ begin
 			else
 				begin
 					insert Funcionario (
-									DataCadastro, NomeFuncionario, Cep, Endereco, Numero, Complemento, Bairro, Cidade, Uf, Pais,
+									DataContratacao, NomeFuncionario, Cep, Endereco, Numero, Complemento, Bairro, Cidade, Uf, Pais,
 									DataNascimento, Cpf, Sexo, Telefone1, Cargo, Ativo, DataInclusao, UsuarioIncluiu )
 									Output inserted.CodigoFuncionario
 		
 					Values		(	
-									GETDATE(), @NomeFuncionario, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais,
+									@DataContratacao, @NomeFuncionario, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais,
 									@DataNascimento, @Cpf, @Sexo, @Telefone1, @Cargo, 1, GETDATE(), @NomeUsuarioTRAN )
 				end
 		end
@@ -118,6 +120,7 @@ begin
 		begin
 			Update	Funcionario
 			set		NomeFuncionario = @NomeFuncionario,
+					DataContratacao = @DataContratacao,
 					Cep = @Cep,
 					Endereco = @Endereco,
 					Numero = @Numero,

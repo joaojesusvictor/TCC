@@ -42,7 +42,12 @@ set nocount on
 
 declare @rowsaffected				integer,
 		@errorreturned				integer,
-		@NomeTabela					VarChar(80)
+		@NomeTabela					VarChar(80),
+		@Qtd						int,
+		@QtdAtualVenda				int,
+		@QtdAtualProduto			int,
+		@QtdLimiteProduto			int,
+		@NovaQtdProduto				int
 		
 -- Variável para obter o nome do usuário que vai transacionar a tabela		
 Declare	@NomeUsuarioTRAN			Varchar(30)	
@@ -58,14 +63,66 @@ end
 select @NomeTabela = 'Tabela de Venda.'
 
 IF @Modo = 1 --Inclusao
-begin
-	Insert Venda ( CodigoProduto, CodigoCliente, Quantidade, Valor, DataVenda, Ativo, DataInclusao, UsuarioIncluiu )
-					Output inserted.CodigoVenda
-	Values		( @CodigoProduto, @CodigoCliente, @Quantidade, @Valor, @DataVenda, 1, GETDATE(), @NomeUsuarioTRAN )
-end
+Begin
+	select @QtdAtualProduto = (select Quantidade from Produto where CodigoProduto = @CodigoProduto)
 
-else IF @Modo = 2 -- Alteracao
-begin
+	IF @QtdAtualProduto >= @Quantidade
+		Begin
+			select @Qtd = (select @QtdAtualProduto - @Quantidade)
+
+			update	Produto
+			set		Quantidade = @Qtd
+			where	CodigoProduto = @CodigoProduto
+
+			Insert Venda ( CodigoProduto, CodigoCliente, Quantidade, Valor, DataVenda, Ativo, DataInclusao, UsuarioIncluiu )
+							Output inserted.CodigoVenda
+			Values		( @CodigoProduto, @CodigoCliente, @Quantidade, @Valor, @DataVenda, 1, GETDATE(), @NomeUsuarioTRAN )
+		End
+	Else
+		Begin
+			select 0
+		End
+End
+
+ELSE IF @Modo = 2 -- Alteracao
+Begin
+	select @QtdAtualVenda = (select Quantidade from Venda where CodigoVenda = @CodigoVenda)
+
+	If @QtdAtualVenda <> @Quantidade
+	Begin
+		IF @QtdAtualVenda > @Quantidade
+		Begin
+			select @Qtd = (select @QtdAtualVenda - @Quantidade)
+
+			select @NovaQtdProduto = (select Quantidade + @Qtd from Produto where CodigoProduto = @CodigoProduto)
+
+			select @QtdLimiteProduto = (select QtdLimite from Produto where CodigoProduto = @CodigoProduto)
+
+			IF @NovaQtdProduto > @QtdLimiteProduto
+			Begin
+				select @NovaQtdProduto = @QtdLimiteProduto
+			End
+		End
+
+		If @QtdAtualVenda < @Quantidade
+		Begin
+			select @Qtd = (select @Quantidade - @QtdAtualVenda)
+
+			select @QtdAtualProduto = (select Quantidade from Produto where CodigoProduto = @CodigoProduto)
+
+			IF @QtdAtualProduto < @Qtd
+			Begin
+				return 0
+			End
+
+			select @NovaQtdProduto = (select @QtdAtualProduto - @Qtd)
+		End
+
+		update	Produto
+		set		Quantidade = @NovaQtdProduto
+		where	CodigoProduto = @CodigoProduto
+	End
+
 	Update	Venda
 	set		CodigoProduto = @CodigoProduto,
 			CodigoCliente = @CodigoCliente,
@@ -78,15 +135,17 @@ begin
 	where	CodigoVenda = @CodigoVenda
 
 	select @rowsaffected = @@rowcount, @errorreturned = @@error     
-    IF @rowsaffected = 0 OR @errorreturned <> 0
-    begin
-       select 'Ocorreu uma falha na alteracao ' + @NomeTabela     
-       return -100        
-    end
-end
+	IF @rowsaffected = 0 OR @errorreturned <> 0
+	begin
+	   select 'Ocorreu uma falha na alteracao ' + @NomeTabela     
+	   return -100        
+	end
+
+	select 1
+End
 
 ELSE IF @Modo = 3 -- Exclusao
-begin
+Begin
 	Update	Venda
 	set		Ativo = 0,
 			DataUltimaAlteracao = GETDATE(),

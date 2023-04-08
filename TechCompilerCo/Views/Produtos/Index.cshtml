@@ -55,12 +55,15 @@
                     <th>
                         Quantidade
                     </th>
+                    <th>
+                        Data Validade
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var p in Model.Produtos)
                 {
-                    <tr>
+                    <tr style="color: @p.CorLinha">
                         <td>
                             <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Produtos", new { id = p.CodigoProduto } )"><i class="fa fa-edit"></i></a>
                             <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@p.CodigoProduto)"><i class="fa fa-trash"></i></a>
@@ -76,6 +79,9 @@
                         </td>
                         <td>
                             @p.Quantidade
+                        </td>
+                        <td>
+                            @p.StrValidade
                         </td>
                     </tr>
                 }

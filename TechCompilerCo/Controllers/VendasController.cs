@@ -87,7 +87,21 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(New));
             }
 
-            await _vendasRepository.CreateAsync(model);
+            if (model.Quantidade == 0)
+            {
+                MostraMsgErro("A Quantidade da Venda deve ser maior do que Zero!");
+
+                return RedirectToAction(nameof(New));
+            }
+
+            int result = await _vendasRepository.CreateAsync(model);
+
+            if (result <= 0)
+            {
+                MostraMsgErro("A Quantidade da Venda está maior do que a Quantidade do Produto em Estoque!");
+
+                return RedirectToAction(nameof(New));
+            }
 
             MostraMsgSucesso("Venda incluída com sucesso!");
 
@@ -135,8 +149,22 @@ namespace TechCompilerCo.Controllers
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoVenda });
             }
+            
+            if(model.Quantidade == 0)
+            {
+                MostraMsgErro("A Quantidade da Venda deve ser maior do que Zero!");
 
-            await _vendasRepository.UpdateAsync(model);
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoVenda });
+            }
+
+            int result = await _vendasRepository.UpdateAsync(model);
+
+            if (result <= 0)
+            {
+                MostraMsgErro("A Quantidade da Venda está maior do que a Quantidade do Produto em Estoque!");
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoVenda });
+            }
 
             MostraMsgSucesso("Venda alterada com sucesso!");
 
