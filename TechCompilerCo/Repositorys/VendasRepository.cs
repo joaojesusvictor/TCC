@@ -62,7 +62,7 @@ namespace TechCompilerCo.Repositorys
             return result;
         }
 
-        public async Task CreateAsync(VendasViewModel model)
+        public async Task<int> CreateAsync(VendasViewModel model)
         {
             var p = new ParametrosTran()
             {
@@ -75,15 +75,19 @@ namespace TechCompilerCo.Repositorys
                 UsuarioTran = model.CodigoUsuario
             };
 
+            int result = 0;
+
             using (var conn = new SqlConnection(_db.ConnectionString))
             {
                 conn.Open();
 
-                await conn.ExecuteAsync(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
+
+            return result;
         }
 
-        public async Task UpdateAsync(VendasViewModel model)
+        public async Task<int> UpdateAsync(VendasViewModel model)
         {
             var p = new ParametrosTran()
             {
@@ -97,12 +101,16 @@ namespace TechCompilerCo.Repositorys
                 UsuarioTran = model.CodigoUsuario
             };
 
+            int result = 0;
+
             using (var conn = new SqlConnection(_db.ConnectionString))
             {
                 conn.Open();
 
-                await conn.ExecuteAsync(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
+
+            return result;
         }
 
         public async Task DeleteAsync(int id, int codigoUsuario)

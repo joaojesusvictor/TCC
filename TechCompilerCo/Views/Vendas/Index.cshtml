@@ -42,7 +42,10 @@
         <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
             <thead>
                 <tr>
-                    <th></th>
+                    @if (Model.UsuarioAdm)
+                    {
+                        <th></th>
+                    }
                     <th>
                         Nome Cliente
                     </th>
@@ -64,14 +67,14 @@
                 @foreach (var v in Model.Vendas)
                 {
                     <tr>
-                        <td>
-                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Vendas", new { id = @v.CodigoVenda } )"><i class="fa fa-edit"></i></a>
+                        @if (Model.UsuarioAdm)
+                        {
+                            <td>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Vendas", new { id = @v.CodigoVenda } )"><i class="fa fa-edit"></i></a>
 
-                            @if (Model.UsuarioAdm)
-                            {
                                 <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@v.CodigoVenda)"><i class="fa fa-trash"></i></a>
-                            }
-                        </td>
+                            </td>
+                        }
                         <td>
                             @v.NomeCliente
                         </td>
@@ -85,7 +88,7 @@
                             R$ @v.Valor.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
                         </td>
                         <td>
-                            @v.DataVenda.ToString("d")
+                            @v.DataVenda.ToString("dd-MM-yyyy")
                         </td>
                     </tr>
                 }

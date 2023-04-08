@@ -17,7 +17,7 @@ namespace TechCompilerCo.Repositorys
     public class ProdutosRepository
     {
         private readonly IDbConnection _db;
-        private string _sqlTran = "EXEC Prod_Produtos_TRAN @Modo, @CodigoProduto, @Descricao, @Referencia, @Localizacao, @Marca, @Categoria, @ValorUnitario, @Quantidade, @CodigoFornecedor, @UsuarioTran";
+        private string _sqlTran = "EXEC Prod_Produtos_TRAN @Modo, @CodigoProduto, @Descricao, @Referencia, @Localizacao, @Marca, @Categoria, @ValorUnitario, @Quantidade, @Validade, @CodigoFornecedor, @UsuarioTran";
 
         public ProdutosRepository()
         {
@@ -28,7 +28,7 @@ namespace TechCompilerCo.Repositorys
         {
             var p = new ParametrosTran()
             {
-                Modo = 5
+                Modo = 6
             };
 
             var result = await _db.QueryAsync<Produto>(_sqlTran, p);
@@ -95,6 +95,7 @@ namespace TechCompilerCo.Repositorys
                 Categoria = model.Categoria,
                 ValorUnitario = model.ValorUnitario,
                 Quantidade = model.Quantidade,
+                Validade = model.Validade,
                 UsuarioTran = model.CodigoUsuario,
                 CodigoFornecedor = model.CodigoFornecedor
             };
@@ -124,6 +125,7 @@ namespace TechCompilerCo.Repositorys
                 Categoria = model.Categoria,
                 ValorUnitario = model.ValorUnitario,
                 Quantidade = model.Quantidade,
+                Validade= model.Validade,
                 UsuarioTran = model.CodigoUsuario,
                 CodigoFornecedor = model.CodigoFornecedor
             };
@@ -171,6 +173,7 @@ namespace TechCompilerCo.Repositorys
             public string? Categoria { get; set; }
             public decimal ValorUnitario { get; set; }
             public int Quantidade { get; set; }
+            public DateTime Validade { get; set; }
             public bool Ativo { get; set; }
             public DateTime DataInclusao { get; set; }
             public string? UsuarioIncluiu { get; set; }
@@ -188,6 +191,7 @@ namespace TechCompilerCo.Repositorys
             public string? Categoria { get; set; }
             public decimal ValorUnitario { get; set; }
             public int Quantidade { get; set; }
+            public DateTime? Validade { get; set; }
             public int CodigoFornecedor { get; set; }
             public int UsuarioTran { get; set; }
         }

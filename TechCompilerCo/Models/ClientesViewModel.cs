@@ -16,7 +16,7 @@
         public DateTime? DataNascimento { get; set; }
         public string? StrDataNascimento => DataNascimento == null ? "" : DataNascimento?.ToString("d");
         public string? Telefone1 { get; set; }
-        public string? Cpf { get; set; }
+        public string? Documento { get; set; }
         public string? Cep { get; set; }
         public string? Endereco { get; set; }
         public int Numero { get; set; }
@@ -42,7 +42,7 @@
         public string? Email { get; set; }
         public DateTime DataNascimento { get; set; }
         public string? Telefone1 { get; set; }
-        public string? Cpf { get; set; }
+        public string? Documento { get; set; }
         public string? Cep { get; set; }
         public string? Endereco { get; set; }
         public int Numero { get; set; }

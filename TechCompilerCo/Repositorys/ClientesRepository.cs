@@ -14,7 +14,7 @@ namespace TechCompilerCo.Repositorys
     public class ClientesRepository
     {
         private readonly IDbConnection _db;
-        private string _sqlTran = "EXEC Clien_Clientes_TRAN @Modo, @CodigoCliente, @NomeCliente, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Cpf, @Sexo, @Email, @Telefone1, @UsuarioTran";
+        private string _sqlTran = "EXEC Clien_Clientes_TRAN @Modo, @CodigoCliente, @NomeCliente, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Documento, @Sexo, @Email, @Telefone1, @UsuarioTran";
 
         public ClientesRepository()
         {
@@ -89,7 +89,7 @@ namespace TechCompilerCo.Repositorys
                 DataNascimento = model.DataNascimento,
                 Email = model.Email,
                 Telefone1 = model.Telefone1,
-                Cpf = model.Cpf,
+                Documento = model.Documento,
                 Cep = model.Cep,
                 Endereco = model.Endereco,
                 Numero = model.Numero,
@@ -123,7 +123,7 @@ namespace TechCompilerCo.Repositorys
                 DataNascimento = model.DataNascimento,
                 Email = model.Email,
                 Telefone1 = model.Telefone1,
-                Cpf = model.Cpf,
+                Documento = model.Documento,
                 Cep = model.Cep,
                 Endereco = model.Endereco,
                 Numero = model.Numero,
@@ -173,7 +173,7 @@ namespace TechCompilerCo.Repositorys
             public DateTime? DataNascimento { get; set; }
             public string? Email { get; set; }
             public string? Telefone1 { get; set; }
-            public string? Cpf { get; set; }
+            public string? Documento { get; set; }
             public string? Cep { get; set; }
             public string? Endereco { get; set; }
             public int Numero { get; set; }
@@ -193,7 +193,7 @@ namespace TechCompilerCo.Repositorys
             public DateTime? DataNascimento { get; set; }
             public string? Email { get; set; }
             public string? Telefone1 { get; set; }
-            public string? Cpf { get; set; }
+            public string? Documento { get; set; }
             public string? Cep { get; set; }
             public string? Endereco { get; set; }
             public int Numero { get; set; }

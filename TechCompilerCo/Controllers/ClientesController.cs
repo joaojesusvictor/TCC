@@ -40,7 +40,7 @@ namespace TechCompilerCo.Controllers
                     CodigoCliente = f.CodigoCliente,
                     NomeCliente = f.NomeCliente,
                     Email = f.Email,
-                    Cpf = f.Cpf,
+                    Documento = f.Documento,
                     Telefone1 = f.Telefone1
                 });
             }
@@ -63,11 +63,25 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(ClientesViewModel model)
         {
-            if (!CpfValido(model.Cpf))
-            {
-                MostraMsgErro("Este CPF não é válido!");
+            string doc = DeixaSoNumeros(model.Documento);
 
-                return RedirectToAction(nameof(New));
+            if (doc.Length == 11)
+            {
+                if (!CpfValido(model.Documento))
+                {
+                    MostraMsgErro("Este Documento não é válido!");
+
+                    return RedirectToAction(nameof(New));
+                }
+            }
+            else
+            {
+                if (!CnpjValido(model.Documento))
+                {
+                    MostraMsgErro("Este Documento não é válido!");
+
+                    return RedirectToAction(nameof(New));
+                }
             }
 
             if (!EmailValido(model.Email, true))
@@ -108,7 +122,7 @@ namespace TechCompilerCo.Controllers
                 DataNascimento = cliente.DataNascimento,
                 Email = cliente.Email,
                 Telefone1= cliente.Telefone1,
-                Cpf = cliente.Cpf,
+                Documento = cliente.Documento,
                 Cep = cliente.Cep,
                 Endereco = cliente.Endereco,
                 Numero = cliente.Numero,
@@ -126,12 +140,26 @@ namespace TechCompilerCo.Controllers
         }
 
         public async Task<IActionResult> Update(ClientesViewModel model)
-        {            
-            if (!CpfValido(model.Cpf))
-            {
-                MostraMsgErro("Este CPF não é válido!");
+        {
+            string doc = DeixaSoNumeros(model.Documento);
 
-                return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+            if (doc.Length == 11)
+            {
+                if (!CpfValido(model.Documento))
+                {
+                    MostraMsgErro("Este Documento não é válido!");
+
+                    return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+                }
+            }
+            else
+            {
+                if (!CnpjValido(model.Documento))
+                {
+                    MostraMsgErro("Este Documento não é válido!");
+
+                    return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+                }
             }
 
             if (!EmailValido(model.Email, true))

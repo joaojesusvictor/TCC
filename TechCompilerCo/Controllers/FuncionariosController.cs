@@ -38,6 +38,7 @@ namespace TechCompilerCo.Controllers
                 {
                     CodigoFuncionario = f.CodigoFuncionario,
                     NomeFuncionario = f.NomeFuncionario,
+                    DataContratacao = f.DataContratacao,
                     Email = f.Email,
                     Cpf = f.Cpf,
                     Telefone1 = f.Telefone1
@@ -92,6 +93,7 @@ namespace TechCompilerCo.Controllers
             {
                 ModoEdit = true,
                 CodigoFuncionario = id,
+                DataContratacao = funcionario.DataContratacao,
                 DataInclusao = funcionario.DataInclusao,
                 DataUltimaAlteracao = funcionario.DataUltimaAlteracao,
                 UsuarioIncluiu = funcionario.UsuarioIncluiu,
@@ -139,7 +141,7 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
+
         public async Task<IActionResult> Delete(int id)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();

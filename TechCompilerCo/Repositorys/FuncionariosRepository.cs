@@ -14,7 +14,7 @@ namespace TechCompilerCo.Repositorys
     public class FuncionariosRepository
     {
         private readonly IDbConnection _db;
-        private string _sqlTran = "EXEC Func_Funcionarios_TRAN @Modo, @CodigoFuncionario, @NomeFuncionario, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Cpf, @Sexo, @Telefone1, @Cargo, @UsuarioTran";
+        private string _sqlTran = "EXEC Func_Funcionarios_TRAN @Modo, @CodigoFuncionario, @NomeFuncionario, @DataContratacao, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Cpf, @Sexo, @Telefone1, @Cargo, @UsuarioTran";
 
         public FuncionariosRepository()
         {
@@ -86,6 +86,7 @@ namespace TechCompilerCo.Repositorys
                 CodigoFuncionario = model.CodigoFuncionario,
                 UsuarioTran = model.CodigoUsuario,
                 NomeFuncionario = model.NomeFuncionario,
+                DataContratacao = model.DataContratacao,
                 DataNascimento = model.DataNascimento,
                 Telefone1 = model.Telefone1,
                 Cpf = model.Cpf,
@@ -120,6 +121,7 @@ namespace TechCompilerCo.Repositorys
                 CodigoFuncionario = model.CodigoFuncionario,
                 UsuarioTran = model.CodigoUsuario,
                 NomeFuncionario = model.NomeFuncionario,
+                DataContratacao = model.DataContratacao,
                 DataNascimento = model.DataNascimento,
                 Telefone1 = model.Telefone1,
                 Cpf = model.Cpf,
@@ -165,6 +167,7 @@ namespace TechCompilerCo.Repositorys
         public class Funcionario
         {
             public int CodigoFuncionario { get; set; }
+            public DateTime? DataContratacao { get; set; }
             public DateTime? DataInclusao { get; set; }
             public DateTime? DataUltimaAlteracao { get; set; }
             public string? UsuarioIncluiu { get; set; }
@@ -191,6 +194,7 @@ namespace TechCompilerCo.Repositorys
             public int Modo { get; set; }
             public int CodigoFuncionario { get; set; }
             public string? NomeFuncionario { get; set; }
+            public DateTime? DataContratacao { get; set; }
             public DateTime? DataNascimento { get; set; }
             public string? Telefone1 { get; set; }
             public string? Cpf { get; set; }
