@@ -169,75 +169,49 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(ContasNaoPagas));
         }
 
-        public async Task<IActionResult> Delete(int id, bool contasPagas)
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id, bool contasPagas)
         {
-            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
+            ContasPagarRepository.ContaPagar conta = await _contasPagarRepository.GetContaPagarAsync(id);
 
-            int codigoUsuario = usuario.CodigoUsuario;
-
-            if (contasPagas)
+            var model = new DeletePartialViewModel
             {
-                ContasPagarRepository.ContaPagar conta = await _contasPagarRepository.GetContaPagarAsync(id);
+                Id = id.ToString(),
+                NomeEntidade = conta.ServicoCobrado,
+                Aux1 = contasPagas.ToString(),
+                Mensagem1 = $"Deseja realmente excluir a Conta \"{conta.CodigoCpa}\" do Serviço \"{conta.ServicoCobrado}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
+        {
+            if (model.Aux1.ToLower() == "true")
+            {
+                ContasPagarRepository.ContaPagar conta = await _contasPagarRepository.GetContaPagarAsync(Convert.ToInt32(model.Id));
 
                 if (conta.DataPagamento != null)
                 {
-                    MostraMsgErro("Não é possível excluir uma Conta que ainda Não Foi Paga!");
+                    MostraMsgErro("Não é possível excluir uma Conta que Já Foi Paga!");
 
                     return RedirectToAction(nameof(ContasPagas));
                 }
             }
 
-            await _contasPagarRepository.DeleteAsync(id, codigoUsuario);
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
-            MostraMsgSucesso("Conta excluída com sucesso!");
+            int codigoUsuario = usuario.CodigoUsuario;
 
-            if (contasPagas)
+            await _contasPagarRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
+
+            MostraMsgSucesso($"A Conta \"{model.Id}\" do Serviço \"{model.NomeEntidade}\" foi excluída com sucesso!");
+
+            if (model.Aux1.ToLower() == "true")
                 return RedirectToAction(nameof(ContasPagas));
             else
                 return RedirectToAction(nameof(ContasNaoPagas));
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> Delete(int id, bool contasPagas)
-        //{
-        //    ContasPagarRepository.ContaPagar conta = await _contasPagarRepository.GetContaPagarAsync(id);
-
-        //    var model = new DeletePartialViewModel
-        //    {
-        //        Id = id.ToString(),
-        //        NomeEntidade = conta.ServicoCobrado,
-        //        Aux1 = contasPagas.ToString(),
-        //        Mensagem1 = $"Deseja realmente excluir a Conta \"{conta.CodigoCpa}\" do Serviço \"{conta.ServicoCobrado}\"?",
-        //        DeleteUrl = Url.Action(nameof(Delete))
-        //    };
-
-        //    return PartialView("_DeletePartial", model);
-        //}
-
-        //[HttpDelete]
-        //public async Task<IActionResult> Delete(DeletePartialViewModel model)
-        //{
-        //    if (model.Aux1 == "true")
-        //    {
-        //        ContasPagarRepository.ContaPagar conta = await _contasPagarRepository.GetContaPagarAsync(Convert.ToInt32(model.Id));
-
-        //        if (conta.DataPagamento != null)
-        //        {
-        //            MostraMsgErro("Não é possível excluir uma Conta que ainda Não Foi Paga!");
-
-        //            return RedirectToAction(nameof(ContasPagas));
-        //        }
-        //    }
-
-        //    UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
-
-        //    int codigoUsuario = usuario.CodigoUsuario;
-
-        //    await _contasPagarRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
-
-        //    MostraMsgSucesso($"A Conta \"{model.Id}\" do Serviço \"{model.NomeEntidade}\" foi excluída com sucesso!");
-
-        //    return RedirectToAction(nameof(Index));
-        //}
     }
 }
