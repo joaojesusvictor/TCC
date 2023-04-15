@@ -122,3 +122,18 @@ Create Table Venda(
 	DataUltimaAlteracao datetime null,
 	UsuarioUltimaAlteracao varchar(100) null
 );
+
+Create Table ContasPagar(
+	CodigoCpa int identity(1,1) primary key,
+	CodigoFuncionario int foreign key references Funcionario(CodigoFuncionario),
+	Valor decimal(18,2) not null,
+	DataVencimento datetime not null,
+	DataPagamento datetime null,
+	ServicoCobrado varchar(200) not null,
+	Paga bit not null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null
+);

@@ -1,0 +1,150 @@
+﻿@model TechCompilerCo.Models.ContasPagarViewModel
+
+@{
+    ViewData["Title"] = "Contas Não Pagas";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-6">
+            <span><b>SUA</b></span><br />
+            <span><b>MECÂNICA</b></span>
+        </div>
+
+        <div class="col-md-6" style="text-align: right; font-size: 20px">
+            <span><b>Contas Não Pagas</b></span>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row col-md-12">
+        <div class="col-md-1">
+            <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "ContasPagar")"><i class="fa fa-table"></i> Excel</a>
+        </div>
+
+        <div class="col-md-2">
+            <a class="btn btn-sm btn-primary" href="@Url.Action("New", "ContasPagar", new { contasPagas = false })"><i class="fa fa-plus-circle"></i> Novo</a>
+        </div>
+
+        <div class="col-md-9 pull-right">
+            <a href="@Url.Action("Index", "ContasPagar")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
+            <thead>
+                <tr>
+                    @if (Model.UsuarioAdm)
+                    {
+                        <th></th>
+                    }
+                    <th>
+                        Data Vencimento
+                    </th>
+                    <th>
+                        Preço
+                    </th>
+                    <th>
+                        Serviço
+                    </th>
+                    <th>
+                        Dados Funcionário Realizou
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Contas)
+                {
+                    <tr>
+                        @if (Model.UsuarioAdm)
+                        {
+                            <td>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "ContasPagar", new { id = c.CodigoCpa, contasPagas = false } )"><i class="fa fa-edit"></i></a>
+
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@c.CodigoCpa)"><i class="fa fa-trash"></i></a>
+                            </td>
+                        }
+                        <td>
+                            @c.DataVencimento.ToString("dd-MM-yyyy")
+                        </td>
+                        <td>
+                            R$ @c.Valor.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                        </td>
+                        <td>
+                            @c.ServicoCobrado
+                        </td>
+                        <td>
+                            @c.NomeFuncionario / @c.Cpf / @c.Telefone1
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="dialogExcluir" title="Excluir Conta Paga">
+
+    <input type="hidden" id="CodigoContaModal" />
+
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom:20px">
+            <p>Deseja realmente excluir a conta?</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a onclick="excluir($('#CodigoContaModal').val())" class="btn btn-danger pull-right">Excluir</a>
+            <button onclick="$('#dialogExcluir').dialog('close');" class="btn btn-default pull-right" style="margin-right: 5px" type="button">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript" asp-append-version="true">
+        $(document).ready(function () {
+            $('#dialogExcluir').dialog({
+                autoOpen: false,
+                maxWidth: 500,
+                width: $(window).width() * 0.5,
+                height: $(window).height() * 0.3,
+                modal: true
+            });
+        });
+
+        function abrirModalExcluir(id) {
+            $('html, body').animate({ scrollTop: 0 }, 0);
+            $('#dialogExcluir').dialog('open');
+
+            $('#CodigoContaModal').val(id);
+        }
+
+        function excluir(id) {
+            $.ajax({
+                url: '/ContasPagar/Delete',
+                type: 'POST',
+                data: {
+                    id: id, contasPagas: false
+                },
+                success: function (s) {
+                    document.location.reload();
+                    console.log('Sucesso!');
+                },
+                error: function (e) {
+                    alert('Erro ao Excluir Conta!');
+                    console.log(e);
+                }
+            });
+        }
+    </script>
+
+}

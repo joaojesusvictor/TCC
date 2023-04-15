@@ -71,6 +71,15 @@ function buscarCep() {
     }
 }
 
+function abrirModalRemoto(url) {
+    $.ajax({
+        url: url,
+        success: function (returnedModalPartial) {
+            $('body').append(returnedModalPartial);
+        }
+    });
+}
+
 setTimeout(function () {
     $('.alert').hide();
 }, 3000);

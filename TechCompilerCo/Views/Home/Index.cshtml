@@ -63,13 +63,13 @@
         <br />
         <br />
 
-        <div class="row">
-            @if (Convert.ToBoolean(TempData["UsuarioAdm"]))
-            {
+        @if (Convert.ToBoolean(TempData["UsuarioAdm"]))
+        {
+            <div class="row">
                 <div class="col-md-2">
-                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Funcionarios")';">
-                        <span class="tituloMenus">Funcionários</span> <br />
-                        <i class="fa fa-people-group iconMenus"></i>
+                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "ContasPagar")';">
+                        <span class="tituloMenus">Contas a Pagar</span> <br />
+                        <i class="fa fa-money-bill-transfer iconMenus"></i>
                     </div>
                 </div>
 
@@ -79,8 +79,19 @@
                         <i class="fa fa-handshake iconMenus"></i>
                     </div>
                 </div>
-            }
 
+                <div class="col-md-2">
+                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Funcionarios")';">
+                        <span class="tituloMenus">Funcionários</span> <br />
+                        <i class="fa fa-people-group iconMenus"></i>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <br />
+
+        <div class="row">
             <div class="col-md-2">
                 <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Clientes")';">
                     <span class="tituloMenus">Clientes</span> <br />
