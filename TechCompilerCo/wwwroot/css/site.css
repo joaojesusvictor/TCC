@@ -1,18 +1,140 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+/*Messagebox */
+.divMessageBox {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 100000;
+}
+
+.MessageBoxContainer {
+    top: 35%;
+    color: white;
+    position: relative;
+    width: 100%;
+    background-color: #232323;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+}
+
+.MessageBoxMiddle {
+    position: relative;
+    left: 20%;
+    width: 60%;
+}
+
+    .MessageBoxMiddle .MsgTitle {
+        letter-spacing: -1px;
+        font-size: 24px;
+        font-weight: 300;
+    }
+
+    .MessageBoxMiddle .pText {
+        font-size: 13px;
+    }
+
+.MessageBoxContainer input {
+    width: 50%;
+    padding: 5px;
+}
+
+.MessageBoxContainer select {
+    width: 50%;
+    padding: 5px;
+}
+
+.MessageBoxButtonSection {
+    width: 100%;
+    height: 30px;
+}
+
+    .MessageBoxButtonSection button {
+        float: right;
+        margin-right: 7px;
+        padding-left: 15px;
+        padding-right: 15px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+/* End of MessageBox */
+
+/* Mobile Phones */
+@media screen and (max-width: 450px) and (max-width: 767px) {
+    /*Messagebox Responsive */
+    .divMessageBox {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 100000;
+    }
+
+    .MessageBoxContainer {
+        top: 25%;
+        color: white;
+        position: relative;
+        width: 100%;
+        background-color: #232323;
+    }
+
+    .MessageBoxMiddle {
+        position: relative;
+        left: 0;
+        width: 100%;
+        padding: 3px;
+    }
+
+        .MessageBoxMiddle .MsgTitle {
+            font-size: 22px;
+        }
+
+        .MessageBoxMiddle .pText {
+            font-size: 13px;
+        }
+
+    .MessageBoxContainer input {
+        width: 50%;
+        padding: 5px;
+    }
+
+    .MessageBoxContainer select {
+        width: 50%;
+        padding: 5px;
+    }
+
+    .MessageBoxButtonSection {
+        width: 100%;
+        height: 30px;
+    }
+
+        .MessageBoxButtonSection button {
+            float: right;
+            margin-right: 5px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    /* End of MessageBox Responsive */
 }
