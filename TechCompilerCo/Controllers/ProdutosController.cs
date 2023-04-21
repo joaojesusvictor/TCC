@@ -140,24 +140,40 @@ namespace TechCompilerCo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Delete(int id)
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
+        {
+            ProdutosRepository.Produto produto = await _produtosRepository.GetProdutoAsync(id);
+
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                NomeEntidade = produto.Referencia,
+                Mensagem1 = $"Deseja realmente excluir o Produto \"{produto.Referencia}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 
-            bool deletado = await _produtosRepository.DeleteAsync(id, codigoUsuario);
+            bool deletado = await _produtosRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
 
             if (!deletado)
             {
-                MostraMsgErro("Não foi possível excluír o Produto, pois há itens em estoque.");
+                MostraMsgErro($"Não foi possível excluír o Produto \"{model.NomeEntidade}\", pois há itens em estoque!");
 
                 return RedirectToAction(nameof(Index));
             }
 
-            MostraMsgSucesso("Produto excluído com sucesso!");
+            MostraMsgSucesso($"O Produto \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }

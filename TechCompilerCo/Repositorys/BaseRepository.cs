@@ -45,12 +45,23 @@ namespace TechCompilerCo.Repositorys
             //    return result;
             //}
 
+            //Encript result = new Encript();
+
+            //using (_db)
+            //{
+            //    result = await _db.QueryFirstOrDefaultAsync<Encript>(_sqlEncript, p);
+            //    _db.Dispose();
+            //}
+
+            //return result;
+
             Encript result = new Encript();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<Encript>(_sqlEncript, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<Encript>(_sqlEncript, p);
             }
 
             return result;

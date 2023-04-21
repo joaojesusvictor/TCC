@@ -171,17 +171,32 @@ namespace TechCompilerCo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Delete(int id)
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
+        {
+            VendasRepository.Venda venda = await _vendasRepository.GetVendaAsync(id);
+
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                Mensagem1 = $"Deseja realmente excluir a Venda do Código de Venda \"{id}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 
-            await _vendasRepository.DeleteAsync(id, codigoUsuario);
+            await _vendasRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
 
-            MostraMsgSucesso("Venda excluída com sucesso!");
+            MostraMsgSucesso($"A Venda do Código de Venda \"{model.Id}\" foi excluída com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }
