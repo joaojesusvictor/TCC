@@ -42,12 +42,23 @@ namespace TechCompilerCo.Repositorys
             //    return result;
             //}
 
+            //UsuarioLogadoViewModel result = new UsuarioLogadoViewModel();
+
+            //using (_db)
+            //{
+            //    result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
+            //    _db.Dispose();
+            //}
+
+            //return result;
+
             UsuarioLogadoViewModel result = new UsuarioLogadoViewModel();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
             }
 
             return result;
@@ -68,7 +79,7 @@ namespace TechCompilerCo.Repositorys
             {
                 conn.Open();
 
-                result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
             }
 
             return result;
@@ -87,8 +98,8 @@ namespace TechCompilerCo.Repositorys
             {
                 conn.Open();
 
-                await _db.ExecuteAsync(_sqlTran, p);
-            }
+                await conn.ExecuteAsync(_sqlTran, p);
+            };
         }
 
         public async Task<bool> RedefineSenha(int codigoUsuario, string senhaAtual, string novaSenha)
@@ -103,10 +114,11 @@ namespace TechCompilerCo.Repositorys
 
             bool result = false;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
             }
 
             return result;

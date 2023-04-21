@@ -159,6 +159,12 @@ end
 
 ELSE IF @Modo = 3 -- Exclusao
 begin
+		update	Usuario
+		set		Ativo = 0,
+				DataUltimaAlteracao = GETDATE(),
+				UsuarioUltimaAlteracao = @NomeUsuarioTRAN
+		where	CodigoFuncionario = @CodigoFuncionario
+
 		Update	Funcionario 
 		set		Ativo = 0,
 				DataUltimaAlteracao = GETDATE(),

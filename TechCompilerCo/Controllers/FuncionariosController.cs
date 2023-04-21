@@ -142,17 +142,41 @@ namespace TechCompilerCo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Delete(int id)
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
+        {
+            FuncionariosRepository.Funcionario funcionario = await _funcionariosRepository.GetFuncionarioAsync(id);
+
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                NomeEntidade = funcionario.NomeFuncionario,
+                Mensagem1 = $"Deseja realmente excluir o Funcionário \"{funcionario.NomeFuncionario}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
+            int codigoFuncionario = usuario.CodigoFuncionario;
 
-            await _funcionariosRepository.DeleteAsync(id, codigoUsuario);
+            if (model.Id == codigoFuncionario.ToString())
+            {
+                MostraMsgErro("Você não pode excluir o seu próprio cadastro de Funcionário!");
 
-            MostraMsgSucesso("Funcionário excluído com sucesso!");
+                return RedirectToAction(nameof(Index));
+            }
+
+            await _funcionariosRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
+
+            MostraMsgSucesso($"O Funcionário \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }

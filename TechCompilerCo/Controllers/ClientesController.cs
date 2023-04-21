@@ -182,18 +182,34 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
-        public async Task<IActionResult> Delete(int id)
+
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
+        {
+            ClientesRepository.Cliente cliente = await _clientesRepository.GetClienteAsync(id);
+
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                NomeEntidade = cliente.NomeCliente,
+                Mensagem1 = $"Deseja realmente excluir o Cliente \"{cliente.NomeCliente}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 
-            await _clientesRepository.DeleteAsync(id, codigoUsuario);
+            await _clientesRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
 
-            MostraMsgSucesso("Cliente excluído com sucesso!");
+            MostraMsgSucesso($"O Cliente \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }

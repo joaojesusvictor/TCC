@@ -156,25 +156,41 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
-        public async Task<IActionResult> Delete(int id)
+
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
         {
-            UsuarioLogadoViewModel usuarioSessao = _sessao.BuscarSessaoUsuario();
+            UsuariosRepository.Usuario usuario = await _usuariosRepository.GetUsuarioAsync(id);
 
-            int codigoUsuario = usuarioSessao.CodigoUsuario;
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                NomeEntidade = usuario.NomeUsuario,
+                Mensagem1 = $"Deseja realmente excluir o Usuário \"{usuario.NomeUsuario}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
 
-            if(id == codigoUsuario)
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
+        {
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
+
+            int codigoUsuario = usuario.CodigoUsuario;
+
+            if (model.Id == codigoUsuario.ToString())
             {
                 MostraMsgErro("Você não pode excluir o seu próprio usuário!");
 
                 return RedirectToAction(nameof(Index));
             }
 
-            await _usuariosRepository.DeleteAsync(id, codigoUsuario);
+            await _usuariosRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
 
-            MostraMsgSucesso("Usuário excluído com sucesso!");
+            MostraMsgSucesso($"O Usuário \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }
