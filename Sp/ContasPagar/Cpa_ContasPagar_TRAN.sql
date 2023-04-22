@@ -11,7 +11,8 @@ GO
 CREATE PROCEDURE dbo.Cpa_ContasPagar_TRAN
 	@Modo						integer					,
 	@CodigoCpa					int				=	NULL,
-	@CodigoFuncionario			int				=	NULL,
+	@CodigoFornecedor			int				=	NULL,
+	@NumeroDocumento			varchar(20)		=	NULL,
 	@Valor						decimal(18,2)	=	NULL,
 	@DataVencimento				datetime		=	NULL,
 	@DataPagamento				datetime		=	NULL,
@@ -60,24 +61,62 @@ select @NomeTabela = 'Tabela de ContasPagar.'
     
 IF @Modo = 1 --Inclusao
 Begin
-	insert ContasPagar ( CodigoFuncionario, Valor, DataVencimento, DataPagamento, ServicoCobrado, Paga, Ativo, DataInclusao, UsuarioIncluiu )
-					Output inserted.CodigoCpa
-	
-	Values		(	@CodigoFuncionario, @Valor, @DataVencimento, @DataPagamento, @ServicoCobrado, @ContaPaga, 1, GETDATE(), @NomeUsuarioTRAN )
+	If exists(select NumeroDocumento from ContasPagar where NumeroDocumento = @NumeroDocumento and Ativo = 1)
+		Begin
+			Select 0
+		End
+	Else
+		Begin
+			If exists(select NumeroDocumento from ContasPagar where NumeroDocumento = @NumeroDocumento and Ativo = 0)
+				Begin
+					Update	ContasPagar
+					set		CodigoFornecedor = @CodigoFornecedor,
+							Valor = @Valor,
+							DataVencimento = @DataVencimento,
+							DataPagamento = @DataPagamento,
+							ServicoCobrado = @ServicoCobrado,
+							Paga = @ContaPaga,
+							Ativo = 1,
+							DataInclusao = GETDATE(),
+							UsuarioIncluiu = @NomeUsuarioTRAN,
+							DataUltimaAlteracao = null,
+							UsuarioUltimaAlteracao = null
+					where	NumeroDocumento = @NumeroDocumento
+
+					Select 1
+				End
+			Else
+				Begin
+					Insert ContasPagar ( CodigoFornecedor, NumeroDocumento, Valor, DataVencimento, DataPagamento, ServicoCobrado, Paga, Ativo, DataInclusao, UsuarioIncluiu )
+									Output inserted.CodigoCpa
+					
+					Values		(	@CodigoFornecedor, @NumeroDocumento, @Valor, @DataVencimento, @DataPagamento, @ServicoCobrado, @ContaPaga, 1, GETDATE(), @NomeUsuarioTRAN )
+				End
+		End
 End
 
 ELSE IF @Modo = 2 -- Alteracao
 Begin
-	Update	ContasPagar
-	set		CodigoFuncionario = @CodigoFuncionario,
-			Valor = @Valor,
-			DataVencimento = @DataVencimento,
-			DataPagamento = @DataPagamento,
-			ServicoCobrado = @ServicoCobrado,
-			Paga = @ContaPaga,
-			DataUltimaAlteracao = GETDATE(),
-			UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-	where	CodigoCpa = @CodigoCpa
+	If exists(select NumeroDocumento from ContasPagar where NumeroDocumento = @NumeroDocumento and CodigoCpa <> @CodigoCpa and Ativo = 1)
+		Begin
+			Select 0
+		End
+	Else
+		Begin
+			Update	ContasPagar
+			set		CodigoFornecedor = @CodigoFornecedor,
+					NumeroDocumento = @NumeroDocumento,
+					Valor = @Valor,
+					DataVencimento = @DataVencimento,
+					DataPagamento = @DataPagamento,
+					ServicoCobrado = @ServicoCobrado,
+					Paga = @ContaPaga,
+					DataUltimaAlteracao = GETDATE(),
+					UsuarioUltimaAlteracao = @NomeUsuarioTRAN
+			where	CodigoCpa = @CodigoCpa
+
+			Select 1
+		End
 
 	select @rowsaffected = @@rowcount, @errorreturned = @@error     
     IF @rowsaffected = 0 OR @errorreturned <> 0
@@ -114,6 +153,7 @@ End
 ELSE IF @Modo = 5 -- Consulta Varias Contas Pagas
 Begin
 	Select	CPA.CodigoCpa,
+			CPA.NumeroDocumento,
 			CPA.Valor,
 			CPA.DataVencimento,
 			CPA.DataPagamento,
@@ -121,11 +161,11 @@ Begin
 			CPA.Paga,
 			CPA.Ativo,
 			CPA.DataInclusao,
-			F.NomeFuncionario,
-			F.Cpf,
+			F.NomeFantasia,
+			F.Documento,
 			F.Telefone1
 	From	ContasPagar CPA inner join
-			Funcionario F on CPA.CodigoFuncionario = F.CodigoFuncionario
+			Fornecedor F on CPA.CodigoFornecedor = F.CodigoFornecedor
 	Where	CPA.Ativo = 1
 	and		CPA.Paga = 1
 End
@@ -133,6 +173,7 @@ End
 ELSE IF @Modo = 6 -- Consulta Varias Contas Nao Pagas
 Begin
 	Select	CPA.CodigoCpa,
+			CPA.NumeroDocumento,
 			CPA.Valor,
 			CPA.DataVencimento,
 			CPA.DataPagamento,
@@ -140,11 +181,11 @@ Begin
 			CPA.Paga,
 			CPA.Ativo,
 			CPA.DataInclusao,
-			F.NomeFuncionario,
-			F.Cpf,
+			F.NomeFantasia,
+			F.Documento,
 			F.Telefone1
 	From	ContasPagar CPA inner join
-			Funcionario F on CPA.CodigoFuncionario = F.CodigoFuncionario
+			Fornecedor F on CPA.CodigoFornecedor = F.CodigoFornecedor
 	Where	CPA.Ativo = 1
 	and		CPA.Paga = 0
 End

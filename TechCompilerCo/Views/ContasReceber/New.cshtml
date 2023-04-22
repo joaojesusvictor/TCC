@@ -1,0 +1,48 @@
+﻿@model TechCompilerCo.Models.ContasReceberViewModel
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <span><b>SUA</b></span><br />
+        <span><b>MECÂNICA</b></span>
+    </div>
+
+    <div class="col-md-6" style="text-align: right; font-size: 20px">
+        @if(Model.ContasRecebidas){
+            <span><b>Cadastro de Contas Recebidas</b></span>
+        }else{
+            <span><b>Cadastro de Contas Não Recebidas</b></span>
+        }
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("Create", "ContasReceber", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" asp-for="ContasRecebidas" />
+
+    <partial name="_Form.cshtml" />
+
+    <br />
+    
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin-left: 5px"><i class="fa fa-check"></i> Salvar</button>
+            
+            @if (Model.ContasRecebidas)
+            {
+                <a href="@Url.Action("ContasRecebidas", "ContasReceber")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+            }
+            else
+            {
+                <a href="@Url.Action("ContasNaoRecebidas", "ContasReceber")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+            }
+        </div>
+    </div>
+}

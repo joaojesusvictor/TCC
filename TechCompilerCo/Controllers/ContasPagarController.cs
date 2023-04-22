@@ -15,13 +15,13 @@ namespace TechCompilerCo.Controllers
     {
         private ContasPagarRepository _contasPagarRepository;
         private readonly ISessao _sessao;
-        private FuncionariosRepository _funcionariosRepository;
+        private FornecedoresRepository _fornecedoresRepository;
 
-        public ContasPagarController(ContasPagarRepository contasPagarRepository, ISessao sessao, FuncionariosRepository funcionariosRepository)
+        public ContasPagarController(ContasPagarRepository contasPagarRepository, ISessao sessao, FornecedoresRepository fornecedoresRepository)
         {
             _contasPagarRepository = contasPagarRepository;
             _sessao = sessao;
-            _funcionariosRepository = funcionariosRepository;
+            _fornecedoresRepository = fornecedoresRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -54,6 +54,7 @@ namespace TechCompilerCo.Controllers
                 viewModel.Contas.Add(new ContaPagarViewModel()
                 {
                     CodigoCpa = c.CodigoCpa,
+                    NumeroDocumento= c.NumeroDocumento,
                     Valor = c.Valor,
                     DataVencimento = c.DataVencimento,
                     DataPagamento = c.DataPagamento,
@@ -61,8 +62,8 @@ namespace TechCompilerCo.Controllers
                     Paga = c.Paga,
                     Ativo = c.Ativo,
                     DataInclusao = c.DataInclusao,
-                    NomeFuncionario = c.NomeFuncionario,
-                    Cpf = c.Cpf,
+                    NomeFantasia = c.NomeFantasia,
+                    Documento = c.Documento,
                     Telefone1 = c.Telefone1
                 });
             }
@@ -87,6 +88,7 @@ namespace TechCompilerCo.Controllers
                 viewModel.Contas.Add(new ContaPagarViewModel()
                 {
                     CodigoCpa = c.CodigoCpa,
+                    NumeroDocumento = c.NumeroDocumento,
                     Valor = c.Valor,
                     DataVencimento = c.DataVencimento,
                     DataPagamento = c.DataPagamento,
@@ -94,8 +96,8 @@ namespace TechCompilerCo.Controllers
                     Paga = c.Paga,
                     Ativo = c.Ativo,
                     DataInclusao = c.DataInclusao,
-                    NomeFuncionario = c.NomeFuncionario,
-                    Cpf = c.Cpf,
+                    NomeFantasia = c.NomeFantasia,
+                    Documento = c.Documento,
                     Telefone1 = c.Telefone1
                 });
             }
@@ -105,12 +107,12 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> New(bool contasPagas)
         {
-            var comboFuncionarios = await _funcionariosRepository.ComboFuncionariosAsync();
+            var comboFornecedores = await _fornecedoresRepository.ComboFornecedoresAsync();
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ContasPagarViewModel()
             {
-                FuncionariosSelect = comboFuncionarios,
+                FornecedoresSelect = comboFornecedores,
                 UsuarioAdm = usuario.UsuarioAdm,
                 CodigoUsuario = usuario.CodigoUsuario,
                 ContasPagas = contasPagas
@@ -121,9 +123,16 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(ContasPagarViewModel model)
         {
-            await _contasPagarRepository.CreateAsync(model);
+            int incluido = await _contasPagarRepository.CreateAsync(model);
 
-            MostraMsgSucesso("Conta incluída com sucesso!");
+            if (incluido <= 0)
+            {
+                MostraMsgErro("Já existe uma outra conta com este Número Documento!");
+
+                return RedirectToAction(nameof(New), new { contasPagas = model.ContasPagas });
+            }
+
+            MostraMsgSucesso($"A Conta do Serviço \"{model.ServicoCobrado}\" foi incluída com sucesso!");
 
             if (model.ContasPagas)
                 return RedirectToAction(nameof(ContasPagas));
@@ -133,16 +142,17 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Edit(int id, bool contasPagas)
         {
-            var comboFuncionarios = await _funcionariosRepository.ComboFuncionariosAsync();
+            var comboFornecedores = await _fornecedoresRepository.ComboFornecedoresAsync();
             ContasPagarRepository.ContaPagar conta = await _contasPagarRepository.GetContaPagarAsync(id);
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ContasPagarViewModel()
             {
-                FuncionariosSelect = comboFuncionarios,
+                FornecedoresSelect = comboFornecedores,
                 ModoEdit = true,
                 CodigoCpa = id,
-                CodigoFuncionario = conta.CodigoFuncionario,
+                CodigoFornecedor = conta.CodigoFornecedor,
+                NumeroDocumento = conta.NumeroDocumento,
                 Valor = conta.Valor,
                 DataVencimento = conta.DataVencimento,
                 DataPagamento = conta.DataPagamento,
@@ -160,9 +170,16 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(ContasPagarViewModel model)
         {
-            await _contasPagarRepository.UpdateAsync(model);
+            int alterado = await _contasPagarRepository.UpdateAsync(model);
 
-            MostraMsgSucesso("Conta alterada com sucesso!");
+            if(alterado <= 0)
+            {
+                MostraMsgErro("Já existe uma outra conta com este Número Documento!");
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoCpa, contasPagas = model.ContasPagas });
+            }
+
+            MostraMsgSucesso($"A Conta \"{model.CodigoCpa}\" do Serviço \"{model.ServicoCobrado}\" foi alterada com sucesso!");
 
             if (model.ContasPagas)
                 return RedirectToAction(nameof(ContasPagas));
