@@ -125,12 +125,30 @@ Create Table Venda(
 
 Create Table ContasPagar(
 	CodigoCpa int identity(1,1) primary key,
-	CodigoFuncionario int foreign key references Funcionario(CodigoFuncionario),
+	CodigoFornecedor int foreign key references Fornecedor(CodigoFornecedor),
+	NumeroDocumento varchar(20) not null,
 	Valor decimal(18,2) not null,
 	DataVencimento datetime not null,
 	DataPagamento datetime null,
 	ServicoCobrado varchar(200) not null,
 	Paga bit not null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null
+);
+
+Create Table ContasReceber(
+	CodigoCre int identity(1,1) primary key,
+	CodigoCliente int foreign key references Cliente(CodigoCliente),
+	NumeroDocumento varchar(20) not null,
+	DataVencimento datetime not null,
+	Valor decimal(18,2) not null,
+	DataPagamento datetime null,
+	FormaPagamento varchar(3) null,
+	ServicoCobrado varchar(200) not null,
+	Recebida bit not null,
 	Ativo bit not null,
 	DataInclusao datetime not null,
 	UsuarioIncluiu varchar(100) not null,

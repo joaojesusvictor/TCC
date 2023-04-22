@@ -1,0 +1,73 @@
+﻿@model TechCompilerCo.Models.ContasReceberViewModel
+
+<input asp-for="CodigoUsuario" type="hidden" />
+
+<div class="row">
+    <div class="col-md-6">
+        @if (Model.ModoEdit)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Código Conta</label>
+                    <input asp-for="CodigoCre" class="form-control" readonly />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Data de Cadastro</label>
+                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
+                </div>
+            </div>
+        }        
+
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Número Documento</label>
+                <input asp-for="NumeroDocumento" maxlength="20" class="form-control" required />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Data Vencimento</label>
+                <input asp-for="DataVencimento" type="date" class="form-control" required />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Data Pagamento</label>
+                <input asp-for="DataPagamento" type="date" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Forma Pagamento</label>
+                <select asp-for="FormaPagamento" class="form-control" required>
+                    <option></option>
+                    <option value="Cc">Cartão de Crédito</option>
+                    <option value="Cd">Cartão de Débito</option>
+                    <option value="Din">Dinheiro</option>
+                    <option value="Pix">Pix</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="form-label">Descrição Serviço</label>
+                <input asp-for="ServicoCobrado" maxlength="200" class="form-control" required />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Preço</label>
+                <input asp-for="Valor" type="number" min="0" step=".01" class="form-control" required />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Cliente</label>
+                <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control" required></select>
+            </div>
+        </div>
+    </div>
+</div>

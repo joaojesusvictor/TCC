@@ -21,6 +21,13 @@
 
         <div class="row">
             <div class="col-md-6">
+                <label class="form-label">Número Documento</label>
+                <input asp-for="NumeroDocumento" maxlength="20" class="form-control" required />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
                 <label class="form-label">Data Vencimento</label>
                 <input asp-for="DataVencimento" type="date" class="form-control" required />
             </div>
@@ -47,8 +54,8 @@
             </div>
 
             <div class="col-md-6">
-                <label class="form-label">Funcionário</label>
-                <select asp-for="CodigoFuncionario" asp-items="@Model.FuncionariosSelect" class="form-control" required></select>
+                <label class="form-label">Fornecedor</label>
+                <select asp-for="CodigoFornecedor" asp-items="@Model.FornecedoresSelect" class="form-control" required></select>
             </div>
         </div>
     </div>

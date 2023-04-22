@@ -103,13 +103,13 @@ namespace TechCompilerCo.Controllers
                 }
                 else
                 {
-                    MostraMsgErro("Não conseguimos enviar o email de Redefinição de Senha. Por favor, tente novamente!");
+                    MostraMsgErro("Não conseguimos enviar o Email de Redefinição de Senha. Por favor, tente novamente!");
                 }
 
                 return RedirectToAction(nameof(Index));
             }
 
-            MostraMsgErro("Não conseguimos redefinir sua senha. Por favor, tente novamente!");
+            MostraMsgErro("Não conseguimos Redefinir sua Senha. Por favor, tente novamente!");
 
             return RedirectToAction(nameof(Index));
         }

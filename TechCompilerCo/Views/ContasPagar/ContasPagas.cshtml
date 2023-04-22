@@ -43,6 +43,9 @@
                         <th></th>
                     }
                     <th>
+                        Número Documento
+                    </th>
+                    <th>
                         Data Vencimento
                     </th>
                     <th>
@@ -55,7 +58,7 @@
                         Serviço
                     </th>
                     <th>
-                        Dados Funcionário Realizou
+                        Dados Fornecedor
                     </th>
                 </tr>
             </thead>
@@ -72,6 +75,9 @@
                             </td>
                         }
                         <td>
+                            @c.NumeroDocumento
+                        </td>
+                        <td>
                             @c.DataVencimento.ToString("dd-MM-yyyy")
                         </td>
                         <td>
@@ -84,7 +90,7 @@
                             @c.ServicoCobrado
                         </td>
                         <td>
-                            @c.NomeFuncionario / @c.Cpf / @c.Telefone1
+                            @c.NomeFantasia / @c.Documento / @c.Telefone1
                         </td>
                     </tr>
                 }

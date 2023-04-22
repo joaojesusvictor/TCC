@@ -16,7 +16,7 @@ namespace TechCompilerCo.Repositorys
     public class ContasPagarRepository
     {
         private readonly IDbConnection _db;
-        private string _sqlTran = "EXEC Cpa_ContasPagar_TRAN @Modo, @CodigoCpa, @CodigoFuncionario, @Valor, @DataVencimento, @DataPagamento, @ServicoCobrado, @ContaPaga, @UsuarioTran";
+        private string _sqlTran = "EXEC Cpa_ContasPagar_TRAN @Modo, @CodigoCpa, @CodigoFornecedor, @NumeroDocumento, @Valor, @DataVencimento, @DataPagamento, @ServicoCobrado, @ContaPaga, @UsuarioTran";
 
         public ContasPagarRepository()
         {
@@ -81,13 +81,14 @@ namespace TechCompilerCo.Repositorys
             return result;
         }
 
-        public async Task CreateAsync(ContasPagarViewModel model)
+        public async Task<int> CreateAsync(ContasPagarViewModel model)
         {
             var p = new ParametrosTran()
             {
                 Modo = 1,
                 UsuarioTran = model.CodigoUsuario,
-                CodigoFuncionario = model.CodigoFuncionario,
+                CodigoFornecedor = model.CodigoFornecedor,
+                NumeroDocumento = model.NumeroDocumento,
                 Valor = model.Valor,
                 DataVencimento = model.DataVencimento,
                 DataPagamento = model.DataPagamento,
@@ -95,22 +96,27 @@ namespace TechCompilerCo.Repositorys
                 ContaPaga = model.DataPagamento != null
             };
 
+            int result = 0;
+
             using (var conn = new SqlConnection(_db.ConnectionString))
             {
                 conn.Open();
 
-                await conn.ExecuteAsync(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
+
+            return result;
         }
 
-        public async Task UpdateAsync(ContasPagarViewModel model)
+        public async Task<int> UpdateAsync(ContasPagarViewModel model)
         {
             var p = new ParametrosTran()
             {
                 Modo = 2,
                 UsuarioTran = model.CodigoUsuario,
                 CodigoCpa= model.CodigoCpa,
-                CodigoFuncionario = model.CodigoFuncionario,
+                CodigoFornecedor = model.CodigoFornecedor,
+                NumeroDocumento = model.NumeroDocumento,
                 Valor = model.Valor,
                 DataVencimento = model.DataVencimento,
                 DataPagamento = model.DataPagamento,
@@ -118,12 +124,16 @@ namespace TechCompilerCo.Repositorys
                 ContaPaga = model.DataPagamento != null
             };
 
+            int result = 0;
+
             using (var conn = new SqlConnection(_db.ConnectionString))
             {
                 conn.Open();
 
-                await conn.ExecuteAsync(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
+
+            return result;
         }
 
         public async Task DeleteAsync(int id, int codigoUsuario)
@@ -146,7 +156,8 @@ namespace TechCompilerCo.Repositorys
         public class ContaPagar
         {
             public int CodigoCpa { get; set; }
-            public int CodigoFuncionario { get; set; }
+            public int CodigoFornecedor { get; set; }
+            public string? NumeroDocumento { get; set; }
             public decimal Valor { get; set; }
             public DateTime DataVencimento { get; set; }
             public DateTime? DataPagamento { get; set; }
@@ -154,8 +165,8 @@ namespace TechCompilerCo.Repositorys
             public bool Paga { get; set; }
             public bool Ativo { get; set; }
             public DateTime DataInclusao { get; set; }
-            public string? NomeFuncionario { get; set; }
-            public string? Cpf { get; set; }
+            public string? NomeFantasia { get; set; }
+            public string? Documento { get; set; }
             public string? Telefone1 { get; set; }
         }
 
@@ -163,7 +174,8 @@ namespace TechCompilerCo.Repositorys
         {
             public int Modo { get; set; }
             public int CodigoCpa { get; set; }
-            public int CodigoFuncionario { get; set; }
+            public int CodigoFornecedor { get; set; }
+            public string? NumeroDocumento { get; set; }
             public decimal Valor { get; set; }
             public DateTime? DataVencimento { get; set; }
             public DateTime? DataPagamento { get; set; }
