@@ -125,9 +125,11 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(ContasReceberViewModel model)
         {
-            if (string.IsNullOrEmpty(model.NumeroDocumento))
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Número Documento é necessário!");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(New), new { contasRecebidas = model.ContasRecebidas });
             }
@@ -180,9 +182,11 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(ContasReceberViewModel model)
         {
-            if (string.IsNullOrEmpty(model.NumeroDocumento))
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Número Documento é necessário!");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoCre, contasRecebidas = model.ContasRecebidas });
             }
@@ -202,6 +206,19 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(ContasRecebidas));
             else
                 return RedirectToAction(nameof(ContasNaoRecebidas));
+        }
+
+        public string Validar(ContasReceberViewModel model)
+        {
+            string msg = "";
+
+            if (string.IsNullOrEmpty(model.NumeroDocumento))
+                msg = "O Número Documento é necessário! ";
+
+            if (string.IsNullOrEmpty(model.ServicoCobrado))
+                msg += "A Descrição do Serviço é necessária!";
+
+            return msg;
         }
 
         [HttpGet]

@@ -23,6 +23,7 @@ builder.Services.AddTransient<ProdutosRepository, ProdutosRepository>();
 builder.Services.AddTransient<VendasRepository, VendasRepository>();
 builder.Services.AddTransient<ContasPagarRepository, ContasPagarRepository>();
 builder.Services.AddTransient<ContasReceberRepository, ContasReceberRepository>();
+builder.Services.AddTransient<GerarOsRepository, GerarOsRepository>();
 
 builder.Services.AddSession(o =>
 {

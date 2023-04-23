@@ -63,6 +63,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(FornecedoresViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(New));
+            }
+
             string doc = DeixaSoNumeros(model.Documento);
 
             if(doc.Length == 11)
@@ -140,6 +149,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(FornecedoresViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoFornecedor });
+            }
+
             string doc = DeixaSoNumeros(model.Documento);
 
             if (doc.Length == 11)
@@ -180,6 +198,43 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Fornecedor alterado com sucesso!");
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public string Validar(FornecedoresViewModel model)
+        {
+            string msg = "";
+
+            if (string.IsNullOrEmpty(model.RazaoSocial))
+                msg = "A Razão Social é necessária! ";
+
+            if (string.IsNullOrEmpty(model.NomeFantasia))
+                msg += "O Nome Fantasia é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Telefone1))
+                msg += "O Telefone é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Documento))
+                msg += "O Documento é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Cep))
+                msg += "O Cep é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Endereco))
+                msg += "O Endereço é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Bairro))
+                msg += "O Bairro é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Cidade))
+                msg += "A Cidade é necessária! ";
+
+            if (string.IsNullOrEmpty(model.Uf))
+                msg += "O Estado é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Pais))
+                msg += "O País é necessário!";
+
+            return msg;
         }
 
         [HttpGet]

@@ -67,9 +67,11 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(UsuariosViewModel model)
         {
-            if (model.CodigoFuncionario == 0)
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Selecione o Funcionário");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(New));
             }
@@ -129,11 +131,22 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(UsuariosViewModel model)
         {
-            if (model.CodigoFuncionario == 0)
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Selecione o Funcionário");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoUsuario });
+            }
+
+            bool existeLogin = await _usuariosRepository.ValidaUsuarioLoginEditAsync(model.CodigoUsuario, model.CodigoFuncionario);
+
+            if (existeLogin)
+            {
+                MostraMsgErro("Este Funcionário já possui login!");
+
+                return RedirectToAction(nameof(New));
             }
 
             if (!EmailValido(model.Email))
@@ -155,6 +168,28 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Usuário alterado com sucesso!");
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public string Validar(UsuariosViewModel model)
+        {
+            string msg = "";
+
+            if (!model.ModoEdit)
+            {
+                if (model.CodigoFuncionario == 0)
+                    msg = "Selecione o Funcionário! ";
+
+                if (string.IsNullOrEmpty(model.Senha))
+                    msg = "A Senha é necessária! ";
+            }
+
+            if (string.IsNullOrEmpty(model.LoginUsuario))
+                msg += "O Login é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Email))
+                msg += "O Email é necessário!";
+
+            return msg;
         }
 
         [HttpGet]

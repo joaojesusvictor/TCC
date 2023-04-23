@@ -148,6 +148,27 @@ namespace TechCompilerCo.Repositorys
             return result;
         }
 
+        public async Task<bool> ValidaUsuarioLoginEditAsync(int codigoUsuario, int codigoFuncionario)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 11,
+                CodigoUsuario = codigoUsuario,
+                CodigoFuncionario = codigoFuncionario
+            };
+
+            bool result = false;
+
+            using (var conn = new SqlConnection(_db.ConnectionString))
+            {
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
+            }
+
+            return result;
+        }
+
         public class Usuario
         {
             public int CodigoUsuario { get; set; }
