@@ -123,6 +123,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(ContasPagarViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(New), new { contasPagas = model.ContasPagas });
+            }
+
             int incluido = await _contasPagarRepository.CreateAsync(model);
 
             if (incluido <= 0)
@@ -170,6 +179,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(ContasPagarViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoCpa, contasPagas = model.ContasPagas });
+            }
+
             int alterado = await _contasPagarRepository.UpdateAsync(model);
 
             if(alterado <= 0)
@@ -185,6 +203,19 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(ContasPagas));
             else
                 return RedirectToAction(nameof(ContasNaoPagas));
+        }
+
+        public string Validar(ContasPagarViewModel model)
+        {
+            string msg = "";
+
+            if (string.IsNullOrEmpty(model.NumeroDocumento))
+                msg = "O Número Documento é necessário! ";
+
+            if (string.IsNullOrEmpty(model.ServicoCobrado))
+                msg += "A Descrição do Serviço é necessária!";
+
+            return msg;
         }
 
         [HttpGet]

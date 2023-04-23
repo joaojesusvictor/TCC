@@ -68,9 +68,11 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(ProdutosViewModel model)
         {
-            if (model.CodigoFornecedor == 0)
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Selecione o Fornecedor");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(New));
             }
@@ -118,10 +120,12 @@ namespace TechCompilerCo.Controllers
         }
 
         public async Task<IActionResult> Update(ProdutosViewModel model)
-        {            
-            if(model.CodigoFornecedor == 0)
+        {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Selecione o Fornecedor");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoProduto });
             }
@@ -138,6 +142,22 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Produto alterado com sucesso!");
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public string Validar(ProdutosViewModel model)
+        {
+            string msg = "";
+
+            if (model.CodigoFornecedor == 0)
+                msg = "Selecione o Fornecedor! ";
+
+            if (string.IsNullOrEmpty(model.Referencia))
+                msg += "A Referência é necessária! ";
+
+            if (string.IsNullOrEmpty(model.Descricao))
+                msg += "A Descrição é necessária!";
+
+            return msg;
         }
 
         [HttpGet]

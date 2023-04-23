@@ -73,23 +73,11 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(VendasViewModel model)
         {
-            if (model.CodigoProduto == 0)
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Selecione o Produto");
-
-                return RedirectToAction(nameof(New));
-            }
-
-            if (model.CodigoCliente == 0)
-            {
-                MostraMsgErro("Selecione o Cliente");
-
-                return RedirectToAction(nameof(New));
-            }
-
-            if (model.Quantidade == 0)
-            {
-                MostraMsgErro("A Quantidade da Venda deve ser maior do que Zero!");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(New));
             }
@@ -136,23 +124,11 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(VendasViewModel model)
         {
-            if(model.CodigoProduto == 0)
-            {
-                MostraMsgErro("Selecione o Produto");
+            string msgErro = Validar(model);
 
-                return RedirectToAction(nameof(Edit), new { id = model.CodigoVenda });
-            }
-            
-            if(model.CodigoCliente == 0)
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Selecione o Cliente");
-
-                return RedirectToAction(nameof(Edit), new { id = model.CodigoVenda });
-            }
-            
-            if(model.Quantidade == 0)
-            {
-                MostraMsgErro("A Quantidade da Venda deve ser maior do que Zero!");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoVenda });
             }
@@ -169,6 +145,25 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Venda alterada com sucesso!");
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public string Validar(VendasViewModel model)
+        {
+            string msg = "";
+
+            if (model.CodigoProduto == 0)
+                msg = "Selecione o Produto! ";
+
+            if (model.CodigoCliente == 0)
+                msg += "Selecione o Cliente! ";
+
+            if (model.Quantidade == 0)
+                msg += "A Quantidade da Venda deve ser maior do que Zero! ";
+
+            if (model.Valor == 0)
+                msg += "O Preço da Venda deve ser maior do que Zero!";
+
+            return msg;
         }
 
         [HttpGet]

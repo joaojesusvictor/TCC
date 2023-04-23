@@ -63,6 +63,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(ClientesViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(New));
+            }
+
             string doc = DeixaSoNumeros(model.Documento);
 
             if (doc.Length == 11)
@@ -141,6 +150,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(ClientesViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+            }
+
             string doc = DeixaSoNumeros(model.Documento);
 
             if (doc.Length == 11)
@@ -181,6 +199,22 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Cliente alterado com sucesso!");
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public string Validar(ClientesViewModel model)
+        {
+            string msg = "";
+
+            if (string.IsNullOrEmpty(model.NomeCliente))
+                msg = "O Nome Cliente é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Telefone1))
+                msg += "O Telefone é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Documento))
+                msg += "O Número Documento é necessário! ";
+
+            return msg;
         }
 
         [HttpGet]

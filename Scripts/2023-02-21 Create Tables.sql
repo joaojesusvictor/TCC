@@ -155,3 +155,19 @@ Create Table ContasReceber(
 	DataUltimaAlteracao datetime null,
 	UsuarioUltimaAlteracao varchar(100) null
 );
+
+Create Table OrdemServico(
+	CodigoOs int identity(1,1) primary key,
+	CodigoCliente int foreign key references Cliente(CodigoCliente),
+	CodigoFuncionario int foreign key references Funcionario(CodigoFuncionario),
+	DataInicio datetime not null,
+	DataPrevisaoTermino datetime not null,
+	DescricaoProblema varchar(200) not null,
+	Valor decimal(18,2) not null,
+	StatusOs varchar(3) not null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null
+);
