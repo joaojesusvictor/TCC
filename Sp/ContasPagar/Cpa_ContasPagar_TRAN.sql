@@ -16,6 +16,7 @@ CREATE PROCEDURE dbo.Cpa_ContasPagar_TRAN
 	@Valor						decimal(18,2)	=	NULL,
 	@DataVencimento				datetime		=	NULL,
 	@DataPagamento				datetime		=	NULL,
+	@FormaPagamento				varchar(3)		=	NULL,
 	@ServicoCobrado				varchar(200)	=	NULL,
 	@ContaPaga					bit				=	NULL,
 	@UsuarioTran				int				=	NULL
@@ -74,6 +75,7 @@ Begin
 							Valor = @Valor,
 							DataVencimento = @DataVencimento,
 							DataPagamento = @DataPagamento,
+							FormaPagamento = @FormaPagamento,
 							ServicoCobrado = @ServicoCobrado,
 							Paga = @ContaPaga,
 							Ativo = 1,
@@ -87,10 +89,10 @@ Begin
 				End
 			Else
 				Begin
-					Insert ContasPagar ( CodigoFornecedor, NumeroDocumento, Valor, DataVencimento, DataPagamento, ServicoCobrado, Paga, Ativo, DataInclusao, UsuarioIncluiu )
+					Insert ContasPagar ( CodigoFornecedor, NumeroDocumento, Valor, DataVencimento, DataPagamento, FormaPagamento, ServicoCobrado, Paga, Ativo, DataInclusao, UsuarioIncluiu )
 									Output inserted.CodigoCpa
 					
-					Values		(	@CodigoFornecedor, @NumeroDocumento, @Valor, @DataVencimento, @DataPagamento, @ServicoCobrado, @ContaPaga, 1, GETDATE(), @NomeUsuarioTRAN )
+					Values		(	@CodigoFornecedor, @NumeroDocumento, @Valor, @DataVencimento, @DataPagamento, @FormaPagamento, @ServicoCobrado, @ContaPaga, 1, GETDATE(), @NomeUsuarioTRAN )
 				End
 		End
 End
@@ -109,6 +111,7 @@ Begin
 					Valor = @Valor,
 					DataVencimento = @DataVencimento,
 					DataPagamento = @DataPagamento,
+					FormaPagamento = @FormaPagamento,
 					ServicoCobrado = @ServicoCobrado,
 					Paga = @ContaPaga,
 					DataUltimaAlteracao = GETDATE(),
@@ -157,6 +160,7 @@ Begin
 			CPA.Valor,
 			CPA.DataVencimento,
 			CPA.DataPagamento,
+			CPA.FormaPagamento,
 			CPA.ServicoCobrado,
 			CPA.Paga,
 			CPA.Ativo,
@@ -177,6 +181,7 @@ Begin
 			CPA.Valor,
 			CPA.DataVencimento,
 			CPA.DataPagamento,
+			CPA.FormaPagamento,
 			CPA.ServicoCobrado,
 			CPA.Paga,
 			CPA.Ativo,

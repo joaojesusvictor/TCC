@@ -151,7 +151,7 @@ namespace TechCompilerCo.Repositorys
             return result;
         }
 
-        public async Task DeleteAsync(int id, int codigoUsuario)
+        public async Task<bool> DeleteAsync(int id, int codigoUsuario)
         {
             var p = new ParametrosTran()
             {
@@ -160,12 +160,16 @@ namespace TechCompilerCo.Repositorys
                 UsuarioTran = codigoUsuario
             };
 
+            bool result = false;
+
             using (var conn = new SqlConnection(_db.ConnectionString))
             {
                 conn.Open();
 
-                await conn.ExecuteAsync(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
             }
+
+            return result;
         }
 
         public class Cliente

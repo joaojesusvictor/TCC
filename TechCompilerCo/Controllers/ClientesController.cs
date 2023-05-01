@@ -239,7 +239,14 @@ namespace TechCompilerCo.Controllers
 
             int codigoUsuario = usuario.CodigoUsuario;
 
-            await _clientesRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
+            bool excluido = await _clientesRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
+
+            if (!excluido)
+            {
+                MostraMsgErro($"O Cliente \"{model.NomeEntidade}\" não pode ser excluído enquanto tiver OS Aberta/Em Execução para ele!");
+
+                return RedirectToAction(nameof(Index));
+            }
 
             MostraMsgSucesso($"O Cliente \"{model.NomeEntidade}\" foi excluído com sucesso!");
 

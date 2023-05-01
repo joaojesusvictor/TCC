@@ -152,11 +152,20 @@ end
 
 ELSE IF @Modo = 3 -- Exclusao
 begin
-		Update	Cliente 
-		set		Ativo = 0,
-				DataUltimaAlteracao = GETDATE(),
-				UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-		where	CodigoCliente = @CodigoCliente
+	If exists(select * from OrdemServico where CodigoCliente = @CodigoCliente and StatusOs in ('001', '002'))
+		begin
+			select 0
+		end
+	else
+		begin
+			Update	Cliente 
+			set		Ativo = 0,
+					DataUltimaAlteracao = GETDATE(),
+					UsuarioUltimaAlteracao = @NomeUsuarioTRAN
+			where	CodigoCliente = @CodigoCliente
+
+			select 1
+		end
 
 	    select @errorreturned = @@error     
         IF @errorreturned <> 0
