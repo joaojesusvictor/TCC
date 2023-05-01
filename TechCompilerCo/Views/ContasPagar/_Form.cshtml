@@ -24,17 +24,28 @@
                 <label class="form-label">Número Documento</label>
                 <input asp-for="NumeroDocumento" maxlength="20" class="form-control" required />
             </div>
-        </div>
 
-        <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Data Vencimento</label>
                 <input asp-for="DataVencimento" type="date" class="form-control" required />
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Data Pagamento</label>
                 <input asp-for="DataPagamento" type="date" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Forma Pagamento</label>
+                <select asp-for="FormaPagamento" class="form-control">
+                    <option></option>
+                    <option value="Cc">Cartão de Crédito</option>
+                    <option value="Cd">Cartão de Débito</option>
+                    <option value="Din">Dinheiro</option>
+                    <option value="Pix">Pix</option>
+                </select>
             </div>
         </div>
     </div>

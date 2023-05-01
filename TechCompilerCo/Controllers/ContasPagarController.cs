@@ -58,6 +58,7 @@ namespace TechCompilerCo.Controllers
                     Valor = c.Valor,
                     DataVencimento = c.DataVencimento,
                     DataPagamento = c.DataPagamento,
+                    FormaPagamento = c.FormaPagamento,
                     ServicoCobrado = c.ServicoCobrado,
                     Paga = c.Paga,
                     Ativo = c.Ativo,
@@ -92,6 +93,7 @@ namespace TechCompilerCo.Controllers
                     Valor = c.Valor,
                     DataVencimento = c.DataVencimento,
                     DataPagamento = c.DataPagamento,
+                    FormaPagamento = c.FormaPagamento,
                     ServicoCobrado = c.ServicoCobrado,
                     Paga = c.Paga,
                     Ativo = c.Ativo,
@@ -165,6 +167,7 @@ namespace TechCompilerCo.Controllers
                 Valor = conta.Valor,
                 DataVencimento = conta.DataVencimento,
                 DataPagamento = conta.DataPagamento,
+                FormaPagamento = conta.FormaPagamento,
                 ServicoCobrado = conta.ServicoCobrado,
                 Paga = conta.Paga,
                 Ativo = conta.Ativo,
@@ -237,17 +240,17 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
-            if (model.Aux1.ToLower() == "true")
-            {
-                ContasPagarRepository.ContaPagar conta = await _contasPagarRepository.GetContaPagarAsync(Convert.ToInt32(model.Id));
+            //if (model.Aux1.ToLower() == "true")
+            //{
+            //    ContasPagarRepository.ContaPagar conta = await _contasPagarRepository.GetContaPagarAsync(Convert.ToInt32(model.Id));
 
-                if (conta.DataPagamento != null)
-                {
-                    MostraMsgErro("Não é possível excluir uma Conta que Já Foi Paga!");
+            //    if (conta.DataPagamento != null)
+            //    {
+            //        MostraMsgErro("Não é possível excluir uma Conta que Já Foi Paga!");
 
-                    return RedirectToAction(nameof(ContasPagas));
-                }
-            }
+            //        return RedirectToAction(nameof(ContasPagas));
+            //    }
+            //}
 
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 

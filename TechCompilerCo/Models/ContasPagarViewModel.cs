@@ -12,6 +12,7 @@ namespace TechCompilerCo.Models
         public decimal Valor { get; set; }
         public DateTime? DataVencimento { get; set; }
         public DateTime? DataPagamento { get; set; }
+        public string? FormaPagamento { get; set; }
         public string? ServicoCobrado { get; set; }
         public bool Paga { get; set; }
         public bool Ativo { get; set; }
@@ -34,6 +35,7 @@ namespace TechCompilerCo.Models
         public decimal Valor { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime? DataPagamento { get; set; }
+        public string? FormaPagamento { get; set; }
         public string? StrDtPagamento => DataPagamento == null ? "" : DataPagamento?.ToString("dd-MM-yyyy");
         public string? ServicoCobrado { get; set; }
         public bool Paga { get; set; }

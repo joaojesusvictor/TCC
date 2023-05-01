@@ -240,17 +240,17 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
-            if (model.Aux1.ToLower() == "true")
-            {
-                ContasReceberRepository.ContaReceber conta = await _contasReceberRepository.GetContaReceberAsync(Convert.ToInt32(model.Id));
+            //if (model.Aux1.ToLower() == "true")
+            //{
+            //    ContasReceberRepository.ContaReceber conta = await _contasReceberRepository.GetContaReceberAsync(Convert.ToInt32(model.Id));
 
-                if (conta.DataPagamento != null)
-                {
-                    MostraMsgErro("Não é possível excluir uma Conta que Já Foi Recebida!");
+            //    if (conta.DataPagamento != null)
+            //    {
+            //        MostraMsgErro("Não é possível excluir uma Conta que Já Foi Recebida!");
 
-                    return RedirectToAction(nameof(ContasRecebidas));
-                }
-            }
+            //        return RedirectToAction(nameof(ContasRecebidas));
+            //    }
+            //}
 
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
