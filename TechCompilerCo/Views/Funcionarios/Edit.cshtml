@@ -1,0 +1,34 @@
+﻿@model TechCompilerCo.Models.FuncionariosViewModel
+
+@{
+    ViewData["Title"] = "Edição";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <span><b>SUA</b></span><br />
+        <span><b>MECÂNICA</b></span>
+    </div>
+
+    <div class="col-md-6" style="text-align: right; font-size: 20px">
+        <span><b>Edição de Funcionários</b></span>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("Update", "Funcionarios", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <partial name="_Form.cshtml" />
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin-left: 5px"><i class="fa fa-check"></i> Salvar Alterações</button>
+            <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+        </div>
+    </div>
+}

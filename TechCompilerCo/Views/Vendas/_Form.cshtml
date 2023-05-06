@@ -1,0 +1,68 @@
+﻿@model TechCompilerCo.Models.VendasViewModel
+
+<input asp-for="CodigoUsuario" type="hidden" />
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.ModoEdit)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Código Venda</label>
+                    <input asp-for="CodigoVenda" class="form-control" readonly />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Data de Cadastro</label>
+                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
+                </div>
+            </div>
+        }
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <label class="form-label">Data da Venda</label>
+                <input asp-for="DataVenda" type="date" class="form-control" required />
+            </div>
+        </div>
+        <div class="row">
+            @if ((!Model.UsuarioAdm && !Model.ModoEdit) || Model.UsuarioAdm)
+            {
+                <div class="col-md-6">
+                    <label class="form-label">Cliente</label>
+                    <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control" required></select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Produto</label>
+                    <select asp-for="CodigoProduto" asp-items="@Model.ProdutosSelect" class="form-control" required></select>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" asp-for="CodigoCliente" />
+                <input type="hidden" asp-for="CodigoProduto" />
+
+                <div class="col-md-6">
+                    <label class="form-label">Cliente</label>
+                    <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control" disabled></select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Produto</label>
+                    <select asp-for="CodigoProduto" asp-items="@Model.ProdutosSelect" class="form-control" disabled></select>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Quantidade</label>
+                <input asp-for="Quantidade" type="number" min="0" class="form-control" required />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Preço</label>
+                <input asp-for="Valor" type="number" min="0" step=".01" class="form-control" required />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿@using Newtonsoft.Json;
+@using TechCompilerCo.Util.Helpers;
+
+@{
+    var jsonAlerts = TempData["UiAlerts"] as string;
+    {
+        if (!string.IsNullOrEmpty(jsonAlerts))
+        {
+            var alerts = JsonConvert.DeserializeObject<List<UiAlert>>(jsonAlerts);
+
+            if (alerts != null && alerts.Any())
+            {
+                foreach (var alert in alerts)
+                {
+                    <div class="alert alert-block @alert.AlertType?.HtmlClass">
+                        @if (!string.IsNullOrEmpty(alert.Title))
+                        {
+                            <h4 class="alert-heading"><i class="@alert.AlertType?.Icon"></i> @alert.Title</h4>
+                        }
+                        <p>@Html.Raw(alert.Message) <a href="#" target="_blank">@alert.Url</a></p>
+                    </div>
+                }
+            }
+        }
+    }
+}

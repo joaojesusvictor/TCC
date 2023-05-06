@@ -1,0 +1,99 @@
+﻿@model TechCompilerCo.Models.UsuariosViewModel
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-6">
+            <span><b>SUA</b></span><br />
+            <span><b>MECÂNICA</b></span>
+        </div>
+
+        <div class="col-md-6" style="text-align: right; font-size: 20px">
+            <span><b>Usuários</b></span>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row col-md-12">
+        <div class="col-md-1">
+            <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "Usuarios")"><i class="fa fa-table"></i> Excel</a>
+        </div>
+
+        @if (Model.UsuarioAdmLogado)
+        {
+            <div class="col-md-2">
+                <a class="btn btn-sm btn-primary" href="@Url.Action("New", "Usuarios")"><i class="fa fa-plus-circle"></i> Novo</a>
+            </div>
+        }
+        else
+        {
+            <span class="col-md-2"></span>
+        }
+
+        <div class="col-md-9 pull-right">
+            <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
+            <thead>
+                <tr>
+                    @if (Model.UsuarioAdmLogado)
+                    {
+                        <th></th>
+                    }
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Usuário Adm
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var u in Model.Usuarios)
+                {
+                    <tr>
+                        @if (Model.UsuarioAdmLogado)
+                        {
+                            <td>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Usuarios", new { id = u.CodigoUsuario } )"><i class="fa fa-edit"></i></a>
+                                
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalRemoto('@Url.Action("DeletePartial", "Usuarios", new { id = u.CodigoUsuario } )');"><i class="fa fa-trash"></i></a>
+                            </td>
+                        }
+                        <td>
+                            @u.NomeUsuario
+                        </td>
+                        <td>
+                            @u.LoginUsuario
+                        </td>
+                        <td>
+                            @u.Email
+                        </td>
+                        <td>
+                            @Html.Raw(u.AdmSimNao)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

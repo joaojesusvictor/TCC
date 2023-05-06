@@ -1,21 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using TechCompilerCo.Filters;
 using TechCompilerCo.Models;
+using TechCompilerCo.Repositorys;
+using TechCompilerCo.Helper;
 
 namespace TechCompilerCo.Controllers
 {
+    [PaginaParaUsuarioLogado]
+
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ISessao _sessao;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ISessao sessao)
         {
-            _logger = logger;
+            _sessao = sessao;
         }
 
         public IActionResult Index()
         {
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
+
+            TempData["CodigoUsuario"] = usuario.CodigoUsuario;
+            TempData["NomeUsuario"] = usuario.NomeUsuario;
+            TempData["UsuarioAdm"] = usuario.UsuarioAdm;
+
             return View();
+        }
+
+        public IActionResult Sair()
+        {
+            _sessao.RemoverSessaoUsuario();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

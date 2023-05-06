@@ -1,0 +1,92 @@
+﻿@model TechCompilerCo.Models.ProdutosViewModel
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-6">
+            <span><b>SUA</b></span><br />
+            <span><b>MECÂNICA</b></span>
+        </div>
+
+        <div class="col-md-6" style="text-align: right; font-size: 20px">
+            <span><b>Produtos</b></span>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row col-md-12">
+        <div class="col-md-1">
+            <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "Produtos")"><i class="fa fa-table"></i> Excel</a>
+        </div>
+
+        <div class="col-md-2">
+            <a class="btn btn-sm btn-primary" href="@Url.Action("New", "Produtos" )"><i class="fa fa-plus-circle"></i> Novo</a>
+        </div>
+
+        <div class="col-md-9 pull-right">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Referência
+                    </th>
+                    <th>
+                        Descrição
+                    </th>
+                    <th>
+                        Valor Unitário
+                    </th>
+                    <th>
+                        Quantidade
+                    </th>
+                    <th>
+                        Data Validade
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model.Produtos)
+                {
+                    <tr style="color: @p.CorLinha">
+                        <td>
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Produtos", new { id = p.CodigoProduto } )"><i class="fa fa-edit"></i></a>
+                            
+                            <a class="btn btn-xs btn-danger" onclick="abrirModalRemoto('@Url.Action("DeletePartial", "Produtos", new { id = p.CodigoProduto } )');"><i class="fa fa-trash"></i></a>
+                        </td>
+                        <td>
+                            @p.Referencia
+                        </td>
+                        <td>
+                            @p.Descricao
+                        </td>
+                        <td>
+                            R$ @p.ValorUnitario.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                        </td>
+                        <td>
+                            @p.Quantidade
+                        </td>
+                        <td>
+                            @p.StrValidade
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
