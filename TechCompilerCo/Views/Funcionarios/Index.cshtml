@@ -21,10 +21,6 @@
     <br />
 
     <div class="row col-md-12">
-        <div class="col-md-1">
-            <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "Funcionarios")"><i class="fa fa-table"></i> Excel</a>
-        </div>
-
         @if (Model.UsuarioAdm)
         {
             <div class="col-md-2">
@@ -41,7 +37,7 @@
             <span class="col-md-2"></span>
         }
 
-        <div class="col-md-7 pull-right">
+        <div class="col-md-8 pull-right">
             <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
         </div>
     </div>
