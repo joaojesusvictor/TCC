@@ -166,6 +166,13 @@ namespace TechCompilerCo.Controllers
             return emailRegex.IsMatch(email);
         }
 
+        public static bool SenhaInvalida(string senha)
+        {
+            Regex senhaRegex = new Regex("^(.{0,7}|[^0-9]*|[^A-Z]*|[^a-z]*|[a-zA-Z0-9]*)$", RegexOptions.IgnoreCase);
+
+            return senhaRegex.IsMatch(senha);
+        }
+
         public sealed class Notification
         {
             public Notification(string message, string property)

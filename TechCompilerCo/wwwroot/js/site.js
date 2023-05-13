@@ -99,7 +99,7 @@ $('#btnImprimir').click(function () {
 
     win.document.write('<html>');
     win.document.write('<head>');
-    win.document.write('<title>Ordem de Serviço</title>');
+    win.document.write('<title>' + $('#tituloImpressao').val() + '</title>');
     win.document.write('</head>');
     win.document.write('<body>');
     win.document.write(conteudo);

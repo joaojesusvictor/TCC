@@ -1,0 +1,98 @@
+﻿@model TechCompilerCo.Models.AniversariantesViewModel
+
+@{
+    ViewData["Title"] = "Visualização";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <span><b>SUA</b></span><br />
+        <span><b>MECÂNICA</b></span>
+    </div>
+
+    <div class="col-md-6" style="text-align: right; font-size: 20px">
+        <span><b>Visualização Aniversariantes</b></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a id="btnImprimir" class="btn btn-sm btn-primary pull-right"><i class="fa fa-print"></i> Imprimir</a>
+    </div>
+</div>
+
+<br />
+<br />
+
+@using (Html.BeginForm("Index", "Aniversariantes", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <input id="tituloImpressao" value="Relatório de Aniversariantes" hidden />
+
+    <div id="divImpressao">
+        <div style="flex: 0 0 auto; width: 100%; display: flex; justify-content: center; align-items: center; height: 40vh;">
+            <div style="flex: 0 0 auto; width: 66.66666666%;">
+                <div style="width: 100%; display: flex;">
+                    <div style="flex: 0 0 auto; width: 20%;">
+                        <label style="margin-bottom: 0.5rem;">Mês</label>
+                        <input asp-for="StrAnoMes" style="display: block; width: 100%" />
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div style="width: 100%; display: flex;">
+                    <table style="width: 900px; font: 17px Calibri; border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                        <thead>
+                            <tr>
+                                <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                    Nome
+                                </th>
+                                <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                    Telefone
+                                </th>
+                                <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                    Email
+                                </th>
+                                <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                    Idade Atual
+                                </th>
+                                <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                    Classificação Pessoa
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var a in Model.Aniversarios)
+                            {
+                                <tr>
+                                    <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        @a.Nome
+                                    </td>
+                                    <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        @a.Telefone
+                                    </td>
+                                    <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        @a.Email
+                                    </td>
+                                    <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        @a.Idade
+                                    </td>
+                                    <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        @a.TipoPessoa
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <a href="@Url.Action("Index", "Aniversariantes")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+}
