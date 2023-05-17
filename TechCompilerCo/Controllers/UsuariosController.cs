@@ -189,6 +189,11 @@ namespace TechCompilerCo.Controllers
             if (string.IsNullOrEmpty(model.Email))
                 msg += "O Email é necessário!";
 
+            bool senhaInvalida = SenhaInvalida(model.Senha);
+
+            if (senhaInvalida)
+                msg += "Senha Inválida!";
+
             return msg;
         }
 

@@ -57,9 +57,14 @@
                 <a><b>SUA</b></a> <br />
                 <a><b>MECÂNICA</b></a>
             </div>
+
+            <div class="col-md-4">
+                <div class="col-md-3 pull-right">
+                    <a href="@Url.Action("Sair", "Home")" class="btn btn-sm btn-danger" style="border-radius: 8px"><i class="fa fa-door-open"></i> Sair</a>
+                </div>
+            </div>
         </div>
 
-        <br />
         <br />
         <br />
 
@@ -94,9 +99,9 @@
                     </div>
                 </div>
             </div>
-        }
 
-        <br />
+            <br />
+        }
 
         <div class="row">
             <div class="col-md-2">
@@ -110,6 +115,13 @@
                 <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "GerarOs")';">
                     <span class="tituloMenus">Gerar OS</span> <br />
                     <i class="fa fa-check-square iconMenus"></i>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Gerencial")';">
+                    <span class="tituloMenus">Gerencial</span> <br />
+                    <i class="fa fa-signal iconMenus"></i>
                 </div>
             </div>
 
@@ -132,14 +144,6 @@
                     <span class="tituloMenus">Alterar Senha</span> <br />
                     <i class="fa fa-refresh iconMenus"></i>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-1 pull-right">
-                <a href="@Url.Action("Sair", "Home")" class="btn btn-sm btn-danger" style="border-radius: 8px"><i class="fa fa-door-open"></i> Sair</a>
             </div>
         </div>
     </div>

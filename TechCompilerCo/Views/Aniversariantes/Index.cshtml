@@ -1,0 +1,64 @@
+﻿@model TechCompilerCo.Models.AniversariantesViewModel
+
+@{
+    ViewData["Title"] = "Aniversariantes";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-6">
+            <span><b>SUA</b></span><br />
+            <span><b>MECÂNICA</b></span>
+        </div>
+
+        <div class="col-md-6" style="text-align: right; font-size: 20px">
+            <span><b>Aniversariantes</b></span>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row col-md-12">
+        <div class="col-md-12 pull-right">
+            <a href="@Url.Action("Index", "Gerencial")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Qtd Aniversariantes
+                    </th>
+                    <th>
+                        Mês Aniversário
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var a in Model.Aniversarios)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Visualizacao", "Aniversariantes", new { mes = a.MesNascimento } )"><i class="fa fa-search"></i></a>
+                        </td>
+                        <td>
+                            @a.QtdAniversariantes
+                        </td>
+                        <td>
+                            @a.StrAnoMes
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

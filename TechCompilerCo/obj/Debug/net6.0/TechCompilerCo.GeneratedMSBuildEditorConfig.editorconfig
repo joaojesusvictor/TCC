@@ -20,6 +20,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWx0ZXJhclNlbmhhXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projetos/TCC/TechCompilerCo/Views/Aniversariantes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQW5pdmVyc2FyaWFudGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Aniversariantes/Visualizacao.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQW5pdmVyc2FyaWFudGVzXFZpc3VhbGl6YWNhby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projetos/TCC/TechCompilerCo/Views/Clientes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -130,6 +138,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projetos/TCC/TechCompilerCo/Views/GerarOs/_Form.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VyYXJPc1xfRm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Gerencial/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VyZW5jaWFsXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Home/Index.cshtml]

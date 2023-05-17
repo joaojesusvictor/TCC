@@ -166,49 +166,12 @@ namespace TechCompilerCo.Controllers
             return emailRegex.IsMatch(email);
         }
 
-        //public FileStreamResult CriarPlanilhaExcel<T>(IEnumerable<T> rows, string nomeArquivo, bool primeiraColunaOn = true)
-        //{
-        //    using (ExcelPackage pkg = new ExcelPackage())
-        //    {
-        //        ExcelWorksheet worksheet = pkg.Workbook.Worksheets.Add(nomeArquivo);
-        //        worksheet.TabColor = System.Drawing.Color.Red;
+        public static bool SenhaInvalida(string senha)
+        {
+            Regex senhaRegex = new Regex("^(.{0,7}|[^0-9]*|[^A-Z]*|[^a-z]*|[a-zA-Z0-9]*)$", RegexOptions.IgnoreCase);
 
-        //        worksheet.Cells["A1"].LoadFromCollectionFiltered(rows);
-        //        //worksheet.Cells["A1"].LoadFromArrays<T>(rows, true, OfficeOpenXml.Table.TableStyles.None);
-        //        worksheet.Cells.AutoFitColumns();
-        //        worksheet.Cells.AutoFilter = true;
-
-        //        ExcelRange dimensionCells = worksheet.Cells[worksheet.Dimension.Address];
-        //        dimensionCells.Style.Fill.PatternType = ExcelFillStyle.Solid;
-        //        dimensionCells.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(242, 242, 242));
-
-        //        dimensionCells.Style.Border.Top.Style = ExcelBorderStyle.Thick;
-        //        dimensionCells.Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
-        //        dimensionCells.Style.Border.Left.Style = ExcelBorderStyle.Thick;
-        //        dimensionCells.Style.Border.Right.Style = ExcelBorderStyle.Thick;
-
-        //        dimensionCells.Style.Border.Top.Color.SetColor(System.Drawing.Color.White);
-        //        dimensionCells.Style.Border.Bottom.Color.SetColor(System.Drawing.Color.White);
-        //        dimensionCells.Style.Border.Left.Color.SetColor(System.Drawing.Color.White);
-        //        dimensionCells.Style.Border.Right.Color.SetColor(System.Drawing.Color.White);
-
-        //        if (primeiraColunaOn)
-        //        {
-        //            ExcelRange headerCells = worksheet.Cells[1, 1, 1, worksheet.Dimension.End.Column];
-        //            headerCells.Style.Font.Bold = true;
-        //            headerCells.Style.Fill.PatternType = ExcelFillStyle.Solid;
-        //            headerCells.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(142, 169, 219));
-        //        }
-        //        var stream = new MemoryStream();
-        //        pkg.SaveAs(stream);
-
-        //        var fileName = nomeArquivo.IsNotBlank() ? nomeArquivo.Trim() + ".xlsx" : "relatorio.xlsx";
-        //        var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-        //        stream.Position = 0;
-        //        return File(stream, contentType, fileName);
-        //    }
-        //}
+            return senhaRegex.IsMatch(senha);
+        }
 
         public sealed class Notification
         {

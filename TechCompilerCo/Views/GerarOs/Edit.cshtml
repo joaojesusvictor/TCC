@@ -29,6 +29,104 @@
 {
     <partial name="_Form.cshtml" />
 
+    <input id="tituloImpressao" value="Ordem de Serviço" hidden />
+
+    <div id="divImpressao" hidden>
+        <div style="flex: 0 0 auto; width: 100%; display: flex; justify-content: center; align-items: center; height: 80vh;">
+            <div style="flex: 0 0 auto; width: 66.66666666%;">
+                <div style="width: 100%; display: flex">
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Código OS</label>
+                        <input asp-for="CodigoOs" style="display: block; width: 98%" disabled />
+                    </div>
+                    &nbsp;
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Data de Cadastro</label>
+                        <input asp-for="DataInclusao" type="date" style="display: block; width: 98%" disabled />
+                    </div>
+                </div>
+
+                <br />
+                <br />
+
+                <div style="width: 100%; display: flex">
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Cliente</label>
+                        <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" style="display: block; width: 98%"></select>
+                    </div>
+                    &nbsp;
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Funcionário</label>
+                        <select asp-for="CodigoFuncionario" asp-items="@Model.FuncionariosSelect" style="display: block; width: 98%"></select>
+                    </div>
+                </div>
+
+                <br />
+                <br />
+
+                <div style="width: 100%; display: flex">
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Início Serviço</label>
+                        <input asp-for="DataInicio" type="date" style="display: block; width: 98%" />
+                    </div>
+                    &nbsp;
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Previsão Término</label>
+                        <input asp-for="DataPrevisaoTermino" type="date" style="display: block; width: 98%" />
+                    </div>
+                </div>
+
+                <br />
+                <br />
+
+                <div style="width: 100%; display: flex">
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Preço</label>
+                        <input asp-for="Valor" type="number" min="0" step=".01" style="display: block; width: 98%" />
+                    </div>
+                    &nbsp;
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Status OS</label>
+                        <select asp-for="StatusOs" style="display: block; width: 98%">
+                            <option value="001">Aberta</option>
+                            <option value="002">Em Execução</option>
+                            <option value="003">Finalizada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <br />
+                <br />
+
+                <div style="flex: 0 0 auto; width: 100%;">
+                    <label style="margin-bottom: 0.5rem;">Descrição Problema</label>
+                    <textarea asp-for="DescricaoProblema" rows="10" style="display: block; width: 100%"></textarea>
+                </div>
+
+                <br />
+                <br />
+
+                <div style="width: 100%; display: flex">
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Assinatura Cliente:</label>
+                        <br />
+                        <br />
+                        <br />
+                        __________________________
+                    </div>
+                    &nbsp;
+                    <div style="flex: 0 0 auto; width: 50%;">
+                        <label style="margin-bottom: 0.5rem;">Assinatura Responsável Mecânica:</label>
+                        <br />
+                        <br />
+                        <br />
+                        _____________________________
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <br />
 
     <div class="row">
@@ -37,12 +135,4 @@
             <a href="@Url.Action("Index", "GerarOs")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
         </div>
     </div>
-}
-
-@section scripts{
-    <script>
-        $('#btnImprimir').click(function(){
-            window.print();
-        });
-    </script>
 }
