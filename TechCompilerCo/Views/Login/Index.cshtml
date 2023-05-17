@@ -13,17 +13,22 @@
         font-family: "Poppins", sans-serif;
     }
 
-    body {
-        background: linear-gradient(45deg, #8e2de2, #4a00e0);
+
+    body{
+        background: url("https://chiptronic.com.br/blog/wp-content/uploads/2017/09/5-dicas-para-gerar.png") center;
+        backdrop-filter:brightness(.5);
+        display: flex;
+        background-size:cover;        
         background-repeat: no-repeat;
         min-height: 100vh;
         min-width: 100vw;
-        display: flex;
+        margin-bottom:0 !important;
         align-items: center;
         justify-content: center;
     }
 
     main.container {
+        position: relative;
         background: white;
         max-width: 320px;
         min-height: 40vh;
@@ -115,6 +120,10 @@
 </head>
 
 <body>
+
+    @*<img id="img" src="https://chiptronic.com.br/blog/wp-content/uploads/2017/09/5-dicas-para-gerar.png" />*@
+    
+    
     <main class="container">
 
         <partial name="/Views/Shared/_Notifications.cshtml" />
