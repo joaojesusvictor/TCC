@@ -189,9 +189,21 @@ Begin
 		End
 End
 
-ELSE IF @Modo = 10 -- Valida se Funcionario já tem Login
+ELSE IF @Modo = 10 -- Valida se Funcionario ja tem Login para Novo
 Begin
 	if exists(select * from Usuario where CodigoFuncionario = @CodigoFuncionario and Ativo = 1)
+		begin
+			select 1
+		end
+	else
+		begin
+			select 0
+		end
+End
+
+ELSE IF @Modo = 11 -- Valida se Funcionario ja tem Login para Edicao
+Begin
+	if exists(select * from Usuario where CodigoFuncionario = @CodigoFuncionario and CodigoUsuario <> @CodigoUsuario and Ativo = 1)
 		begin
 			select 1
 		end

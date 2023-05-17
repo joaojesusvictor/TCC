@@ -62,34 +62,85 @@
                 <a><b>SUA</b></a> <br />
                 <a><b>MECÂNICA</b></a>
             </div>
+
+            <div class="col-md-4">
+                <div class="col-md-3 pull-right">
+                    <a href="@Url.Action("Sair", "Home")" class="btn btn-sm btn-danger" style="border-radius: 8px"><i class="fa fa-door-open"></i> Sair</a>
+                </div>
+            </div>
         </div>
 
         <br />
         <br />
-        <br />
 
-        <div class="row">
-            @if (Convert.ToBoolean(TempData["UsuarioAdm"]))
-            {
+        @if (Convert.ToBoolean(TempData["UsuarioAdm"]))
+        {
+            <div class="row">
                 <div class="col-md-2">
-                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Funcionarios")';">
-                    <span class="tituloMenus">Funcionários</span> <br />
-                    <i class="fa fa-people-group iconMenus"></i>
+                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "ContasPagar")';">
+                        <span class="tituloMenus">Contas a Pagar</span> <br />
+                        <i class="fa fa-money-bill-transfer iconMenus"></i>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "ContasReceber")';">
+                        <span class="tituloMenus">Contas a Receber</span> <br />
+                        <i class="fa fa-usd iconMenus"></i>
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Fornecedores")';">
-                    <span class="tituloMenus">Fornecedores</span> <br />
-                    <i class="fa fa-money-bill iconMenus"></i>
+                        <span class="tituloMenus">Fornecedores</span> <br />
+                        <i class="fa fa-handshake iconMenus"></i>
                     </div>
                 </div>
-            }
 
+                <div class="col-md-2">
+                    <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Funcionarios")';">
+                        <span class="tituloMenus">Funcionários</span> <br />
+                        <i class="fa fa-people-group iconMenus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+        }
+
+        <div class="row">
             <div class="col-md-2">
                 <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Clientes")';">
                     <span class="tituloMenus">Clientes</span> <br />
-                    <i class="fa fa-handshake iconMenus"></i>
+                    <i class="fa fa-money-bill iconMenus"></i>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "GerarOs")';">
+                    <span class="tituloMenus">Gerar OS</span> <br />
+                    <i class="fa fa-check-square iconMenus"></i>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Gerencial")';">
+                    <span class="tituloMenus">Gerencial</span> <br />
+                    <i class="fa fa-signal iconMenus"></i>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Produtos")';">
+                    <span class="tituloMenus">Produtos</span> <br />
+                    <i class="fa fa-box iconMenus"></i>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "Vendas")';">
+                    <span class="tituloMenus">Vendas</span> <br />
+                    <i class="fa fa-money-bill-1-wave iconMenus"></i>
                 </div>
             </div>
 
@@ -98,14 +149,6 @@
                     <span class="tituloMenus">Alterar Senha</span> <br />
                     <i class="fa fa-refresh iconMenus"></i>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container" style="margin-top: 100px">
-        <div class="row pull-right">
-            <div class="col-md-2" style="width: 100%">
-                <a href="@Url.Action("Sair", "Home")" class="btn btn-sm btn-danger" style="border-radius: 8px"><i class="fa fa-door-open"></i> Sair</a>
             </div>
         </div>
     </div>

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Dapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TechCompilerCo.Models;
 
 namespace TechCompilerCo.Repositorys
@@ -13,11 +15,31 @@ namespace TechCompilerCo.Repositorys
     public class ClientesRepository
     {
         private readonly IDbConnection _db;
-        private string _sqlTran = "EXEC Clien_Clientes_TRAN @Modo, @CodigoCliente, @NomeCliente, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Cpf, @Sexo, @Email, @Telefone1, @UsuarioTran";
+        private string _sqlTran = "EXEC Clien_Clientes_TRAN @Modo, @CodigoCliente, @NomeCliente, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Documento, @Sexo, @Email, @Telefone1, @UsuarioTran";
 
         public ClientesRepository()
         {
             _db = new DbSession().SqlConnection();
+        }
+
+        public async Task<IEnumerable<SelectListItem>> ComboClientesAsync(bool addBranco = false)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 5
+            };
+
+            var result = await _db.QueryAsync<Cliente>(_sqlTran, p);
+
+            var combo = new List<SelectListItem>();
+
+            foreach (var r in result)
+                combo.Add(new SelectListItem() { Value = r.CodigoCliente.ToString(), Text = r.NomeCliente });
+
+            if (addBranco)
+                combo.Insert(0, new SelectListItem());
+
+            return combo;
         }
 
         public async Task<IEnumerable<Cliente>> GetClientesAsync()
@@ -29,10 +51,11 @@ namespace TechCompilerCo.Repositorys
 
             IEnumerable<Cliente> results = new List<Cliente>();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                results = await _db.QueryAsync<Cliente>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                results = await conn.QueryAsync<Cliente>(_sqlTran, p);
             }
 
             return results;
@@ -48,10 +71,11 @@ namespace TechCompilerCo.Repositorys
 
             Cliente result = new();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<Cliente>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<Cliente>(_sqlTran, p);
             }
 
             return result;
@@ -68,7 +92,7 @@ namespace TechCompilerCo.Repositorys
                 DataNascimento = model.DataNascimento,
                 Email = model.Email,
                 Telefone1 = model.Telefone1,
-                Cpf = model.Cpf,
+                Documento = model.Documento,
                 Cep = model.Cep,
                 Endereco = model.Endereco,
                 Numero = model.Numero,
@@ -82,10 +106,11 @@ namespace TechCompilerCo.Repositorys
 
             int result = 0;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
 
             return result;
@@ -102,7 +127,7 @@ namespace TechCompilerCo.Repositorys
                 DataNascimento = model.DataNascimento,
                 Email = model.Email,
                 Telefone1 = model.Telefone1,
-                Cpf = model.Cpf,
+                Documento = model.Documento,
                 Cep = model.Cep,
                 Endereco = model.Endereco,
                 Numero = model.Numero,
@@ -116,16 +141,17 @@ namespace TechCompilerCo.Repositorys
 
             int result = 0;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
 
             return result;
         }
 
-        public async Task DeleteAsync(int id, int codigoUsuario)
+        public async Task<bool> DeleteAsync(int id, int codigoUsuario)
         {
             var p = new ParametrosTran()
             {
@@ -134,11 +160,16 @@ namespace TechCompilerCo.Repositorys
                 UsuarioTran = codigoUsuario
             };
 
-            using (_db)
+            bool result = false;
+
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                await _db.ExecuteAsync(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
             }
+
+            return result;
         }
 
         public class Cliente
@@ -152,7 +183,7 @@ namespace TechCompilerCo.Repositorys
             public DateTime? DataNascimento { get; set; }
             public string? Email { get; set; }
             public string? Telefone1 { get; set; }
-            public string? Cpf { get; set; }
+            public string? Documento { get; set; }
             public string? Cep { get; set; }
             public string? Endereco { get; set; }
             public int Numero { get; set; }
@@ -172,7 +203,7 @@ namespace TechCompilerCo.Repositorys
             public DateTime? DataNascimento { get; set; }
             public string? Email { get; set; }
             public string? Telefone1 { get; set; }
-            public string? Cpf { get; set; }
+            public string? Documento { get; set; }
             public string? Cep { get; set; }
             public string? Endereco { get; set; }
             public int Numero { get; set; }

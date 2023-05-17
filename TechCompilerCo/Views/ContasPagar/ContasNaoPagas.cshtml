@@ -1,0 +1,94 @@
+﻿@model TechCompilerCo.Models.ContasPagarViewModel
+
+@{
+    ViewData["Title"] = "Contas Não Pagas";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-6">
+            <span><b>SUA</b></span><br />
+            <span><b>MECÂNICA</b></span>
+        </div>
+
+        <div class="col-md-6" style="text-align: right; font-size: 20px">
+            <span><b>Contas Não Pagas</b></span>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row col-md-12">
+        <div class="col-md-2">
+            <a class="btn btn-sm btn-primary" href="@Url.Action("New", "ContasPagar", new { contasPagas = false })"><i class="fa fa-plus-circle"></i> Novo</a>
+        </div>
+
+        <div class="col-md-10 pull-right">
+            <a href="@Url.Action("Index", "ContasPagar")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
+            <thead>
+                <tr>
+                    @if (Model.UsuarioAdm)
+                    {
+                        <th></th>
+                    }
+                    <th>
+                        Número Documento
+                    </th>
+                    <th>
+                        Data Vencimento
+                    </th>
+                    <th>
+                        Preço
+                    </th>
+                    <th>
+                        Serviço
+                    </th>
+                    <th>
+                        Dados Fornecedor
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model.Contas)
+                {
+                    <tr>
+                        @if (Model.UsuarioAdm)
+                        {
+                            <td>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "ContasPagar", new { id = c.CodigoCpa, contasPagas = false } )"><i class="fa fa-edit"></i></a>
+
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalRemoto('@Url.Action("DeletePartial", "ContasPagar", new { id = c.CodigoCpa, contasPagas = false } )');"><i class="fa fa-trash"></i></a>
+                            </td>
+                        }
+                        <td>
+                            @c.NumeroDocumento
+                        </td>
+                        <td>
+                            @c.DataVencimento.ToString("dd-MM-yyyy")
+                        </td>
+                        <td>
+                            R$ @c.Valor.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                        </td>
+                        <td>
+                            @c.ServicoCobrado
+                        </td>
+                        <td>
+                            @c.NomeFantasia / @c.Documento / @c.Telefone1
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@model TechCompilerCo.Models.DeletePartialViewModel
+
+<div class="divMessageBox animated fadeIn fast MessageIE" id="MsgBoxBack">
+    <div class="MessageBoxContainer animated fadeIn fast" id="Msg1">
+        <div class="MessageBoxMiddle">
+            <span class="MsgTitle"><i class="fa fa-warning txt-color-orangeDark"></i> @Html.Raw(Model.Mensagem1)</span>
+            <p class="pText">@Html.Raw(Model.Mensagem2)</p>
+            <div class="MessageBoxButtonSection">
+                <form action="@Model.DeleteUrl" class="form-horizontal" enctype="multipart/form-data" method="post">
+
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="NomeEntidade" />
+                    <input type="hidden" asp-for="Aux1" />
+
+                    <div class="MessageBoxButtonSection">
+                        <button class='btn btn-primary' type='submit'><i class='fa fa-save'></i> Excluir</button>
+                        <button type="button" class="btn btn-danger" onclick="$('#MsgBoxBack').remove()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

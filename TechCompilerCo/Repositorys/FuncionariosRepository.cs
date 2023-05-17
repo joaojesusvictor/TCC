@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Dapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TechCompilerCo.Models;
 
 namespace TechCompilerCo.Repositorys
@@ -13,14 +15,14 @@ namespace TechCompilerCo.Repositorys
     public class FuncionariosRepository
     {
         private readonly IDbConnection _db;
-        private string _sqlTran = "EXEC Func_Funcionarios_TRAN @Modo, @CodigoFuncionario, @NomeFuncionario, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Cpf, @Sexo, @Telefone1, @Cargo, @UsuarioTran";
+        private string _sqlTran = "EXEC Func_Funcionarios_TRAN @Modo, @CodigoFuncionario, @NomeFuncionario, @DataContratacao, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais, @DataNascimento, @Cpf, @Sexo, @Telefone1, @Cargo, @UsuarioTran";
 
         public FuncionariosRepository()
         {
             _db = new DbSession().SqlConnection();
         }
 
-        public async Task<IEnumerable<Combo>> ComboFuncionariosAsync()
+        public async Task<IEnumerable<SelectListItem>> ComboFuncionariosAsync(bool addBranco = false)
         {
             var p = new ParametrosTran()
             {
@@ -29,10 +31,13 @@ namespace TechCompilerCo.Repositorys
 
             var result = await _db.QueryAsync<Funcionario>(_sqlTran, p);
 
-            var combo = new List<Combo>();
+            var combo = new List<SelectListItem>();
 
             foreach (var r in result)
-                combo.Add(new Combo() { Id = r.CodigoFuncionario.ToString(), Nome = r.NomeFuncionario });
+                combo.Add(new SelectListItem() { Value = r.CodigoFuncionario.ToString(), Text = r.NomeFuncionario });
+
+            if (addBranco)
+                combo.Insert(0, new SelectListItem());
 
             return combo;
         }
@@ -46,10 +51,11 @@ namespace TechCompilerCo.Repositorys
 
             IEnumerable<Funcionario> results = new List<Funcionario>();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                results = await _db.QueryAsync<Funcionario>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                results = await conn.QueryAsync<Funcionario>(_sqlTran, p);
             }
 
             return results;
@@ -65,10 +71,11 @@ namespace TechCompilerCo.Repositorys
 
             Funcionario result = new();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<Funcionario>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<Funcionario>(_sqlTran, p);
             }
 
             return result;
@@ -82,6 +89,7 @@ namespace TechCompilerCo.Repositorys
                 CodigoFuncionario = model.CodigoFuncionario,
                 UsuarioTran = model.CodigoUsuario,
                 NomeFuncionario = model.NomeFuncionario,
+                DataContratacao = model.DataContratacao,
                 DataNascimento = model.DataNascimento,
                 Telefone1 = model.Telefone1,
                 Cpf = model.Cpf,
@@ -99,10 +107,11 @@ namespace TechCompilerCo.Repositorys
 
             int result = 0;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
 
             return result;
@@ -116,6 +125,7 @@ namespace TechCompilerCo.Repositorys
                 CodigoFuncionario = model.CodigoFuncionario,
                 UsuarioTran = model.CodigoUsuario,
                 NomeFuncionario = model.NomeFuncionario,
+                DataContratacao = model.DataContratacao,
                 DataNascimento = model.DataNascimento,
                 Telefone1 = model.Telefone1,
                 Cpf = model.Cpf,
@@ -130,13 +140,14 @@ namespace TechCompilerCo.Repositorys
                 Sexo = model.Sexo,
                 Cargo = model.Cargo
             };
-
+            
             int result = 0;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
 
             return result;
@@ -151,22 +162,18 @@ namespace TechCompilerCo.Repositorys
                 UsuarioTran = codigoUsuario
             };
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                await _db.ExecuteAsync(_sqlTran, p);
-                _db.Dispose();
-            }
-        }
+                conn.Open();
 
-        public class Combo
-        {
-            public string Id { get; set; }
-            public string Nome { get; set; }
+                await conn.ExecuteAsync(_sqlTran, p);
+            }
         }
 
         public class Funcionario
         {
             public int CodigoFuncionario { get; set; }
+            public DateTime? DataContratacao { get; set; }
             public DateTime? DataInclusao { get; set; }
             public DateTime? DataUltimaAlteracao { get; set; }
             public string? UsuarioIncluiu { get; set; }
@@ -193,6 +200,7 @@ namespace TechCompilerCo.Repositorys
             public int Modo { get; set; }
             public int CodigoFuncionario { get; set; }
             public string? NomeFuncionario { get; set; }
+            public DateTime? DataContratacao { get; set; }
             public DateTime? DataNascimento { get; set; }
             public string? Telefone1 { get; set; }
             public string? Cpf { get; set; }

@@ -40,7 +40,7 @@ namespace TechCompilerCo.Controllers
                     CodigoCliente = f.CodigoCliente,
                     NomeCliente = f.NomeCliente,
                     Email = f.Email,
-                    Cpf = f.Cpf,
+                    Documento = f.Documento,
                     Telefone1 = f.Telefone1
                 });
             }
@@ -63,11 +63,34 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(ClientesViewModel model)
         {
-            if (!CpfValido(model.Cpf))
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Este CPF não é válido!");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(New));
+            }
+
+            string doc = DeixaSoNumeros(model.Documento);
+
+            if (doc.Length == 11)
+            {
+                if (!CpfValido(model.Documento))
+                {
+                    MostraMsgErro("Este Documento não é válido!");
+
+                    return RedirectToAction(nameof(New));
+                }
+            }
+            else
+            {
+                if (!CnpjValido(model.Documento))
+                {
+                    MostraMsgErro("Este Documento não é válido!");
+
+                    return RedirectToAction(nameof(New));
+                }
             }
 
             if (!EmailValido(model.Email, true))
@@ -108,7 +131,7 @@ namespace TechCompilerCo.Controllers
                 DataNascimento = cliente.DataNascimento,
                 Email = cliente.Email,
                 Telefone1= cliente.Telefone1,
-                Cpf = cliente.Cpf,
+                Documento = cliente.Documento,
                 Cep = cliente.Cep,
                 Endereco = cliente.Endereco,
                 Numero = cliente.Numero,
@@ -126,12 +149,35 @@ namespace TechCompilerCo.Controllers
         }
 
         public async Task<IActionResult> Update(ClientesViewModel model)
-        {            
-            if (!CpfValido(model.Cpf))
+        {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
             {
-                MostraMsgErro("Este CPF não é válido!");
+                MostraMsgErro(msgErro);
 
                 return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+            }
+
+            string doc = DeixaSoNumeros(model.Documento);
+
+            if (doc.Length == 11)
+            {
+                if (!CpfValido(model.Documento))
+                {
+                    MostraMsgErro("Este Documento não é válido!");
+
+                    return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+                }
+            }
+            else
+            {
+                if (!CnpjValido(model.Documento))
+                {
+                    MostraMsgErro("Este Documento não é válido!");
+
+                    return RedirectToAction(nameof(Edit), new { id = model.CodigoCliente });
+                }
             }
 
             if (!EmailValido(model.Email, true))
@@ -154,18 +200,57 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
-        public async Task<IActionResult> Delete(int id)
+
+        public string Validar(ClientesViewModel model)
+        {
+            string msg = "";
+
+            if (string.IsNullOrEmpty(model.NomeCliente))
+                msg = "O Nome Cliente é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Telefone1))
+                msg += "O Telefone é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Documento))
+                msg += "O Número Documento é necessário! ";
+
+            return msg;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
+        {
+            ClientesRepository.Cliente cliente = await _clientesRepository.GetClienteAsync(id);
+
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                NomeEntidade = cliente.NomeCliente,
+                Mensagem1 = $"Deseja realmente excluir o Cliente \"{cliente.NomeCliente}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 
-            await _clientesRepository.DeleteAsync(id, codigoUsuario);
+            bool excluido = await _clientesRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
 
-            MostraMsgSucesso("Cliente excluído com sucesso!");
+            if (!excluido)
+            {
+                MostraMsgErro($"O Cliente \"{model.NomeEntidade}\" não pode ser excluído enquanto tiver OS Aberta/Em Execução para ele!");
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            MostraMsgSucesso($"O Cliente \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }

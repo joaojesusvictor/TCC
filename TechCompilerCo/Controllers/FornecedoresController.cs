@@ -63,6 +63,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(FornecedoresViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(New));
+            }
+
             string doc = DeixaSoNumeros(model.Documento);
 
             if(doc.Length == 11)
@@ -140,6 +149,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(FornecedoresViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoFornecedor });
+            }
+
             string doc = DeixaSoNumeros(model.Documento);
 
             if (doc.Length == 11)
@@ -181,18 +199,71 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
-        public async Task<IActionResult> Delete(int id)
+
+        public string Validar(FornecedoresViewModel model)
+        {
+            string msg = "";
+
+            if (string.IsNullOrEmpty(model.RazaoSocial))
+                msg = "A Razão Social é necessária! ";
+
+            if (string.IsNullOrEmpty(model.NomeFantasia))
+                msg += "O Nome Fantasia é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Telefone1))
+                msg += "O Telefone é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Documento))
+                msg += "O Documento é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Cep))
+                msg += "O Cep é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Endereco))
+                msg += "O Endereço é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Bairro))
+                msg += "O Bairro é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Cidade))
+                msg += "A Cidade é necessária! ";
+
+            if (string.IsNullOrEmpty(model.Uf))
+                msg += "O Estado é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Pais))
+                msg += "O País é necessário!";
+
+            return msg;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
+        {
+            FornecedoresRepository.Fornecedor fornecedor = await _fornecedoresRepository.GetFornecedorAsync(id);
+
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                NomeEntidade = fornecedor.NomeFantasia,
+                Mensagem1 = $"Deseja realmente excluir o Fornecedor \"{fornecedor.NomeFantasia}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
 
-            await _fornecedoresRepository.DeleteAsync(id, codigoUsuario);
+            await _fornecedoresRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
 
-            MostraMsgSucesso("Fornecedor excluído com sucesso!");
+            MostraMsgSucesso($"O Fornecedor \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace TechCompilerCo.Controllers
                 {
                     CodigoFuncionario = f.CodigoFuncionario,
                     NomeFuncionario = f.NomeFuncionario,
+                    DataContratacao = f.DataContratacao,
                     Email = f.Email,
                     Cpf = f.Cpf,
                     Telefone1 = f.Telefone1
@@ -62,6 +63,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(FuncionariosViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(New));
+            }
+
             if (!CpfValido(model.Cpf))
             {
                 MostraMsgErro("Este CPF não é válido!");
@@ -92,6 +102,7 @@ namespace TechCompilerCo.Controllers
             {
                 ModoEdit = true,
                 CodigoFuncionario = id,
+                DataContratacao = funcionario.DataContratacao,
                 DataInclusao = funcionario.DataInclusao,
                 DataUltimaAlteracao = funcionario.DataUltimaAlteracao,
                 UsuarioIncluiu = funcionario.UsuarioIncluiu,
@@ -118,7 +129,16 @@ namespace TechCompilerCo.Controllers
         }
 
         public async Task<IActionResult> Update(FuncionariosViewModel model)
-        {            
+        {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoFuncionario });
+            }
+
             if (!CpfValido(model.Cpf))
             {
                 MostraMsgErro("Este CPF não é válido!");
@@ -139,18 +159,79 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
-        public async Task<IActionResult> Delete(int id)
+
+        public string Validar(FuncionariosViewModel model)
+        {
+            string msg = "";
+
+            if (string.IsNullOrEmpty(model.NomeFuncionario))
+                msg = "O Nome Funcionário é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Telefone1))
+                msg += "O Telefone é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Cpf))
+                msg += "O Cpf é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Cargo))
+                msg += "O Cargo é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Cep))
+                msg += "O Cep é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Endereco))
+                msg += "O Endereço é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Bairro))
+                msg += "O Bairro é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Cidade))
+                msg += "A Cidade é necessária! ";
+
+            if (string.IsNullOrEmpty(model.Uf))
+                msg += "O Estado é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Pais))
+                msg += "O País é necessário!";
+
+            return msg;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
+        {
+            FuncionariosRepository.Funcionario funcionario = await _funcionariosRepository.GetFuncionarioAsync(id);
+
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                NomeEntidade = funcionario.NomeFuncionario,
+                Mensagem1 = $"Deseja realmente excluir o Funcionário \"{funcionario.NomeFuncionario}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
         {
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             int codigoUsuario = usuario.CodigoUsuario;
+            int codigoFuncionario = usuario.CodigoFuncionario;
 
-            await _funcionariosRepository.DeleteAsync(id, codigoUsuario);
+            if (model.Id == codigoFuncionario.ToString())
+            {
+                MostraMsgErro("Você não pode excluir o seu próprio cadastro de Funcionário!");
 
-            MostraMsgSucesso("Funcionário excluído com sucesso!");
+                return RedirectToAction(nameof(Index));
+            }
+
+            await _funcionariosRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
+
+            MostraMsgSucesso($"O Funcionário \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }

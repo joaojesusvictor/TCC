@@ -55,16 +55,25 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            bool senhaInvalida = SenhaInvalida(model.SenhaNova);
+
+            if (senhaInvalida)
+            {
+                MostraMsgErro("A Nova Senha é inválida!");
+
+                return RedirectToAction(nameof(Index));
+            }
+
             if (model.SenhaNova.ToLower() != model.SenhaConfirmada.ToLower())
             {
-                MostraMsgErro("A Nova Senha e a Confirmação da Senha não são iguais.");
+                MostraMsgErro("A Nova Senha e a Confirmação da Senha não são iguais!");
 
                 return RedirectToAction(nameof(Index));
             }
 
             if ((model.SenhaNova.ToLower() == model.SenhaAtual.ToLower()) || (model.SenhaConfirmada.ToLower() == model.SenhaAtual.ToLower()))
             {
-                MostraMsgErro("A Nova Senha deve ser diferente da Senha Atual.");
+                MostraMsgErro("A Nova Senha deve ser diferente da Senha Atual!");
 
                 return RedirectToAction(nameof(Index));
             }
@@ -74,7 +83,7 @@ namespace TechCompilerCo.Controllers
             if (senhaRedefinida)
                 MostraMsgSucesso("Senha Alterada com Sucesso!");
             else
-                MostraMsgErro("Senha Atual incorreta.");
+                MostraMsgErro("Senha Atual incorreta!");
 
             return RedirectToAction(nameof(Index));
         }

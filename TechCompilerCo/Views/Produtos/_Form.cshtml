@@ -1,0 +1,72 @@
+﻿@model TechCompilerCo.Models.ProdutosViewModel
+
+<input asp-for="CodigoUsuario" type="hidden" />
+
+<div class="row">
+    <div class="col-md-6">
+        @if (Model.ModoEdit)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Código Produto</label>
+                    <input asp-for="CodigoProduto" class="form-control" readonly />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Data de Cadastro</label>
+                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <label class="form-label">Fornecedor</label>
+                <select asp-for="CodigoFornecedor" asp-items="@Model.FornecedoresSelect" class="form-control" required></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Data Validade</label>
+                <input asp-for="Validade" type="date" class="form-control" required />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Referência</label>
+                <input asp-for="Referencia" maxlength="50" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Localização</label>
+                <input asp-for="Localizacao" maxlength="100" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Marca</label>
+                <input asp-for="Marca" maxlength="100" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Categoria</label>
+                <input asp-for="Categoria" maxlength="100" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label class="form-label">Descrição</label>
+                <input asp-for="Descricao" maxlength="150" class="form-control" required />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Valor</label>
+                <input asp-for="ValorUnitario" type="number" min="0" step=".01" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Quantidade</label>
+                <input asp-for="Quantidade" type="number" min="0" class="form-control" />
+            </div>
+        </div>
+    </div>
+</div>

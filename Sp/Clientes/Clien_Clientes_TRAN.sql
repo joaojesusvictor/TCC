@@ -21,7 +21,7 @@ CREATE PROCEDURE dbo.Clien_Clientes_TRAN
 	@Uf							varchar(2)		=	NULL,
 	@Pais						varchar(50)		=	NULL,
 	@DataNascimento				datetime		=	NULL,
-	@Cpf						varchar(20)		=	NULL,
+	@Documento					varchar(20)		=	NULL,
 	@Sexo						varchar(1)		=	NULL,
 	@Email						varchar(100)	=	NULL,
 	@Telefone1					varchar(20)		=	NULL,
@@ -68,9 +68,9 @@ select @NomeTabela = 'Tabela de Cliente.'
     
 IF @Modo = 1 --Inclusao
 begin
-	if not exists(select * from Cliente where Cpf = @Cpf and Ativo = 1)
+	if not exists(select * from Cliente where Documento = @Documento and Ativo = 1)
 		begin
-			if exists(select * from Cliente where Cpf = @Cpf and Ativo = 0)
+			if exists(select * from Cliente where Documento = @Documento and Ativo = 0)
 				begin
 					Update	Cliente
 					set		NomeCliente = @NomeCliente,
@@ -83,14 +83,14 @@ begin
 							Uf = @Uf,
 							Pais = @Pais,
 							DataNascimento = @DataNascimento,
-							Cpf = @Cpf,
+							Documento = @Documento,
 							Sexo = @Sexo,
 							Email = @Email,
 							Telefone1 = @Telefone1,
 							Ativo = 1,
 							DataUltimaAlteracao = GETDATE(),
 							UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-					where	Cpf = @Cpf
+					where	Documento = @Documento
 
 					select 1
 				end
@@ -98,12 +98,12 @@ begin
 				begin
 					insert Cliente (
 									DataCadastro, NomeCliente, Cep, Endereco, Numero, Complemento, Bairro, Cidade, Uf, Pais,
-									DataNascimento, Cpf, Sexo, Email, Telefone1, Ativo, DataInclusao, UsuarioIncluiu )
+									DataNascimento, Documento, Sexo, Email, Telefone1, Ativo, DataInclusao, UsuarioIncluiu )
 									Output inserted.CodigoCliente
 		
 					Values		(	
 									GETDATE(), @NomeCliente, @Cep, @Endereco, @Numero, @Complemento, @Bairro, @Cidade, @Uf, @Pais,
-									@DataNascimento, @Cpf, @Sexo, @Email, @Telefone1, 1, GETDATE(), @NomeUsuarioTRAN )
+									@DataNascimento, @Documento, @Sexo, @Email, @Telefone1, 1, GETDATE(), @NomeUsuarioTRAN )
 				end
 		end
 	else
@@ -114,7 +114,7 @@ end
 
 else IF @Modo = 2 -- Alteracao
 begin
-	if not exists(select * from Cliente where CodigoCliente <> @CodigoCliente and Cpf = @Cpf and Ativo = 1)
+	if not exists(select * from Cliente where CodigoCliente <> @CodigoCliente and Documento = @Documento and Ativo = 1)
 		begin
 			Update	Cliente
 			set		NomeCliente = @NomeCliente,
@@ -127,7 +127,7 @@ begin
 					Uf = @Uf,
 					Pais = @Pais,
 					DataNascimento = @DataNascimento,
-					Cpf = @Cpf,
+					Documento = @Documento,
 					Sexo = @Sexo,
 					Email = @Email,
 					Telefone1 = @Telefone1,
@@ -152,11 +152,20 @@ end
 
 ELSE IF @Modo = 3 -- Exclusao
 begin
-		Update	Cliente 
-		set		Ativo = 0,
-				DataUltimaAlteracao = GETDATE(),
-				UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-		where	CodigoCliente = @CodigoCliente
+	If exists(select * from OrdemServico where CodigoCliente = @CodigoCliente and StatusOs in ('001', '002'))
+		begin
+			select 0
+		end
+	else
+		begin
+			Update	Cliente 
+			set		Ativo = 0,
+					DataUltimaAlteracao = GETDATE(),
+					UsuarioUltimaAlteracao = @NomeUsuarioTRAN
+			where	CodigoCliente = @CodigoCliente
+
+			select 1
+		end
 
 	    select @errorreturned = @@error     
         IF @errorreturned <> 0

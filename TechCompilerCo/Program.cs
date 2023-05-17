@@ -19,6 +19,12 @@ builder.Services.AddTransient<FuncionariosRepository, FuncionariosRepository>();
 builder.Services.AddTransient<ClientesRepository, ClientesRepository>();
 builder.Services.AddTransient<FornecedoresRepository, FornecedoresRepository>();
 builder.Services.AddTransient<UsuariosRepository, UsuariosRepository>();
+builder.Services.AddTransient<ProdutosRepository, ProdutosRepository>();
+builder.Services.AddTransient<VendasRepository, VendasRepository>();
+builder.Services.AddTransient<ContasPagarRepository, ContasPagarRepository>();
+builder.Services.AddTransient<ContasReceberRepository, ContasReceberRepository>();
+builder.Services.AddTransient<GerarOsRepository, GerarOsRepository>();
+builder.Services.AddTransient<AniversariantesRepository, AniversariantesRepository>();
 
 builder.Services.AddSession(o =>
 {

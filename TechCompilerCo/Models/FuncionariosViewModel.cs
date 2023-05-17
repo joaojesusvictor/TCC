@@ -5,6 +5,8 @@
         public bool UsuarioAdm { get; set; }
         public int CodigoFuncionario { get; set; }
         public int CodigoUsuario { get; set; }
+        public DateTime? DataContratacao { get; set; }
+        public string? StrDataContratacao => DataContratacao == null ? "" : DataContratacao?.ToString("d");
         public DateTime? DataInclusao { get; set; }
         public string? StrDataInclusao => DataInclusao == null ? "" : DataInclusao?.ToString("d");
         public DateTime? DataUltimaAlteracao { get; set; }
@@ -35,6 +37,7 @@
     public class FuncionarioViewModel
     {
         public int CodigoFuncionario { get; set; }
+        public DateTime? DataContratacao { get; set; }
         public DateTime DataInclusao { get; set; }
         public DateTime DataUltimaAlteracao { get; set; }
         public string? UsuarioIncluiu { get; set; }

@@ -20,6 +20,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWx0ZXJhclNlbmhhXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projetos/TCC/TechCompilerCo/Views/Aniversariantes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQW5pdmVyc2FyaWFudGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Aniversariantes/Visualizacao.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQW5pdmVyc2FyaWFudGVzXFZpc3VhbGl6YWNhby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projetos/TCC/TechCompilerCo/Views/Clientes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -34,6 +42,54 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Clientes/_Form.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcX0Zvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasPagar/ContasNaoPagas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUGFnYXJcQ29udGFzTmFvUGFnYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasPagar/ContasPagas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUGFnYXJcQ29udGFzUGFnYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasPagar/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUGFnYXJcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasPagar/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUGFnYXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasPagar/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUGFnYXJcTmV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasPagar/_Form.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUGFnYXJcX0Zvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasReceber/ContasNaoRecebidas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUmVjZWJlclxDb250YXNOYW9SZWNlYmlkYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasReceber/ContasRecebidas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUmVjZWJlclxDb250YXNSZWNlYmlkYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasReceber/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUmVjZWJlclxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasReceber/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUmVjZWJlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasReceber/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUmVjZWJlclxOZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ContasReceber/_Form.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFzUmVjZWJlclxfRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Fornecedores/Edit.cshtml]
@@ -68,6 +124,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9zXF9Gb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projetos/TCC/TechCompilerCo/Views/GerarOs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VyYXJPc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/GerarOs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VyYXJPc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/GerarOs/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VyYXJPc1xOZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/GerarOs/_Form.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VyYXJPc1xfRm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Gerencial/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VyZW5jaWFsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projetos/TCC/TechCompilerCo/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -84,6 +160,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUmVkZWZpbmlyU2VuaGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projetos/TCC/TechCompilerCo/Views/Produtos/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Produtos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Produtos/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NcTmV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Produtos/_Form.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NcX0Zvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projetos/TCC/TechCompilerCo/Views/Restrito/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdHJpdG9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -94,6 +186,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Shared/_DeletePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EZWxldGVQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Shared/_LayoutDeslogado.cshtml]
@@ -122,6 +218,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Usuarios/_Form.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcX0Zvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Vendas/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZGFzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Vendas/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZGFzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Vendas/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZGFzXE5ldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/Vendas/_Form.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVuZGFzXF9Gb3JtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/TCC/TechCompilerCo/Views/_ViewImports.cshtml]

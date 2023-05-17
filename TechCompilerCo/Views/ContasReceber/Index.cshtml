@@ -1,0 +1,60 @@
+﻿@model TechCompilerCo.Models.ContasReceberViewModel
+
+@{
+    ViewData["Title"] = "Contas a Receber";
+}
+
+<style>
+    .menus {
+        border: solid;
+        border-radius: 8px;
+        background-color: darkblue;
+        text-align: center;
+        height: 12vh;
+        cursor: pointer
+    }
+
+    .tituloMenus {
+        text-align: center;
+        color: white
+    }
+
+    .iconMenus {
+        color: white
+    }
+
+    .pull-right {
+        float: right !important;
+    }
+
+    .pull-left {
+        float: left !important
+    }
+</style>
+
+<div class="container" style="padding-top: 50px">
+    <div class="row col-md-12">
+        <div class="pull-right">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="menus col-md-12" onclick="window.location.href='@Url.Action("ContasNaoRecebidas", "ContasReceber")';">
+                <span class="tituloMenus">Contas Não Recebidas</span> <br />
+                <i class="fa fa-times iconMenus"></i>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="menus col-md-12" onclick="window.location.href='@Url.Action("ContasRecebidas", "ContasReceber")';">
+                <span class="tituloMenus">Contas Recebidas</span> <br />
+                <i class="fa fa-check iconMenus"></i>
+            </div>
+        </div>
+    </div>
+</div>

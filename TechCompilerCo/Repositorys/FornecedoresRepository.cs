@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Dapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TechCompilerCo.Models;
 
 namespace TechCompilerCo.Repositorys
@@ -20,6 +22,26 @@ namespace TechCompilerCo.Repositorys
             _db = new DbSession().SqlConnection();
         }
 
+        public async Task<IEnumerable<SelectListItem>> ComboFornecedoresAsync(bool addBranco = false)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 6
+            };
+
+            var result = await _db.QueryAsync<Fornecedor>(_sqlTran, p);
+
+            var combo = new List<SelectListItem>();
+
+            foreach (var r in result)
+                combo.Add(new SelectListItem() { Value = r.CodigoFornecedor.ToString(), Text = r.NomeFantasia });
+
+            if (addBranco)
+                combo.Insert(0, new SelectListItem());
+
+            return combo;
+        }
+
         public async Task<IEnumerable<Fornecedor>> GetFornecedoresAsync()
         {
             var p = new ParametrosTran()
@@ -29,10 +51,11 @@ namespace TechCompilerCo.Repositorys
 
             IEnumerable<Fornecedor> results = new List<Fornecedor>();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                results = await _db.QueryAsync<Fornecedor>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                results = await conn.QueryAsync<Fornecedor>(_sqlTran, p);
             }
 
             return results;
@@ -48,10 +71,11 @@ namespace TechCompilerCo.Repositorys
 
             Fornecedor result = new();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<Fornecedor>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<Fornecedor>(_sqlTran, p);
             }
 
             return result;
@@ -81,10 +105,11 @@ namespace TechCompilerCo.Repositorys
 
             int result = 0;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
 
             return result;
@@ -114,10 +139,11 @@ namespace TechCompilerCo.Repositorys
 
             int result = 0;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
 
             return result;
@@ -132,10 +158,11 @@ namespace TechCompilerCo.Repositorys
                 UsuarioTran = codigoUsuario
             };
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                await _db.ExecuteAsync(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                await conn.ExecuteAsync(_sqlTran, p);
             }
         }
 

@@ -21,15 +21,11 @@
     <br />
 
     <div class="row col-md-12">
-        <div class="col-md-1">
-            <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "Clientes")"><i class="fa fa-table"></i> Excel</a>
-        </div>
-
         <div class="col-md-2">
             <a class="btn btn-sm btn-primary" href="@Url.Action("New", "Clientes" )"><i class="fa fa-plus-circle"></i> Novo</a>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-10">
             <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
         </div>
     </div>
@@ -50,7 +46,7 @@
                         Email
                     </th>
                     <th>
-                        Cpf
+                        Documento
                     </th>
                     <th>
                         Telefone
@@ -58,24 +54,25 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var f in Model.Clientes)
+                @foreach (var c in Model.Clientes)
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Clientes", new { id = f.CodigoCliente } )"><i class="fa fa-edit"></i></a>
-                            <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@f.CodigoCliente)"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Clientes", new { id = c.CodigoCliente } )"><i class="fa fa-edit"></i></a>
+                            
+                            <a class="btn btn-xs btn-danger" onclick="abrirModalRemoto('@Url.Action("DeletePartial", "Clientes", new { id = c.CodigoCliente } )');"><i class="fa fa-trash"></i></a>
                         </td>
                         <td>
-                            @f.NomeCliente
+                            @c.NomeCliente
                         </td>
                         <td>
-                            @f.Email
+                            @c.Email
                         </td>
                         <td>
-                            @f.Cpf
+                            @c.Documento
                         </td>
                         <td>
-                            @f.Telefone1
+                            @c.Telefone1
                         </td>
                     </tr>
                 }
@@ -83,61 +80,3 @@
         </table>
     </div>
 </div>
-
-<div id="dialogExcluir" title="Excluir Cliente">
-
-    <input type="hidden" id="CodigoClienteModal" />
-
-    <div class="row">
-        <div class="col-md-12" style="margin-bottom:20px">
-            <p>Deseja realmente excluir o cliente?</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <a onclick="excluir($('#CodigoClienteModal').val())" class="btn btn-danger pull-right">Excluir</a>
-            <button onclick="$('#dialogExcluir').dialog('close');" class="btn btn-default pull-right" style="margin-right: 5px" type="button">Cancelar</button>
-        </div>
-    </div>
-</div>
-
-@section Scripts{
-
-    <script type="text/javascript" asp-append-version="true">
-        $(document).ready(function () {
-            $('#dialogExcluir').dialog({
-                autoOpen: false,
-                maxWidth: 500,
-                width: $(window).width() * 0.5,
-                height: $(window).height() * 0.3,
-                modal: true
-            });
-        });
-
-        function abrirModalExcluir(id, nome) {
-            $('html, body').animate({ scrollTop: 0 }, 0);
-            $('#dialogExcluir').dialog('open');
-
-            $('#CodigoClienteModal').val(id);
-        }
-
-        function excluir(id) {
-            $.ajax({
-                url: '/Clientes/Delete',
-                type: 'POST',
-                data: {
-                    id: id
-                },
-                success: function (s) {
-                    document.location.reload();
-                    console.log('Sucesso!');
-                },
-                error: function (e) {
-                    alert('Erro ao Excluir Cliente!');
-                    console.log(e);
-                }
-            });
-        }
-    </script>
-
-}

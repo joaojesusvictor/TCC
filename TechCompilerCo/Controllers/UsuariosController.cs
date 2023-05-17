@@ -57,7 +57,7 @@ namespace TechCompilerCo.Controllers
 
             var viewModel = new UsuariosViewModel()
             {
-                FuncionariosSelect = comboFuncionarios.ToSelectListItem(),
+                FuncionariosSelect = comboFuncionarios,
                 UsuarioAdmLogado = usuarioSessao.UsuarioAdm,
                 CodigoUsuarioLogado = usuarioSessao.CodigoUsuario
             };
@@ -67,6 +67,15 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Create(UsuariosViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(New));
+            }
+
             bool existeLogin = await _usuariosRepository.ValidaUsuarioLoginAsync(model.CodigoFuncionario);
 
             if (existeLogin) 
@@ -105,7 +114,7 @@ namespace TechCompilerCo.Controllers
 
             var viewModel = new UsuariosViewModel()
             {
-                FuncionariosSelect = comboFuncionarios.ToSelectListItem(),
+                FuncionariosSelect = comboFuncionarios,
                 ModoEdit = true,
                 CodigoUsuario = id,
                 UsuarioAdmLogado = usuarioSessao.UsuarioAdm,
@@ -122,6 +131,24 @@ namespace TechCompilerCo.Controllers
 
         public async Task<IActionResult> Update(UsuariosViewModel model)
         {
+            string msgErro = Validar(model);
+
+            if (!string.IsNullOrEmpty(msgErro))
+            {
+                MostraMsgErro(msgErro);
+
+                return RedirectToAction(nameof(Edit), new { id = model.CodigoUsuario });
+            }
+
+            bool existeLogin = await _usuariosRepository.ValidaUsuarioLoginEditAsync(model.CodigoUsuario, model.CodigoFuncionario);
+
+            if (existeLogin)
+            {
+                MostraMsgErro("Este Funcionário já possui login!");
+
+                return RedirectToAction(nameof(New));
+            }
+
             if (!EmailValido(model.Email))
             {
                 MostraMsgErro("O Email precisa ser válido");
@@ -142,25 +169,68 @@ namespace TechCompilerCo.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-                
-        public async Task<IActionResult> Delete(int id)
+
+        public string Validar(UsuariosViewModel model)
         {
-            UsuarioLogadoViewModel usuarioSessao = _sessao.BuscarSessaoUsuario();
+            string msg = "";
 
-            int codigoUsuario = usuarioSessao.CodigoUsuario;
+            if (!model.ModoEdit)
+            {
+                if (model.CodigoFuncionario == 0)
+                    msg = "Selecione o Funcionário! ";
 
-            if(id == codigoUsuario)
+                if (string.IsNullOrEmpty(model.Senha))
+                    msg = "A Senha é necessária! ";
+            }
+
+            if (string.IsNullOrEmpty(model.LoginUsuario))
+                msg += "O Login é necessário! ";
+
+            if (string.IsNullOrEmpty(model.Email))
+                msg += "O Email é necessário!";
+
+            bool senhaInvalida = SenhaInvalida(model.Senha);
+
+            if (senhaInvalida)
+                msg += "Senha Inválida!";
+
+            return msg;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeletePartial(int id)
+        {
+            UsuariosRepository.Usuario usuario = await _usuariosRepository.GetUsuarioAsync(id);
+
+            var model = new DeletePartialViewModel
+            {
+                Id = id.ToString(),
+                NomeEntidade = usuario.NomeUsuario,
+                Mensagem1 = $"Deseja realmente excluir o Usuário \"{usuario.NomeUsuario}\"?",
+                DeleteUrl = Url.Action(nameof(Delete))
+            };
+
+            return PartialView("_DeletePartial", model);
+        }
+
+        public async Task<IActionResult> Delete(DeletePartialViewModel model)
+        {
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
+
+            int codigoUsuario = usuario.CodigoUsuario;
+
+            if (model.Id == codigoUsuario.ToString())
             {
                 MostraMsgErro("Você não pode excluir o seu próprio usuário!");
 
                 return RedirectToAction(nameof(Index));
             }
 
-            await _usuariosRepository.DeleteAsync(id, codigoUsuario);
+            await _usuariosRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
 
-            MostraMsgSucesso("Usuário excluído com sucesso!");
+            MostraMsgSucesso($"O Usuário \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(Index));
-        }        
+        }
     }
 }

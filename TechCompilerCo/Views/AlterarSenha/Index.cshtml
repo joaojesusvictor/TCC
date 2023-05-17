@@ -23,7 +23,7 @@
 
             <div class="col-md-4">
                 <label class="form-label">Nova Senha</label>
-                <input asp-for="SenhaNova" type="password" maxlength="50" class="form-control" />
+                <input asp-for="SenhaNova" type="password" maxlength="15" class="form-control" />
             </div>
         </div>
 
@@ -32,8 +32,14 @@
 
             <div class="col-md-4">
                 <label class="form-label">Confirme a Nova Senha</label>
-                <input asp-for="SenhaConfirmada" type="password" maxlength="50" class="form-control" />
-            </div>
+                <input asp-for="SenhaConfirmada" type="password" maxlength="15" class="form-control" />
+            </div>                        
+        </div>
+
+        <div class="row">
+            <div>
+                Senha precisa ter: Ao menos 1 número; Ao menos 1 letra maiúscula; Ao menos 1 letra minúscula; Ao menos 1 caracter especial; De 8 a 15 caracteres.
+            </div>            
         </div>
 
         <div class="row">

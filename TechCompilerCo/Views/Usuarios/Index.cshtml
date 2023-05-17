@@ -21,10 +21,6 @@
     <br />
 
     <div class="row col-md-12">
-        <div class="col-md-1">
-            <a class="btn btn-sm btn-success" href="@Url.Action("Excel", "Usuarios")"><i class="fa fa-table"></i> Excel</a>
-        </div>
-
         @if (Model.UsuarioAdmLogado)
         {
             <div class="col-md-2">
@@ -36,8 +32,8 @@
             <span class="col-md-2"></span>
         }
 
-        <div class="col-md-9 pull-right">
-            <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        <div class="col-md-10 pull-right">
+            <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
         </div>
     </div>
 
@@ -68,27 +64,28 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var f in Model.Usuarios)
+                @foreach (var u in Model.Usuarios)
                 {
                     <tr>
                         @if (Model.UsuarioAdmLogado)
                         {
                             <td>
-                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Usuarios", new { id = f.CodigoUsuario } )"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-xs btn-danger" onclick="abrirModalExcluir(@f.CodigoUsuario)"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "Usuarios", new { id = u.CodigoUsuario } )"><i class="fa fa-edit"></i></a>
+                                
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalRemoto('@Url.Action("DeletePartial", "Usuarios", new { id = u.CodigoUsuario } )');"><i class="fa fa-trash"></i></a>
                             </td>
                         }
                         <td>
-                            @f.NomeUsuario
+                            @u.NomeUsuario
                         </td>
                         <td>
-                            @f.LoginUsuario
+                            @u.LoginUsuario
                         </td>
                         <td>
-                            @f.Email
+                            @u.Email
                         </td>
                         <td>
-                            @Html.Raw(f.AdmSimNao)
+                            @Html.Raw(u.AdmSimNao)
                         </td>
                     </tr>
                 }
@@ -96,61 +93,3 @@
         </table>
     </div>
 </div>
-
-<div id="dialogExcluir" title="Excluir Usuário">
-
-    <input type="hidden" id="CodigoUsuarioModal" />
-
-    <div class="row">
-        <div class="col-md-12" style="margin-bottom:20px">
-            <p>Deseja realmente excluir o usuário?</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <a onclick="excluir($('#CodigoUsuarioModal').val())" class="btn btn-danger pull-right">Excluir</a>
-            <button onclick="$('#dialogExcluir').dialog('close');" class="btn btn-default pull-right" style="margin-right: 5px" type="button">Cancelar</button>
-        </div>
-    </div>
-</div>
-
-@section Scripts{
-
-    <script type="text/javascript" asp-append-version="true">
-        $(document).ready(function () {
-            $('#dialogExcluir').dialog({
-                autoOpen: false,
-                maxWidth: 500,
-                width: $(window).width() * 0.5,
-                height: $(window).height() * 0.3,
-                modal: true
-            });
-        });
-
-        function abrirModalExcluir(id, nome) {
-            $('html, body').animate({ scrollTop: 0 }, 0);
-            $('#dialogExcluir').dialog('open');
-
-            $('#CodigoUsuarioModal').val(id);
-        }
-
-        function excluir(id) {
-            $.ajax({
-                url: '/Usuarios/Delete',
-                type: 'POST',
-                data: {
-                    id: id
-                },
-                success: function (s) {
-                    document.location.reload();
-                    console.log('Sucesso!');
-                },
-                error: function (e) {
-                    alert('Erro ao Excluir Usuário!');
-                    console.log(e);
-                }
-            });
-        }
-    </script>
-
-}

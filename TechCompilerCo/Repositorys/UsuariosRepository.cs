@@ -32,10 +32,11 @@ namespace TechCompilerCo.Repositorys
 
             IEnumerable<Usuario> results = new List<Usuario>();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                results = await _db.QueryAsync<Usuario>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                results = await conn.QueryAsync<Usuario>(_sqlTran, p);
             }
 
             return results;
@@ -51,10 +52,11 @@ namespace TechCompilerCo.Repositorys
 
             Usuario result = new();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<Usuario>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<Usuario>(_sqlTran, p);
             }
 
             return result;
@@ -75,10 +77,11 @@ namespace TechCompilerCo.Repositorys
 
             int result = 0;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
 
             return result;
@@ -98,10 +101,11 @@ namespace TechCompilerCo.Repositorys
 
             int result = 0;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
 
             return result;
@@ -116,10 +120,11 @@ namespace TechCompilerCo.Repositorys
                 UsuarioTran = codigoUsuarioLogado
             };
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                await _db.ExecuteAsync(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                await conn.ExecuteAsync(_sqlTran, p);
             }
         }
 
@@ -137,7 +142,28 @@ namespace TechCompilerCo.Repositorys
             {
                 conn.Open();
 
-                result = await _db.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
+            }
+
+            return result;
+        }
+
+        public async Task<bool> ValidaUsuarioLoginEditAsync(int codigoUsuario, int codigoFuncionario)
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 11,
+                CodigoUsuario = codigoUsuario,
+                CodigoFuncionario = codigoFuncionario
+            };
+
+            bool result = false;
+
+            using (var conn = new SqlConnection(_db.ConnectionString))
+            {
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
             }
 
             return result;

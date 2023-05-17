@@ -13,13 +13,11 @@ namespace TechCompilerCo.Repositorys
 {
     public class LoginRepository
     {
-        //private DbSession _db;
         private readonly IDbConnection _db;
         private string _sqlTran = "EXEC Func_Usuarios_TRAN @Modo, @Login, @Senha, @UsuarioTran, @CodigoUsuario, @NomeUsuario, @Email, @UsuarioAdm, @CodigoFuncionario, @NovaSenha";
 
-        public LoginRepository(/*DbSession dbSession*/)
+        public LoginRepository()
         {
-            //_db = dbSession;
             _db = new DbSession().SqlConnection();
         }
 
@@ -31,23 +29,13 @@ namespace TechCompilerCo.Repositorys
                 Login = login
             };
 
-            //using var conn = _db.Connection;
-            //UsuarioViewModel result = await conn.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
-
-            //return result;
-
-            //using (var conn = _db.Connection)
-            //{
-            //    UsuarioViewModel result = await conn.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
-            //    return result;
-            //}
-
             UsuarioLogadoViewModel result = new UsuarioLogadoViewModel();
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
             }
 
             return result;
@@ -68,7 +56,7 @@ namespace TechCompilerCo.Repositorys
             {
                 conn.Open();
 
-                result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
             }
 
             return result;
@@ -87,8 +75,8 @@ namespace TechCompilerCo.Repositorys
             {
                 conn.Open();
 
-                await _db.ExecuteAsync(_sqlTran, p);
-            }
+                await conn.ExecuteAsync(_sqlTran, p);
+            };
         }
 
         public async Task<bool> RedefineSenha(int codigoUsuario, string senhaAtual, string novaSenha)
@@ -103,10 +91,11 @@ namespace TechCompilerCo.Repositorys
 
             bool result = false;
 
-            using (_db)
+            using (var conn = new SqlConnection(_db.ConnectionString))
             {
-                result = await _db.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
-                _db.Dispose();
+                conn.Open();
+
+                result = await conn.QueryFirstOrDefaultAsync<bool>(_sqlTran, p);
             }
 
             return result;

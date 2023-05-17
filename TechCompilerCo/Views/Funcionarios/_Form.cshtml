@@ -9,13 +9,15 @@
                     <label class="form-label">Código Funcionário</label>
                     <input asp-for="CodigoFuncionario" class="form-control" readonly />
                 </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Data de Cadastro</label>
-                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
-                </div>
             </div>
         }
+
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label class="form-label">Data Contratação</label>
+                <input asp-for="DataContratacao" type="date" class="form-control" required />
+            </div>
+        </div>
 
         <div class="col-md-12">
             <label class="form-label">Nome</label>
@@ -35,14 +37,14 @@
 
             <div class="col-md-6">
                 <label class="form-label">Cpf</label>
-                <input asp-for="Cpf" maxlength="20" class="form-control" required  />
+                <input asp-for="Cpf" maxlength="20" class="form-control" required />
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Sexo</label>
-                <select asp-for="Sexo" class="form-control" required >
+                <select asp-for="Sexo" class="form-control" required>
                     <option value="F">F</option>
                     <option value="M">M</option>
                     <option value="O">O</option>
@@ -51,7 +53,7 @@
 
             <div class="col-md-6">
                 <label class="form-label">Cargo</label>
-                <input asp-for="Cargo" maxlength="100" class="form-control" required  />
+                <input asp-for="Cargo" maxlength="100" class="form-control" required />
             </div>
         </div>
     </div>
@@ -60,7 +62,7 @@
         <div class="row align-items-end">
             <div class="col-md-6">
                 <label class="form-label">Cep</label>
-                <input asp-for="Cep" maxlength="10" class="form-control" required  />
+                <input asp-for="Cep" maxlength="10" class="form-control" required />
             </div>
 
             <div class="col-md-4">
@@ -71,13 +73,13 @@
 
         <div class="col-md-12">
             <label class="form-label">Endereço</label>
-            <input asp-for="Endereco" maxlength="200" class="form-control" required  />
+            <input asp-for="Endereco" maxlength="200" class="form-control" required />
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Nº</label>
-                <input asp-for="Numero" min="0" class="form-control" required  />
+                <input asp-for="Numero" min="0" class="form-control" required />
             </div>
 
             <div class="col-md-6">
@@ -105,7 +107,7 @@
             </div>
 
             <div class="col-md-6">
-                <label class="form-label">Pais</label>
+                <label class="form-label">País</label>
                 <input asp-for="Pais" maxlength="50" class="form-control" required />
             </div>
         </div>
