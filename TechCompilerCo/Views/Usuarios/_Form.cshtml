@@ -4,28 +4,23 @@
 <input asp-for="ModoEdit" type="hidden" />
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         @if (Model.ModoEdit)
         {
             <input asp-for="CodigoUsuario" type="hidden" />
             <input asp-for="CodigoFuncionario" type="hidden" />
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="form-label">Usuário</label>
                     <select asp-for="CodigoFuncionario" asp-items="@Model.FuncionariosSelect" class="form-control" disabled></select>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Data de Cadastro</label>
-                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
                 </div>
             </div>
         }
         else
         {
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="form-label">Usuário</label>
                     <select asp-for="CodigoFuncionario" asp-items="@Model.FuncionariosSelect" class="form-control" required></select>
                 </div>
@@ -33,12 +28,37 @@
         }
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label class="form-label">Login</label>
                 <input asp-for="LoginUsuario" class="form-control" required />
             </div>
+        </div>
 
-            <div class="col-md-6">
+        <div class="row">
+            @if (!Model.ModoEdit)
+            {
+                <div class="col-md-12">
+                    <label class="form-label">Senha</label>
+                    <input asp-for="Senha" type="password" maxlength="15" class="form-control" required />
+
+                    Senha precisa ter: Ao menos 1 número; Ao menos 1 letra maiúscula; Ao menos 1 letra minúscula; Ao menos 1 caracter especial; De 8 a 15 caracteres.
+                </div>
+            }
+        </div>
+    </div>
+    <div class="address col-md-6">
+        @if (Model.ModoEdit)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label">Data de Cadastro</label>
+                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-12">
                 <br />
 
                 <label class="form-label">Usuário Adm</label>
@@ -47,27 +67,10 @@
         </div>
 
         <div class="row">
-            @if (!Model.ModoEdit)
-            {
-                <div class="col-md-6">
-                    <label class="form-label">Senha</label>
-                    <input asp-for="Senha" type="password" maxlength="15" class="form-control" required />
-
-                    Senha precisa ter: Ao menos 1 número; Ao menos 1 letra maiúscula; Ao menos 1 letra minúscula; Ao menos 1 caracter especial; De 8 a 15 caracteres.
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Email</label>
-                    <input asp-for="Email" type="email" maxlength="100" class="form-control" required />
-                </div>
-            }
-            else
-            {
-                <div class="col-md-12">
-                    <label class="form-label">Email</label>
-                    <input asp-for="Email" type="email" maxlength="100" class="form-control" required />
-                </div>
-            }
+            <div class="col-md-12">
+                <label class="form-label">Email</label>
+                <input asp-for="Email" type="email" maxlength="100" class="form-control" required />
+            </div>
         </div>
     </div>
 </div>
