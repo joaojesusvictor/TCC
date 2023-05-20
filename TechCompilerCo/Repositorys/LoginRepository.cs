@@ -13,13 +13,11 @@ namespace TechCompilerCo.Repositorys
 {
     public class LoginRepository
     {
-        //private DbSession _db;
         private readonly IDbConnection _db;
         private string _sqlTran = "EXEC Func_Usuarios_TRAN @Modo, @Login, @Senha, @UsuarioTran, @CodigoUsuario, @NomeUsuario, @Email, @UsuarioAdm, @CodigoFuncionario, @NovaSenha";
 
-        public LoginRepository(/*DbSession dbSession*/)
+        public LoginRepository()
         {
-            //_db = dbSession;
             _db = new DbSession().SqlConnection();
         }
 
@@ -30,27 +28,6 @@ namespace TechCompilerCo.Repositorys
                 Modo = 4,
                 Login = login
             };
-
-            //using var conn = _db.Connection;
-            //UsuarioViewModel result = await conn.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
-
-            //return result;
-
-            //using (var conn = _db.Connection)
-            //{
-            //    UsuarioViewModel result = await conn.QueryFirstOrDefaultAsync<UsuarioViewModel>(_sqlTran, p);
-            //    return result;
-            //}
-
-            //UsuarioLogadoViewModel result = new UsuarioLogadoViewModel();
-
-            //using (_db)
-            //{
-            //    result = await _db.QueryFirstOrDefaultAsync<UsuarioLogadoViewModel>(_sqlTran, p);
-            //    _db.Dispose();
-            //}
-
-            //return result;
 
             UsuarioLogadoViewModel result = new UsuarioLogadoViewModel();
 

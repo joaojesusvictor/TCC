@@ -5,23 +5,8 @@ using TechCompilerCo.Repositorys;
 
 namespace TechCompilerCo.Models
 {
-    public class DbSession /*: IDisposable*/
+    public class DbSession
     {
-        //public IDbConnection Connection { get; }
-
-        //public DbSession(IConfiguration configuration)
-        //{
-        //    Connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
-        //    Connection.Open();
-        //}
-
-        ////public void Dipose() => Connection?.Dispose();
-
-        //public void Dispose()
-        //{
-        //    Connection?.Dispose();
-        //}
-
         public IDbConnection SqlConnection()
         {
             return new SqlConnection("Server=LEONARDO-PC;Initial Catalog=TccProducao;Integrated Security=True;TrustServerCertificate=true;");

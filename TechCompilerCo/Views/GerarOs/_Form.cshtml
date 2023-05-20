@@ -3,68 +3,70 @@
 <input asp-for="CodigoUsuario" type="hidden" />
 
 <div class="row">
-    <div class="col-md-12" style="display: flex; justify-content: center; align-items: center; height: 40vh">
-        <div class="col-md-4">
-            @if (Model.ModoEdit)
-            {
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="form-label">Código OS</label>
-                        <input asp-for="CodigoOs" class="form-control" readonly />
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Data de Cadastro</label>
-                        <input asp-for="DataInclusao" type="date" class="form-control" readonly />
-                    </div>
-                </div>
-            }
-
+    <div class="col-md-6">
+        @if (Model.ModoEdit)
+        {
             <div class="row">
                 <div class="col-md-6">
-                    <label class="form-label">Cliente</label>
-                    <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control" required></select>
+                    <label class="form-label">Código OS</label>
+                    <input asp-for="CodigoOs" class="form-control" readonly />
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label">Funcionário</label>
-                    <select asp-for="CodigoFuncionario" asp-items="@Model.FuncionariosSelect" class="form-control" required></select>
+                    <label class="form-label">Data de Cadastro</label>
+                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
                 </div>
             </div>
+        }
 
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Data Início Serviço</label>
-                    <input asp-for="DataInicio" type="date" class="form-control" required />
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Data Previsão Término</label>
-                    <input asp-for="DataPrevisaoTermino" type="date" class="form-control" required />
-                </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Cliente</label>
+                <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control" required></select>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Preço</label>
-                    <input asp-for="Valor" type="number" min="0" step=".01" class="form-control" required />
-                </div>
+            <div class="col-md-6">
+                <label class="form-label">Funcionário</label>
+                <select asp-for="CodigoFuncionario" asp-items="@Model.FuncionariosSelect" class="form-control" required></select>
+            </div>
+        </div>
+    </div>
 
-                <div class="col-md-6">
-                    <label class="form-label">Status OS</label>
-                    <select asp-for="StatusOs" class="form-control">
-                        <option value="001">Aberta</option>
-                        <option value="002">Em Execução</option>
-                        <option value="003">Finalizada</option>
-                    </select>
-                </div>
+    <div class="address col-md-6">
+        <div class="row align-items-end">
+            <div class="col-md-6">
+                <label class="form-label">Início Serviço</label>
+                <input asp-for="DataInicio" type="date" class="form-control" required />
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="form-label">Descrição Problema</label>
-                    <textarea asp-for="DescricaoProblema" rows="3" maxlength="200" class="form-control" required></textarea>
-                </div>
+            <div class="col-md-6">
+                <label class="form-label">Previsão Término</label>
+                <input asp-for="DataPrevisaoTermino" type="date" class="form-control" required />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Preço</label>
+                <input asp-for="Valor" type="number" min="0" step=".01" class="form-control" required />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Status OS</label>
+                <select asp-for="StatusOs" class="form-control">
+                    <option value="001">Aberta</option>
+                    <option value="002">Em Execução</option>
+                    <option value="003">Finalizada</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="cal-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="form-label">Descrição Problema</label>
+                <textarea asp-for="DescricaoProblema" rows="3" maxlength="200" class="form-control" required></textarea>
             </div>
         </div>
     </div>

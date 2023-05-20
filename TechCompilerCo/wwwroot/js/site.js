@@ -4,7 +4,8 @@
 // Write your JavaScript code.
 
 $(document).ready(function () {
-    $('#MinhaIndex').DataTable({
+    $('#MinhaIndex').DataTable({ 
+        dom: 'lBfrtip',
         language: {
             processing: "Processando...",
             search: "Pesquisar:",
@@ -26,7 +27,15 @@ $(document).ready(function () {
                 sortAscending: "Ordenar colunas de forma ascendente",
                 sortDescending: "Ordenar colunas de forma descendente"
             }
-        },
+        },        
+        buttons: [
+            'spacer',
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa fa-table"></i> Excel',                
+                titleAttr: 'Excel'
+            }
+        ],
         responsive: true
     });
 });
@@ -83,3 +92,20 @@ function abrirModalRemoto(url) {
 setTimeout(function () {
     $('.alert').hide();
 }, 3000);
+
+$('#btnImprimir').click(function () {
+    const conteudo = $('#divImpressao').html();
+    const win = window.open('', '', 'height=700,width=700');
+
+    win.document.write('<html>');
+    win.document.write('<head>');
+    win.document.write('<title>' + $('#tituloImpressao').val() + '</title>');
+    win.document.write('</head>');
+    win.document.write('<body>');
+    win.document.write(conteudo);
+    win.document.write('</body>');
+    win.document.write('</html>');
+
+    win.print();
+    win.close();
+});
