@@ -25,6 +25,7 @@ builder.Services.AddTransient<ContasPagarRepository, ContasPagarRepository>();
 builder.Services.AddTransient<ContasReceberRepository, ContasReceberRepository>();
 builder.Services.AddTransient<GerarOsRepository, GerarOsRepository>();
 builder.Services.AddTransient<AniversariantesRepository, AniversariantesRepository>();
+builder.Services.AddTransient<ControlarCaixaRepository, ControlarCaixaRepository>();
 
 builder.Services.AddSession(o =>
 {
