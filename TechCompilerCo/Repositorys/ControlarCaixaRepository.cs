@@ -26,12 +26,12 @@ namespace TechCompilerCo.Repositorys
 
         #region Caixa
 
-        public async Task<IEnumerable<Caixa>> GetCaixasEntradaAsync(DateTime? data = null)
+        public async Task<IEnumerable<Caixa>> GetCaixasEntradaAsync(/*DateTime? data = null*/)
         {
             var p = new ParametrosTran()
             {
                 Modo = 5,
-                DataMovimento = data ?? DateTime.Today
+                //DataMovimento = data ?? DateTime.Today
             };
 
             IEnumerable<Caixa> results = new List<Caixa>();
@@ -46,12 +46,12 @@ namespace TechCompilerCo.Repositorys
             return results;
         }
 
-        public async Task<IEnumerable<Caixa>> GetCaixasSaidaAsync(DateTime? data = null)
+        public async Task<IEnumerable<Caixa>> GetCaixasSaidaAsync(/*DateTime? data = null*/)
         {
             var p = new ParametrosTran()
             {
-                Modo = 7,
-                DataMovimento = data ?? DateTime.Today
+                Modo = 6,
+                //DataMovimento = data ?? DateTime.Today
             };
 
             IEnumerable<Caixa> results = new List<Caixa>();
@@ -283,12 +283,12 @@ namespace TechCompilerCo.Repositorys
             return result;
         }
 
-        public async Task UpdateSaldoAFCaixaAsync(int id, decimal saldo, int codigoUsuario)
+        public async Task UpdateSaldoAFCaixaAsync(DateTime? data, decimal? saldo, int codigoUsuario)
         {
             var p = new ParametrosAFTran()
             {
                 Modo = 7,
-                CodigoAFCaixa = id,
+                DataCaixa = data,
                 ValorSaldo = saldo,
                 UsuarioTran = codigoUsuario
             };
@@ -341,8 +341,8 @@ namespace TechCompilerCo.Repositorys
             public string? Descricao { get; set; }
             public decimal ValorTotal { get; set; }
             public decimal ValorDesconto { get; set; }
-            public decimal ValorEntrada { get; set; }
-            public decimal ValorSaida { get; set; }
+            public decimal? ValorEntrada { get; set; }
+            public decimal? ValorSaida { get; set; }
             public DateTime? DataMovimento { get; set; }
             public string? FormaMovimento { get; set; }
             public int UsuarioTran { get; set; }
@@ -354,7 +354,7 @@ namespace TechCompilerCo.Repositorys
             public int CodigoAFCaixa { get; set; }
             public DateTime? DataCaixa { get; set; }
             public decimal ValorAbertura { get; set; }
-            public decimal ValorSaldo { get; set; }
+            public decimal? ValorSaldo { get; set; }
             public decimal? ValorFechamento { get; set; }
             public int UsuarioTran { get; set; }
         }

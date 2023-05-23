@@ -38,9 +38,9 @@ namespace TechCompilerCo.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Entradas(DateTime? data = null)
+        public async Task<IActionResult> Entradas(/*DateTime? data = null*/)
         {
-            IEnumerable<ControlarCaixaRepository.Caixa> caixas = await _controlarCaixaRepository.GetCaixasEntradaAsync(data);
+            IEnumerable<ControlarCaixaRepository.Caixa> caixas = await _controlarCaixaRepository.GetCaixasEntradaAsync(/*data*/);
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ControlarCaixaViewModel()
@@ -68,9 +68,9 @@ namespace TechCompilerCo.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Saidas(DateTime? data = null)
+        public async Task<IActionResult> Saidas(/*DateTime? data = null*/)
         {
-            IEnumerable<ControlarCaixaRepository.Caixa> caixas = await _controlarCaixaRepository.GetCaixasSaidaAsync(data);
+            IEnumerable<ControlarCaixaRepository.Caixa> caixas = await _controlarCaixaRepository.GetCaixasSaidaAsync(/*data*/);
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ControlarCaixaViewModel()
@@ -125,10 +125,10 @@ namespace TechCompilerCo.Controllers
                 return RedirectToAction(nameof(New), new { entrada = model.TelaEntrada });
             }
 
+            ControlarCaixaRepository.AbreFechaCaixa saldo = await _controlarCaixaRepository.GetSaldoAFCaixaAsync(model.DataMovimento);
+
             if (!model.TelaEntrada)
             {
-                ControlarCaixaRepository.AbreFechaCaixa saldo = await _controlarCaixaRepository.GetSaldoAFCaixaAsync(model.DataMovimento);
-
                 if (saldo.ValorSaldo < model.ValorSaida)
                 {
                     MostraMsgErro("O Valor de Saída não pode ser maior do que o Saldo no Caixa!");
@@ -141,9 +141,29 @@ namespace TechCompilerCo.Controllers
 
             if (gravado == 0)
             {
-                MostraMsgErro("Não foi possível salvar, pois não houve o Fechamento de Caixa de ontem!");
+                MostraMsgErro("Não foi possível salvar, pois não houve o Fechamento de Caixa do Dia Anterior!");
 
                 return RedirectToAction(nameof(New), new { entrada = model.TelaEntrada });
+            }
+
+            if (gravado == -1)
+            {
+                MostraMsgErro("Não foi possível salvar, pois já houve o Fechamento do Caixa para esta Data!");
+
+                return RedirectToAction(nameof(New), new { entrada = model.TelaEntrada });
+            }
+
+            if (model.TelaEntrada)
+            {
+                decimal? saldoFinal = saldo.ValorSaldo + model.ValorEntrada;
+
+                await _controlarCaixaRepository.UpdateSaldoAFCaixaAsync(model.DataMovimento, saldoFinal, model.CodigoUsuario);
+            }
+            else
+            {
+                decimal? saldoFinal = saldo.ValorSaldo - model.ValorSaida;
+
+                await _controlarCaixaRepository.UpdateSaldoAFCaixaAsync(model.DataMovimento, saldoFinal, model.CodigoUsuario);
             }
 
             MostraMsgSucesso("Controle de Caixa gravado com sucesso!");

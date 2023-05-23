@@ -110,7 +110,7 @@ begin
 
 			Select @ValorAbAntigo = (select ValorAbertura from AbreFechaCaixa where CodigoAFCaixa = @CodigoAFCaixa);
 
-			If (@ValorAbAntigo != @ValorAbertura)
+			If (@ValorAbAntigo <> @ValorAbertura)
 				Begin
 					Select @TotalEntrada = (select SUM(ValorEntrada) from Caixa where DataMovimento = @DataCaixa);
 					Select @TotalSaida = (select SUM(ValorSaida) from Caixa where DataMovimento = @DataCaixa);
@@ -193,7 +193,7 @@ Begin
 	set		ValorSaldo = @ValorSaldo,
 			DataUltimaAlteracao = GETDATE(),
 			UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-	Where	CodigoAFCaixa = @CodigoAFCaixa
+	Where	DataCaixa = @DataCaixa
 End
 GO
  

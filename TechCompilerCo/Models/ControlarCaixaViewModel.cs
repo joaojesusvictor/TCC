@@ -12,8 +12,8 @@ namespace TechCompilerCo.Models
         public string? Descricao { get; set; }
         public decimal ValorTotal { get; set; }
         public decimal ValorDesconto { get; set; }
-        public decimal ValorEntrada { get; set; }
-        public decimal ValorSaida { get; set; }
+        public decimal? ValorEntrada { get; set; }
+        public decimal? ValorSaida { get; set; }
         public DateTime? DataMovimento { get; set; }
         public string? FormaMovimento { get; set; }
         public DateTime DataInclusao { get; set; }

@@ -61,28 +61,84 @@ end
 select @NomeTabela = 'Tabela de Caixa.'
     
 IF @Modo = 1 --Inclusao
-begin
+begin	
 	declare @ValorFecha decimal(18,2) = null;
 
-	Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, GETDATE()));
+	Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = @DataMovimento);
 
-	If @ValorFecha is null
+	If @ValorFecha is not null
 		Begin
-			select 0
+			Select -1
 		End
 	Else
 		Begin
-			Insert Caixa	(	CodigoCliente, Descricao, ValorTotal, ValorDesconto, ValorEntrada, ValorSaida,
-								DataMovimento, FormaMovimento, Ativo, DataInclusao, UsuarioIncluiu )
-								Output inserted.CodigoCaixa
-			
-				Values		(	@CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida,
-								GETDATE(), @FormaMovimento, 1, GETDATE(), @NomeUsuarioTRAN )
+			Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataMovimento));
+
+			If @ValorFecha is null
+				Begin
+					select 0
+				End
+			Else
+				Begin
+					Insert Caixa	(	CodigoCliente, Descricao, ValorTotal, ValorDesconto, ValorEntrada, ValorSaida,
+										DataMovimento, FormaMovimento, Ativo, DataInclusao, UsuarioIncluiu )
+										Output inserted.CodigoCaixa
+					
+						Values		(	@CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida,
+										@DataMovimento, @FormaMovimento, 1, GETDATE(), @NomeUsuarioTRAN )
+				End
 		End
 end
 
 else IF @Modo = 2 -- Alteracao
 begin
+	declare @EntradaAtual decimal(18,2) = null,
+			@SaidaAtual decimal(18,2) = null,
+			@Diferenca decimal(18,2) = 0;
+	
+	select @EntradaAtual = (select ValorEntrada from Caixa where CodigoCaixa = @CodigoCaixa);
+	select @SaidaAtual = (select ValorSaida from Caixa where CodigoCaixa = @CodigoCaixa);
+
+	If(@EntradaAtual <> @ValorEntrada)
+		Begin
+			If(@EntradaAtual > @ValorEntrada)
+				Begin
+					select @Diferenca = @EntradaAtual - @ValorEntrada;
+
+					update	AbreFechaCaixa
+					set		ValorSaldo = ValorSaldo - @Diferenca
+					where	DataCaixa = @DataMovimento
+				End
+			else
+				Begin
+					select @Diferenca = @ValorEntrada - @EntradaAtual;
+
+					update	AbreFechaCaixa
+					set		ValorSaldo = ValorSaldo + @Diferenca
+					where	DataCaixa = @DataMovimento
+				End
+		End
+
+	If(@SaidaAtual <> @ValorSaida)
+		Begin
+			If(@SaidaAtual > @ValorSaida)
+				Begin
+					select @Diferenca = @SaidaAtual - @ValorSaida;
+
+					update	AbreFechaCaixa
+					set		ValorSaldo = ValorSaldo + @Diferenca
+					where	DataCaixa = @DataMovimento
+				End
+			else
+				Begin
+					select @Diferenca = @ValorSaida - @SaidaAtual;
+
+					update	AbreFechaCaixa
+					set		ValorSaldo = ValorSaldo - @Diferenca
+					where	DataCaixa = @DataMovimento
+				End
+		End
+
 	Update	Caixa
 	Set		CodigoCliente = @CodigoCliente,
 			Descricao = @Descricao,
@@ -149,7 +205,7 @@ Begin
 			NomeCliente = isnull((Select NomeCliente From Cliente where CodigoCliente = isnull(Ca.CodigoCliente, 0)), '')
 	From	Caixa Ca
 	Where	Ca.Ativo = 1
-	and		Ca.DataMovimento = @DataMovimento
+	--and		Ca.DataMovimento = @DataMovimento
 	and		Ca.ValorSaida is null
 End
 
@@ -165,7 +221,7 @@ Begin
 			NomeCliente = isnull((Select NomeCliente From Cliente where CodigoCliente = isnull(Ca.CodigoCliente, 0)), '')
 	From	Caixa Ca
 	Where	Ca.Ativo = 1
-	and		Ca.DataMovimento = @DataMovimento
+	--and		Ca.DataMovimento = @DataMovimento
 	and		Ca.ValorEntrada is null
 End
 GO
