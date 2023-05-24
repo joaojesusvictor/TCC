@@ -133,7 +133,7 @@ namespace TechCompilerCo.Controllers
                 {
                     MostraMsgErro("O Valor de Saída não pode ser maior do que o Saldo no Caixa!");
                                         
-                    return RedirectToAction(nameof(Saidas), new { data = model.DataMovimento });
+                    return RedirectToAction(nameof(Saidas)/*, new { data = model.DataMovimento }*/);
                 }
             }
 
@@ -169,9 +169,9 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Controle de Caixa gravado com sucesso!");
 
             if (model.TelaEntrada)
-                return RedirectToAction(nameof(Entradas), new { data = model.DataMovimento });
+                return RedirectToAction(nameof(Entradas)/*, new { data = model.DataMovimento }*/);
             else
-                return RedirectToAction(nameof(Saidas), new { data = model.DataMovimento });
+                return RedirectToAction(nameof(Saidas)/*, new { data = model.DataMovimento }*/);
         }
 
         public async Task<IActionResult> Edit(int id, bool entrada = false)
@@ -217,9 +217,9 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Controle de Caixa alterado com sucesso!");
 
             if (model.TelaEntrada)
-                return RedirectToAction(nameof(Entradas), new { data = model.DataMovimento });
+                return RedirectToAction(nameof(Entradas)/*, new { data = model.DataMovimento }*/);
             else
-                return RedirectToAction(nameof(Saidas), new { data = model.DataMovimento });
+                return RedirectToAction(nameof(Saidas)/*, new { data = model.DataMovimento }*/);
         }
 
         public string Validar(ControlarCaixaViewModel model)
@@ -248,7 +248,7 @@ namespace TechCompilerCo.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeletePartial(int id)
+        public async Task<IActionResult> DeletePartial(int id, bool telaEntrada)
         {
             ControlarCaixaRepository.Caixa caixa = await _controlarCaixaRepository.GetCaixaAsync(id);
 
@@ -256,6 +256,8 @@ namespace TechCompilerCo.Controllers
             {
                 Id = id.ToString(),
                 NomeEntidade = caixa.DataMovimento.ToString("dd-MM-yyyy"),
+                //Aux1 = caixa.DataMovimento.ToString("yyyy-MM-dd"),
+                Aux2 = telaEntrada.ToString(),
                 Mensagem1 = $"Deseja realmente excluir o Controle de Caixa \"{id}\" do Dia \"{caixa.DataMovimento.ToString("dd-MM-yyyy")}\"?",
                 DeleteUrl = Url.Action(nameof(Delete))
             };
@@ -273,7 +275,10 @@ namespace TechCompilerCo.Controllers
 
             MostraMsgSucesso($"O Controle de Caixa \"{model.Id}\" do Dia \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
-            return RedirectToAction(nameof(Index));
+            if (model.Aux2.ToLower() == "true")
+                return RedirectToAction(nameof(Entradas)/*, new { data = Convert.ToDateTime(model.Aux1) }*/);
+            else
+                return RedirectToAction(nameof(Saidas)/*, new { data = Convert.ToDateTime(model.Aux1) }*/);
         }
 
         #endregion
@@ -288,8 +293,7 @@ namespace TechCompilerCo.Controllers
             var viewModel = new ControlarCaixaViewModel()
             {
                 UsuarioAdm = usuario.UsuarioAdm,
-                CodigoUsuario = usuario.CodigoUsuario,
-                TelaEntrada = true
+                CodigoUsuario = usuario.CodigoUsuario
             };
 
             foreach (var c in caixas)
@@ -337,14 +341,14 @@ namespace TechCompilerCo.Controllers
             {
                 MostraMsgErro("Não foi possível salvar, pois não houve o Fechamento de Caixa de ontem!");
 
-                return RedirectToAction(nameof(New), new { entrada = model.TelaEntrada });
+                return RedirectToAction(nameof(NewCc));
             }
 
             if (gravado == -1)
             {
                 MostraMsgErro("Já existe uma Abertura de Caixa para esta data!");
 
-                return RedirectToAction(nameof(New), new { entrada = model.TelaEntrada });
+                return RedirectToAction(nameof(NewCc));
             }
 
             MostraMsgSucesso("Controle de Caixa gravado com sucesso!");
@@ -365,6 +369,7 @@ namespace TechCompilerCo.Controllers
                 ValorAbertura = caixa.ValorAbertura,
                 ValorSaldo = caixa.ValorSaldo,
                 ValorFechamento = caixa.ValorFechamento,
+                DataInclusao = caixa.DataInclusao,
                 UsuarioAdm = usuario.UsuarioAdm,
                 CodigoUsuario = usuario.CodigoUsuario
             };
@@ -417,7 +422,7 @@ namespace TechCompilerCo.Controllers
                 Id = id.ToString(),
                 NomeEntidade = caixa.DataCaixa.ToString("dd-MM-yyyy"),
                 Mensagem1 = $"Deseja realmente excluir o Controle de Caixa \"{id}\" do Dia \"{caixa.DataCaixa.ToString("dd-MM-yyyy")}\"?",
-                DeleteUrl = Url.Action(nameof(Delete))
+                DeleteUrl = Url.Action(nameof(DeleteCc))
             };
 
             return PartialView("_DeletePartial", model);
@@ -433,7 +438,7 @@ namespace TechCompilerCo.Controllers
 
             MostraMsgSucesso($"O Controle de Caixa \"{model.Id}\" do Dia \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ControleCaixa));
         }
 
         #endregion

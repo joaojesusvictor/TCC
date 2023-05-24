@@ -1,0 +1,43 @@
+﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <span><b>SUA</b></span><br />
+        <span><b>MECÂNICA</b></span>
+    </div>
+
+    <div class="col-md-6" style="text-align: right; font-size: 20px">
+        <span><b>Cadastro Controle Caixa</b></span>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("CreateCc", "ControlarCaixa", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <partial name="_Form.cshtml" />
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin-left: 5px"><i class="fa fa-check"></i> Salvar</button>
+
+            <a href="@Url.Action("ControleCaixa", "ControlarCaixa")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script type="text/javascript" asp-append-version="true">
+        $('#ValorAbertura').change(function() {
+            $('#ValorSaldo').val($(this).val());
+        });
+    </script>
+}

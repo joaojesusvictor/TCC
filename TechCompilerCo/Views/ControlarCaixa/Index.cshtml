@@ -1,0 +1,67 @@
+﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
+
+@{
+    ViewData["Title"] = "Controlar Caixa";
+}
+
+<style>
+    .menus {
+        border: solid;
+        border-radius: 8px;
+        background-color: darkblue;
+        text-align: center;
+        height: 10vh;
+        cursor: pointer
+    }
+
+    .tituloMenus {
+        text-align: center;
+        color: white
+    }
+
+    .iconMenus {
+        color: white
+    }
+
+    .pull-right {
+        float: right !important;
+    }
+
+    .pull-left {
+        float: left !important
+    }
+</style>
+
+<div class="container" style="padding-top: 50px">
+    <div class="row col-md-12">
+        <div class="pull-right">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="menus col-md-12" onclick="window.location.href='@Url.Action("ControleCaixa", "ControlarCaixa")';">
+                <span class="tituloMenus">Controlar Caixa</span> <br />
+                <i class="fa fa-cash-register iconMenus"></i>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Entradas", "ControlarCaixa")';">
+                <span class="tituloMenus">Entradas</span> <br />
+                <i class="fa fa-arrow-up iconMenus"></i>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Saidas", "ControlarCaixa")';">
+                <span class="tituloMenus">Saídas</span> <br />
+                <i class="fa fa-arrow-down iconMenus"></i>
+            </div>
+        </div>
+    </div>
+</div>

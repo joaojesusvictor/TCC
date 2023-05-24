@@ -62,31 +62,43 @@ select @NomeTabela = 'Tabela de Caixa.'
     
 IF @Modo = 1 --Inclusao
 begin	
-	declare @ValorFecha decimal(18,2) = null;
-
-	Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = @DataMovimento);
-
-	If @ValorFecha is not null
+	If exists(select CodigoAFCaixa from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataMovimento))
 		Begin
-			Select -1
-		End
-	Else
-		Begin
-			Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataMovimento));
+			declare @ValorFecha decimal(18,2) = null;
 
-			If @ValorFecha is null
+			Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = @DataMovimento);
+
+			If @ValorFecha is not null
 				Begin
-					select 0
+					Select -1
 				End
 			Else
 				Begin
-					Insert Caixa	(	CodigoCliente, Descricao, ValorTotal, ValorDesconto, ValorEntrada, ValorSaida,
-										DataMovimento, FormaMovimento, Ativo, DataInclusao, UsuarioIncluiu )
-										Output inserted.CodigoCaixa
-					
-						Values		(	@CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida,
-										@DataMovimento, @FormaMovimento, 1, GETDATE(), @NomeUsuarioTRAN )
+					Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataMovimento));
+
+					If @ValorFecha is null
+						Begin
+							select 0
+						End
+					Else
+						Begin
+							Insert Caixa	(	CodigoCliente, Descricao, ValorTotal, ValorDesconto, ValorEntrada, ValorSaida,
+												DataMovimento, FormaMovimento, Ativo, DataInclusao, UsuarioIncluiu )
+												Output inserted.CodigoCaixa
+							
+								Values		(	@CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida,
+												@DataMovimento, @FormaMovimento, 1, GETDATE(), @NomeUsuarioTRAN )
+						End
 				End
+		End
+	Else
+		Begin
+			Insert Caixa	(	CodigoCliente, Descricao, ValorTotal, ValorDesconto, ValorEntrada, ValorSaida,
+								DataMovimento, FormaMovimento, Ativo, DataInclusao, UsuarioIncluiu )
+								Output inserted.CodigoCaixa
+			
+				Values		(	@CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida,
+								@DataMovimento, @FormaMovimento, 1, GETDATE(), @NomeUsuarioTRAN )
 		End
 end
 
@@ -207,6 +219,7 @@ Begin
 	Where	Ca.Ativo = 1
 	--and		Ca.DataMovimento = @DataMovimento
 	and		Ca.ValorSaida is null
+	order by Ca.DataMovimento desc
 End
 
 ELSE IF @Modo = 6 -- Consulta Varios Caixas Saida
@@ -223,6 +236,7 @@ Begin
 	Where	Ca.Ativo = 1
 	--and		Ca.DataMovimento = @DataMovimento
 	and		Ca.ValorEntrada is null
+	order by Ca.DataMovimento desc
 End
 GO
  

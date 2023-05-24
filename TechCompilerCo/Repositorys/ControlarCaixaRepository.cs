@@ -327,6 +327,7 @@ namespace TechCompilerCo.Repositorys
             public decimal ValorAbertura { get; set; }
             public decimal ValorSaldo { get; set; }
             public decimal ValorFechamento { get; set; }
+            public DateTime DataInclusao { get; set; }
         }
 
         #endregion

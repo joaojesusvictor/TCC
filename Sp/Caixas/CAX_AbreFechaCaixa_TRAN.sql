@@ -163,7 +163,8 @@ Begin
 			DataCaixa,
 			ValorAbertura,
 			ValorSaldo,
-			ValorFechamento
+			ValorFechamento,
+			DataInclusao
 	From	AbreFechaCaixa
 	Where	CodigoAFCaixa = @CodigoAFCaixa
 	and		Ativo = 1
