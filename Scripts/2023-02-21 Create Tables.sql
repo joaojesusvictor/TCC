@@ -1,3 +1,5 @@
+Create Database TccProducao;
+
 Create Table Funcionario(
 	CodigoFuncionario int identity(1,1) primary key,
 	DataContratacao datetime not null,
@@ -24,6 +26,7 @@ Create Table Funcionario(
 
 Create Table Usuario(
 	CodigoUsuario int identity(1,1) primary key,
+	CodigoFuncionario int foreign key references Funcionario(CodigoFuncionario),
 	NomeUsuario varchar(100) not null,
 	LoginUsuario varchar(100) not null,
 	Email varchar(100) not null,
@@ -33,8 +36,7 @@ Create Table Usuario(
 	DataInclusao datetime not null,
 	UsuarioIncluiu varchar(100) not null,
 	DataUltimaAlteracao datetime null,
-	UsuarioUltimaAlteracao varchar(100) null,
-	CodigoFuncionario int foreign key references Funcionario(CodigoFuncionario)
+	UsuarioUltimaAlteracao varchar(100) null	
 );
 
 Create Table Cliente(
@@ -85,7 +87,8 @@ Create Table Fornecedor(
 );
 
 Create Table Produto(
-	CodigoProduto int identity(1,1) primary key,
+	CodigoProduto int identity(1,1) primary key,	
+	CodigoFornecedor int foreign key references Fornecedor(CodigoFornecedor),
 	Descricao varchar(150) not null,
 	Referencia varchar(50) not null,
 	Localizacao varchar(100) null,
@@ -99,14 +102,13 @@ Create Table Produto(
 	DataInclusao datetime not null,
 	UsuarioIncluiu varchar(100) not null,
 	DataUltimaAlteracao datetime null,
-	UsuarioUltimaAlteracao varchar(100) null,
-	CodigoFornecedor int foreign key references Fornecedor(CodigoFornecedor)
+	UsuarioUltimaAlteracao varchar(100) null
 );
 
 Create Table Venda(
 	CodigoVenda int identity(1,1) primary key,
 	CodigoProduto int foreign key references Produto(CodigoProduto),
-	CodigoCliente int foreign key references Cliente(CodigoCliente),
+	CodigoCliente int null,
 	Quantidade int not null,
 	Valor decimal(18,2) not null,
 	DataVenda datetime not null,
@@ -160,6 +162,36 @@ Create Table OrdemServico(
 	DescricaoProblema varchar(200) not null,
 	Valor decimal(18,2) not null,
 	StatusOs varchar(3) not null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null
+);
+
+Create Table AbreFechaCaixa(
+	CodigoAFCaixa int identity(1,1) primary key,
+	DataCaixa date not null,
+	ValorAbertura decimal(18,2) not null,
+	ValorSaldo decimal(18,2) not null,
+	ValorFechamento decimal(18,2) null,
+	Ativo bit not null,
+	DataInclusao datetime not null,
+	UsuarioIncluiu varchar(100) not null,
+	DataUltimaAlteracao datetime null,
+	UsuarioUltimaAlteracao varchar(100) null
+);
+
+Create Table Caixa(
+	CodigoCaixa int identity(1,1) primary key,
+	CodigoCliente int null,
+	Descricao varchar(200) not null,
+	ValorTotal decimal(18,2) not null,
+	ValorDesconto decimal(18,2) not null,
+	ValorEntrada decimal(18,2) null,
+	ValorSaida decimal(18,2) null,
+	DataMovimento date not null,
+	FormaMovimento varchar(3) not null,
 	Ativo bit not null,
 	DataInclusao datetime not null,
 	UsuarioIncluiu varchar(100) not null,

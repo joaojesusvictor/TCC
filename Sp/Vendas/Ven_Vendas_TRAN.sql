@@ -170,7 +170,7 @@ End
 
 ELSE IF @Modo = 5 -- Consulta Varias Vendas
 Begin
-		Select	*, NomeCliente = (Select NomeCliente From Cliente where CodigoCliente = V.CodigoCliente),
+		Select	*, NomeCliente = isnull((Select NomeCliente From Cliente where CodigoCliente = isnull(V.CodigoCliente, 0)), ''),
 		DescricaoProduto = (Select Descricao From Produto where CodigoProduto = V.CodigoProduto)
 		From	Venda V
 		Where	Ativo = 1
