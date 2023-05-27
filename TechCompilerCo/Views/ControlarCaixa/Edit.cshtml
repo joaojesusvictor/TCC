@@ -1,0 +1,69 @@
+﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
+
+@{
+    ViewData["Title"] = "Edição";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <span><b>SUA</b></span><br />
+        <span><b>MECÂNICA</b></span>
+    </div>
+
+    <div class="col-md-6" style="text-align: right; font-size: 20px">
+        @if (Model.TelaEntrada)
+        {
+            <span><b>Edição Entrada</b></span>
+        }
+        else
+        {
+            <span><b>Edição Saida</b></span>
+        }
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("Update", "ControlarCaixa", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <partial name="_Form.cshtml" />
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin-left: 5px"><i class="fa fa-check"></i> Salvar Alterações</button>
+
+            @if (Model.TelaEntrada)
+            {
+                <a href="@Url.Action("Entradas", "ControlarCaixa")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Saidas", "ControlarCaixa")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+            }
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script type="text/javascript" asp-append-version="true">
+        $('#ValorTotal, #ValorDesconto').change(function () {
+            var total = $('#ValorTotal').val();
+            var desconto = $('#ValorDesconto').val();
+            var valor = 0;
+            var entrada = $('#TelaEntrada').val();
+
+            valor = parseFloat(total - desconto).toFixed(2)
+
+            if (entrada == 'True') {
+                $('#ValorEntrada').val(valor);
+            }
+            else {
+                $('#ValorSaida').val(valor);
+            }
+        });
+    </script>
+}

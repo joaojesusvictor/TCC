@@ -269,6 +269,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\favicon_suamecanica.png",
+      "PackagePath": "staticwebassets\\favicon_suamecanica.png"
+    },
+    {
       "Id": "D:\\Projetos\\TCC\\TechCompilerCo\\wwwroot\\js\\all.js",
       "PackagePath": "staticwebassets\\js\\all.js"
     },

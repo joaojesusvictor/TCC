@@ -1,7 +1,7 @@
-﻿@model TechCompilerCo.Models.ContasPagarViewModel
+﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
 
 @{
-    ViewData["Title"] = "Contas Pagas";
+    ViewData["Title"] = "Saidas";
 }
 
 <div class="row">
@@ -12,7 +12,7 @@
         </div>
 
         <div class="col-md-6" style="text-align: right; font-size: 20px">
-            <span><b>Contas Pagas</b></span>
+            <span><b>Saidas</b></span>
         </div>
     </div>
 
@@ -22,7 +22,7 @@
 
     <div class="row col-md-12">
         <div class="col-md-2">
-            <a class="btn btn-sm btn-primary" href="@Url.Action("NewCc", "ControlarCaixa")"><i class="fa fa-plus-circle"></i> Novo</a>
+            <a class="btn btn-sm btn-primary" href="@Url.Action("New", "ControlarCaixa", new { entrada = false })"><i class="fa fa-plus-circle"></i> Novo</a>
         </div>
 
         <div class="col-md-10 pull-right">
@@ -43,54 +43,42 @@
                         <th></th>
                     }
                     <th>
-                        Número Documento
+                        Data Movimento
                     </th>
                     <th>
-                        Data Vencimento
+                        Valor Saida
                     </th>
                     <th>
-                        Data Pagamento
+                        Descrição
                     </th>
                     <th>
-                        Preço
-                    </th>
-                    <th>
-                        Serviço
-                    </th>
-                    <th>
-                        Dados Fornecedor
+                        Cliente
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var c in Model.Contas)
+                @foreach (var c in Model.Caixas)
                 {
                     <tr>
                         @if (Model.UsuarioAdm)
                         {
                             <td>
-                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "ContasPagar", new { id = c.CodigoCpa, contasPagas = true } )"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("Edit", "ControlarCaixa", new { id = c.CodigoCaixa, entrada = false } )"><i class="fa fa-edit"></i></a>
 
-                                @*<a class="btn btn-xs btn-danger" onclick="abrirModalRemoto('@Url.Action("DeletePartial", "ContasPagar", new { id = c.CodigoCpa, contasPagas = true } )');"><i class="fa fa-trash"></i></a>*@
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalRemoto('@Url.Action("DeletePartial", "ControlarCaixa", new { id = c.CodigoCaixa, telaEntrada = false } )');"><i class="fa fa-trash"></i></a>
                             </td>
                         }
                         <td>
-                            @c.NumeroDocumento
+                            @c.DataMovimento.ToString("dd-MM-yyyy")
                         </td>
                         <td>
-                            @c.DataVencimento.ToString("dd-MM-yyyy")
+                            R$ @c.ValorSaida.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
                         </td>
                         <td>
-                            @c.StrDtPagamento
+                            @c.Descricao
                         </td>
                         <td>
-                            R$ @c.Valor.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
-                        </td>
-                        <td>
-                            @c.ServicoCobrado
-                        </td>
-                        <td>
-                            @c.NomeFantasia / @c.Documento / @c.Telefone1
+                            @c.NomeCliente
                         </td>
                     </tr>
                 }

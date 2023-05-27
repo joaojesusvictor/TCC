@@ -26,12 +26,11 @@ namespace TechCompilerCo.Repositorys
 
         #region Caixa
 
-        public async Task<IEnumerable<Caixa>> GetCaixasEntradaAsync(/*DateTime? data = null*/)
+        public async Task<IEnumerable<Caixa>> GetCaixasEntradaAsync()
         {
             var p = new ParametrosTran()
             {
-                Modo = 5,
-                //DataMovimento = data ?? DateTime.Today
+                Modo = 5
             };
 
             IEnumerable<Caixa> results = new List<Caixa>();
@@ -46,12 +45,11 @@ namespace TechCompilerCo.Repositorys
             return results;
         }
 
-        public async Task<IEnumerable<Caixa>> GetCaixasSaidaAsync(/*DateTime? data = null*/)
+        public async Task<IEnumerable<Caixa>> GetCaixasSaidaAsync()
         {
             var p = new ParametrosTran()
             {
-                Modo = 6,
-                //DataMovimento = data ?? DateTime.Today
+                Modo = 6
             };
 
             IEnumerable<Caixa> results = new List<Caixa>();
@@ -228,7 +226,7 @@ namespace TechCompilerCo.Repositorys
             {
                 Modo = 2,
                 CodigoAFCaixa = model.CodigoAFCaixa,
-                //DataCaixa = model.DataCaixa,
+                DataCaixa = model.DataCaixa,
                 ValorAbertura = model.ValorAbertura,
                 ValorFechamento = model.ValorFechamento,
                 UsuarioTran = model.CodigoUsuario
@@ -240,27 +238,32 @@ namespace TechCompilerCo.Repositorys
             {
                 conn.Open();
 
-                await conn.QueryFirstOrDefaultAsync<int>(_sqlAbreFechaTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlAbreFechaTran, p);
             }
 
             return result;
         }
 
-        public async Task DeleteAFCaixaAsync(int id, int codigoUsuario)
+        public async Task<bool> DeleteAFCaixaAsync(int id, int codigoUsuario, DateTime dataCaixa)
         {
             var p = new ParametrosAFTran()
             {
                 Modo = 3,
                 CodigoAFCaixa = id,
+                DataCaixa = dataCaixa,
                 UsuarioTran = codigoUsuario
             };
+
+            bool result = false;
 
             using (var conn = new SqlConnection(_db.ConnectionString))
             {
                 conn.Open();
 
-                await conn.ExecuteAsync(_sqlAbreFechaTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<bool>(_sqlAbreFechaTran, p);
             }
+
+            return result;
         }
 
         public async Task<AbreFechaCaixa> GetSaldoAFCaixaAsync(DateTime? data)
@@ -303,6 +306,29 @@ namespace TechCompilerCo.Repositorys
 
         #endregion
 
+        #region Relatorio
+
+        public async Task<IEnumerable<Relatorio>> GetRelatorioCaixaAsync()
+        {
+            var p = new ParametrosTran()
+            {
+                Modo = 7
+            };
+
+            IEnumerable<Relatorio> results = new List<Relatorio>();
+
+            using (var conn = new SqlConnection(_db.ConnectionString))
+            {
+                conn.Open();
+
+                results = await conn.QueryAsync<Relatorio>(_sqlTran, p);
+            }
+
+            return results;
+        }
+
+        #endregion
+
         #region Modais
 
         public class Caixa
@@ -326,8 +352,17 @@ namespace TechCompilerCo.Repositorys
             public DateTime DataCaixa { get; set; }
             public decimal ValorAbertura { get; set; }
             public decimal ValorSaldo { get; set; }
-            public decimal ValorFechamento { get; set; }
+            public decimal? ValorFechamento { get; set; }
             public DateTime DataInclusao { get; set; }
+        }
+
+        public class Relatorio
+        {
+            public DateTime DataCaixa { get; set; }
+            public decimal ValorAbertura { get; set; }
+            public decimal TotalEntrada { get; set; }
+            public decimal TotalSaida { get; set; }
+            public decimal ValorFechamento { get; set; }
         }
 
         #endregion

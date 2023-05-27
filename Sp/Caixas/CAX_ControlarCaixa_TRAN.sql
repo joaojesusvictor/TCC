@@ -62,7 +62,7 @@ select @NomeTabela = 'Tabela de Caixa.'
     
 IF @Modo = 1 --Inclusao
 begin	
-	If exists(select CodigoAFCaixa from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataMovimento))
+	If exists(select CodigoAFCaixa from AbreFechaCaixa where DataCaixa = @DataMovimento)
 		Begin
 			declare @ValorFecha decimal(18,2) = null;
 
@@ -74,31 +74,43 @@ begin
 				End
 			Else
 				Begin
-					Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataMovimento));
+					If exists(select CodigoAFCaixa from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataMovimento))
+						Begin
+							Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataMovimento));
 
-					If @ValorFecha is null
-						Begin
-							select 0
+							If @ValorFecha is null
+								Begin
+									select 0
+
+									return 0
+								End
 						End
-					Else
+
+					If @ValorEntrada is not null
 						Begin
-							Insert Caixa	(	CodigoCliente, Descricao, ValorTotal, ValorDesconto, ValorEntrada, ValorSaida,
-												DataMovimento, FormaMovimento, Ativo, DataInclusao, UsuarioIncluiu )
-												Output inserted.CodigoCaixa
-							
-								Values		(	@CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida,
-												@DataMovimento, @FormaMovimento, 1, GETDATE(), @NomeUsuarioTRAN )
+							update	AbreFechaCaixa
+							set		ValorSaldo = ValorSaldo + @ValorEntrada
+							where	DataCaixa = @DataMovimento
 						End
+
+					If @ValorSaida is not null
+						Begin
+							update	AbreFechaCaixa
+							set		ValorSaldo = ValorSaldo - @ValorSaida
+							where	DataCaixa = @DataMovimento
+						End
+					
+					Insert Caixa	(	CodigoCliente, Descricao, ValorTotal, ValorDesconto, ValorEntrada, ValorSaida,
+										DataMovimento, FormaMovimento, Ativo, DataInclusao, UsuarioIncluiu )
+										Output inserted.CodigoCaixa
+					
+						Values		(	@CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida,
+										@DataMovimento, @FormaMovimento, 1, GETDATE(), @NomeUsuarioTRAN )	
 				End
 		End
 	Else
 		Begin
-			Insert Caixa	(	CodigoCliente, Descricao, ValorTotal, ValorDesconto, ValorEntrada, ValorSaida,
-								DataMovimento, FormaMovimento, Ativo, DataInclusao, UsuarioIncluiu )
-								Output inserted.CodigoCaixa
-			
-				Values		(	@CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida,
-								@DataMovimento, @FormaMovimento, 1, GETDATE(), @NomeUsuarioTRAN )
+			select -2
 		End
 end
 
@@ -188,7 +200,7 @@ begin
     end
 End
 
-ELSE IF @Modo = 4 -- Consulta Unico Caixa Entrada
+ELSE IF @Modo = 4 -- Consulta Unico Caixa
 Begin
 	Select	Ca.CodigoCaixa,
 			Ca.CodigoCliente,
@@ -217,7 +229,6 @@ Begin
 			NomeCliente = isnull((Select NomeCliente From Cliente where CodigoCliente = isnull(Ca.CodigoCliente, 0)), '')
 	From	Caixa Ca
 	Where	Ca.Ativo = 1
-	--and		Ca.DataMovimento = @DataMovimento
 	and		Ca.ValorSaida is null
 	order by Ca.DataMovimento desc
 End
@@ -234,9 +245,16 @@ Begin
 			NomeCliente = isnull((Select NomeCliente From Cliente where CodigoCliente = isnull(Ca.CodigoCliente, 0)), '')
 	From	Caixa Ca
 	Where	Ca.Ativo = 1
-	--and		Ca.DataMovimento = @DataMovimento
 	and		Ca.ValorEntrada is null
 	order by Ca.DataMovimento desc
+End
+
+ELSE IF @Modo = 7 -- Relatorio Caixa
+Begin
+	select	DataCaixa, AF.ValorAbertura, sum(CA.ValorEntrada) TotalEntrada, sum(CA.ValorSaida) TotalSaida, AF.ValorFechamento
+	from	AbreFechaCaixa AF left join
+			Caixa CA on AF.DataCaixa = CA.DataMovimento
+	group by AF.DataCaixa, AF.ValorAbertura, AF.ValorFechamento
 End
 GO
  

@@ -1,3 +1,5 @@
+Create Database TccProducao;
+
 Create Table Funcionario(
 	CodigoFuncionario int identity(1,1) primary key,
 	DataContratacao datetime not null,

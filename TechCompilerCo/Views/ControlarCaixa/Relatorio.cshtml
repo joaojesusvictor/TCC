@@ -1,0 +1,94 @@
+﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
+
+@{
+    ViewData["Title"] = "Relatório de Caixa";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-6">
+            <span><b>SUA</b></span><br />
+            <span><b>MECÂNICA</b></span>
+        </div>
+
+        <div class="col-md-6" style="text-align: right; font-size: 20px">
+            <span><b>Relatório de Caixa</b></span>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row col-md-12">
+        <div class="col-md-12">
+            <div class="col-md-1 pull-right">
+                <a href="@Url.Action("Index", "ControlarCaixa")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+            </div>
+
+            <div class="col-md-1 pull-right">
+                <a id="btnImprimir" class="btn btn-sm btn-primary pull-right"><i class="fa fa-print"></i> Imprimir</a>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <input id="tituloImpressao" value="Relatório de Caixa" hidden />
+
+        <div id="divImpressao">
+            <div style="flex: 0 0 auto; width: 100%; display: flex; justify-content: center; align-items: center; height: 40vh;">
+                <div style="flex: 0 0 auto; width: 66.66666666%;">
+                    <div style="width: 100%; display: flex;">
+                        <table style="width: 900px; font: 17px Calibri; border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        Data Caixa
+                                    </th>
+                                    <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        Valor Abertura
+                                    </th>
+                                    <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        Total Entrada
+                                    </th>
+                                    <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        Total Saida
+                                    </th>
+                                    <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        Valor Fechamento
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var r in Model.RelatorioCaixas)
+                                {
+                                    <tr style="color: @r.CorLinha">
+                                        <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                            @r.DataCaixa.ToString("dd-MM-yyyy")
+                                        </td>
+                                        <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                            R$ @r.ValorAbertura.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                                        </td>
+                                        <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                            R$ @r.TotalEntrada.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                                        </td>
+                                        <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                            R$ @r.TotalSaida.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                                        </td>
+                                        <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                            R$ @r.ValorFechamento.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

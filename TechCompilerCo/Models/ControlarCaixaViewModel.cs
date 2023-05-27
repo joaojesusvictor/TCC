@@ -30,6 +30,7 @@ namespace TechCompilerCo.Models
 
         public List<CaixaViewModel> Caixas { get; set; } = new List<CaixaViewModel>();
         public List<AbreFechaCaixaViewModel> AFCaixas { get; set; } = new List<AbreFechaCaixaViewModel>();
+        public List<RelatorioViewModel> RelatorioCaixas { get; set; } = new List<RelatorioViewModel>();
     }
 
     public class CaixaViewModel
@@ -53,6 +54,17 @@ namespace TechCompilerCo.Models
         public DateTime DataCaixa { get; set; }
         public decimal ValorAbertura { get; set; }
         public decimal ValorSaldo { get; set; }
+        public decimal? ValorFechamento { get; set; }
+        public string StrValorFechamento => ValorFechamento == null ? "" : "R$ " + ValorFechamento?.ToString("N2");
+    }
+
+    public class RelatorioViewModel
+    {
+        public DateTime DataCaixa { get; set; }
+        public decimal ValorAbertura { get; set; }
+        public decimal TotalEntrada { get; set; }
+        public decimal TotalSaida { get; set; }
         public decimal ValorFechamento { get; set; }
+        public string? CorLinha { get; set; }
     }
 }

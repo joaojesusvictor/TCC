@@ -1,6 +1,7 @@
 ﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
 
 <input asp-for="CodigoUsuario" type="hidden" />
+<input asp-for="TelaEntrada" type="hidden" />
 
 <div class="row">
     <div class="col-md-6">
@@ -9,7 +10,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label class="form-label">Código Controle</label>
-                    <input asp-for="CodigoAFCaixa" class="form-control" readonly />
+                    <input asp-for="CodigoCaixa" class="form-control" readonly />
                 </div>
 
                 <div class="col-md-6">
@@ -20,28 +21,76 @@
         }
 
         <div class="row">
-            <div class="col-md-6">
-                <label class="form-label">Data Caixa</label>
-                <input asp-for="DataCaixa" type="date" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]" class="form-control" required />
-            </div>
+            @if (!Model.ModoEdit)
+            {
+                <div class="col-md-6">
+                    <label class="form-label">Data Movimento</label>
+                    <input asp-for="DataMovimento" type="date" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]" class="form-control" required />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6">
+                    <label class="form-label">Data Movimento</label>
+                    <input asp-for="DataMovimento" type="date" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]" class="form-control" readonly />
+                </div>
+            }
 
             <div class="col-md-6">
-                <label class="form-label">Valor Abertura</label>
-                <input asp-for="ValorAbertura" type="number" min="0" step=".01" class="form-control" required />
+                <label class="form-label">Forma Movimento</label>
+                <select asp-for="FormaMovimento" class="form-control" required>
+                    <option value="Cc">Cartão de Crédito</option>
+                    <option value="Cd">Cartão de Débito</option>
+                    <option value="Din">Dinheiro</option>
+                    <option value="Pix">Pix</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="form-label">Cliente</label>
+                <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control"></select>
             </div>
         </div>
     </div>
 
     <div class="address col-md-6">
         <div class="row align-items-end">
-            <div class="col-md-6">
-                <label class="form-label">Saldo Atual</label>
-                <input asp-for="ValorSaldo" type="number" min="0" step=".01" class="form-control" readonly />
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Valor Total</label>
+                    <input asp-for="ValorTotal" type="number" min="0" step=".01" class="form-control" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Desconto</label>
+                    <input asp-for="ValorDesconto" type="number" min="0" step=".01" class="form-control" required />
+                </div>
             </div>
 
-            <div class="col-md-6">
-                <label class="form-label">Valor Fechamento</label>
-                <input asp-for="ValorFechamento" type="number" min="0" step=".01" class="form-control" required />
+            <div class="row">
+                @if (Model.TelaEntrada)
+                {
+                    <div class="col-md-6">
+                        <label class="form-label">Valor a Receber</label>
+                        <input asp-for="ValorEntrada" type="number" step=".01" class="form-control" required />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6">
+                        <label class="form-label">Valor Saida</label>
+                        <input asp-for="ValorSaida" type="number" step=".01" class="form-control" required />
+                    </div>
+                }
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label">Descrição</label>
+                    <textarea asp-for="Descricao" rows="3" maxlength="200" class="form-control" required></textarea>
+                </div>
             </div>
         </div>
     </div>

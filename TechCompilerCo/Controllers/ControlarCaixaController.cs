@@ -38,9 +38,9 @@ namespace TechCompilerCo.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Entradas(/*DateTime? data = null*/)
+        public async Task<IActionResult> Entradas()
         {
-            IEnumerable<ControlarCaixaRepository.Caixa> caixas = await _controlarCaixaRepository.GetCaixasEntradaAsync(/*data*/);
+            IEnumerable<ControlarCaixaRepository.Caixa> caixas = await _controlarCaixaRepository.GetCaixasEntradaAsync();
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ControlarCaixaViewModel()
@@ -68,9 +68,9 @@ namespace TechCompilerCo.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Saidas(/*DateTime? data = null*/)
+        public async Task<IActionResult> Saidas()
         {
-            IEnumerable<ControlarCaixaRepository.Caixa> caixas = await _controlarCaixaRepository.GetCaixasSaidaAsync(/*data*/);
+            IEnumerable<ControlarCaixaRepository.Caixa> caixas = await _controlarCaixaRepository.GetCaixasSaidaAsync();
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ControlarCaixaViewModel()
@@ -132,8 +132,8 @@ namespace TechCompilerCo.Controllers
                 if (saldo.ValorSaldo < model.ValorSaida)
                 {
                     MostraMsgErro("O Valor de Saída não pode ser maior do que o Saldo no Caixa!");
-                                        
-                    return RedirectToAction(nameof(Saidas)/*, new { data = model.DataMovimento }*/);
+
+                    return RedirectToAction(nameof(Saidas));
                 }
             }
 
@@ -149,6 +149,13 @@ namespace TechCompilerCo.Controllers
             if (gravado == -1)
             {
                 MostraMsgErro("Não foi possível salvar, pois já houve o Fechamento do Caixa para esta Data!");
+
+                return RedirectToAction(nameof(New), new { entrada = model.TelaEntrada });
+            }
+
+            if (gravado == -2)
+            {
+                MostraMsgErro("Não foi possível salvar, pois não há Abertura do Caixa para esta Data!");
 
                 return RedirectToAction(nameof(New), new { entrada = model.TelaEntrada });
             }
@@ -169,16 +176,16 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Controle de Caixa gravado com sucesso!");
 
             if (model.TelaEntrada)
-                return RedirectToAction(nameof(Entradas)/*, new { data = model.DataMovimento }*/);
+                return RedirectToAction(nameof(Entradas));
             else
-                return RedirectToAction(nameof(Saidas)/*, new { data = model.DataMovimento }*/);
+                return RedirectToAction(nameof(Saidas));
         }
 
         public async Task<IActionResult> Edit(int id, bool entrada = false)
         {
-            var comboClientes = await _clientesRepository.ComboClientesAsync();
+            var comboClientes = await _clientesRepository.ComboClientesAsync(true);
             ControlarCaixaRepository.Caixa caixa = await _controlarCaixaRepository.GetCaixaAsync(id);
-            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();            
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ControlarCaixaViewModel()
             {
@@ -217,9 +224,9 @@ namespace TechCompilerCo.Controllers
             MostraMsgSucesso("Controle de Caixa alterado com sucesso!");
 
             if (model.TelaEntrada)
-                return RedirectToAction(nameof(Entradas)/*, new { data = model.DataMovimento }*/);
+                return RedirectToAction(nameof(Entradas));
             else
-                return RedirectToAction(nameof(Saidas)/*, new { data = model.DataMovimento }*/);
+                return RedirectToAction(nameof(Saidas));
         }
 
         public string Validar(ControlarCaixaViewModel model)
@@ -234,13 +241,13 @@ namespace TechCompilerCo.Controllers
 
             if (model.TelaEntrada)
             {
-                if (model.ValorEntrada == 0)
+                if (model.ValorEntrada == null || model.ValorEntrada == 0)
                     msg += "Valor de Entrada deve ser maior do que Zero!";
             }
 
             if (!model.TelaEntrada)
             {
-                if (model.ValorSaida == 0)
+                if (model.ValorSaida == null || model.ValorSaida == 0)
                     msg += "Valor de Saida deve ser maior do que Zero!";
             }
 
@@ -256,11 +263,18 @@ namespace TechCompilerCo.Controllers
             {
                 Id = id.ToString(),
                 NomeEntidade = caixa.DataMovimento.ToString("dd-MM-yyyy"),
-                //Aux1 = caixa.DataMovimento.ToString("yyyy-MM-dd"),
                 Aux2 = telaEntrada.ToString(),
-                Mensagem1 = $"Deseja realmente excluir o Controle de Caixa \"{id}\" do Dia \"{caixa.DataMovimento.ToString("dd-MM-yyyy")}\"?",
                 DeleteUrl = Url.Action(nameof(Delete))
             };
+
+            if (telaEntrada)
+            {
+                model.Mensagem1 = $"Deseja realmente excluir a Entrada \"{id}\" do Dia \"{caixa.DataMovimento.ToString("dd-MM-yyyy")}\"?";
+            }
+            else
+            {
+                model.Mensagem1 = $"Deseja realmente excluir a Saida \"{id}\" do Dia \"{caixa.DataMovimento.ToString("dd-MM-yyyy")}\"?";
+            }
 
             return PartialView("_DeletePartial", model);
         }
@@ -273,12 +287,15 @@ namespace TechCompilerCo.Controllers
 
             await _controlarCaixaRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
 
-            MostraMsgSucesso($"O Controle de Caixa \"{model.Id}\" do Dia \"{model.NomeEntidade}\" foi excluído com sucesso!");
+            if (model.Aux2.ToLower() == "true")
+                MostraMsgSucesso($"A Entrada \"{model.Id}\" do Dia \"{model.NomeEntidade}\" foi excluída com sucesso!");
+            else
+                MostraMsgSucesso($"A Saida \"{model.Id}\" do Dia \"{model.NomeEntidade}\" foi excluída com sucesso!");
 
             if (model.Aux2.ToLower() == "true")
-                return RedirectToAction(nameof(Entradas)/*, new { data = Convert.ToDateTime(model.Aux1) }*/);
+                return RedirectToAction(nameof(Entradas));
             else
-                return RedirectToAction(nameof(Saidas)/*, new { data = Convert.ToDateTime(model.Aux1) }*/);
+                return RedirectToAction(nameof(Saidas));
         }
 
         #endregion
@@ -339,7 +356,7 @@ namespace TechCompilerCo.Controllers
 
             if (gravado == 0)
             {
-                MostraMsgErro("Não foi possível salvar, pois não houve o Fechamento de Caixa de ontem!");
+                MostraMsgErro("Não foi possível salvar, pois não houve o Fechamento de Caixa do Dia Anterior!");
 
                 return RedirectToAction(nameof(NewCc));
             }
@@ -421,6 +438,7 @@ namespace TechCompilerCo.Controllers
             {
                 Id = id.ToString(),
                 NomeEntidade = caixa.DataCaixa.ToString("dd-MM-yyyy"),
+                Aux1 = caixa.DataCaixa.ToString("yyyy-MM-dd"),
                 Mensagem1 = $"Deseja realmente excluir o Controle de Caixa \"{id}\" do Dia \"{caixa.DataCaixa.ToString("dd-MM-yyyy")}\"?",
                 DeleteUrl = Url.Action(nameof(DeleteCc))
             };
@@ -434,11 +452,49 @@ namespace TechCompilerCo.Controllers
 
             int codigoUsuario = usuario.CodigoUsuario;
 
-            await _controlarCaixaRepository.DeleteAFCaixaAsync(Convert.ToInt32(model.Id), codigoUsuario);
+            var exluido = await _controlarCaixaRepository.DeleteAFCaixaAsync(Convert.ToInt32(model.Id), codigoUsuario, Convert.ToDateTime(model.Aux1));
+
+            if (!exluido)
+            {
+                MostraMsgErro($"Não é possível excluir Controle de Caixa que tenha Lançamento de Entrada e/ou Saida!");
+
+                return RedirectToAction(nameof(ControleCaixa));
+            }
 
             MostraMsgSucesso($"O Controle de Caixa \"{model.Id}\" do Dia \"{model.NomeEntidade}\" foi excluído com sucesso!");
 
             return RedirectToAction(nameof(ControleCaixa));
+        }
+
+        #endregion
+
+        #region Relatorio
+
+        public async Task<IActionResult> Relatorio()
+        {
+            IEnumerable<ControlarCaixaRepository.Relatorio> caixas = await _controlarCaixaRepository.GetRelatorioCaixaAsync();
+            UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
+
+            var viewModel = new ControlarCaixaViewModel()
+            {
+                UsuarioAdm = usuario.UsuarioAdm,
+                CodigoUsuario = usuario.CodigoUsuario
+            };
+
+            foreach (var c in caixas)
+            {
+                viewModel.RelatorioCaixas.Add(new RelatorioViewModel()
+                {
+                    DataCaixa = c.DataCaixa,
+                    ValorAbertura = c.ValorAbertura,
+                    TotalEntrada = c.TotalEntrada,
+                    TotalSaida = c.TotalSaida,
+                    ValorFechamento = c.ValorFechamento,
+                    CorLinha = c.TotalSaida > c.TotalEntrada ? "Red" : ""
+                });
+            }
+
+            return View(viewModel);
         }
 
         #endregion

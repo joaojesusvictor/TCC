@@ -58,41 +58,51 @@ select @NomeTabela = 'Tabela de AbreFechaCaixa.'
     
 IF @Modo = 1 --Inclusao
 begin
-	declare @ValorFecha decimal(18,2) = null;
-
-	Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataCaixa));
-
-	If @ValorFecha is null
+	If exists(select CodigoAFCaixa from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataCaixa))
 		Begin
-			select 0
-		End
-	Else
-		Begin
-			If exists(Select CodigoAFCaixa From	AbreFechaCaixa Where DataCaixa = @DataCaixa and Ativo = 1)
+			declare @ValorFecha decimal(18,2) = null;
+
+			Select @ValorFecha = (select ValorFechamento from AbreFechaCaixa where DataCaixa = DATEADD(DAY, -1, @DataCaixa));
+
+			If @ValorFecha is null
 				Begin
-					select -1
+					select 0
 				End
 			Else
 				Begin
-					If exists(Select CodigoAFCaixa From	AbreFechaCaixa Where DataCaixa = @DataCaixa and Ativo = 0)
+					If exists(Select CodigoAFCaixa From	AbreFechaCaixa Where DataCaixa = @DataCaixa and Ativo = 1)
 						Begin
-							Update	AbreFechaCaixa
-							Set		ValorAbertura = @ValorAbertura,
-									ValorSaldo = @ValorAbertura,
-									ValorFechamento = @ValorFechamento,
-									Ativo = 1,
-									DataUltimaAlteracao = GETDATE(),
-									UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-							Where	DataCaixa = @DataCaixa
+							select -1
 						End
 					Else
 						Begin
-							Insert AbreFechaCaixa	(	DataCaixa, ValorAbertura, ValorSaldo, ValorFechamento, Ativo, DataInclusao, UsuarioIncluiu )
-														Output inserted.CodigoAFCaixa
-							
-										Values		(	@DataCaixa, @ValorAbertura, @ValorAbertura, @ValorFechamento, 1, GETDATE(), @NomeUsuarioTRAN )
+							If exists(Select CodigoAFCaixa From	AbreFechaCaixa Where DataCaixa = @DataCaixa and Ativo = 0)
+								Begin
+									Update	AbreFechaCaixa
+									Set		ValorAbertura = @ValorAbertura,
+											ValorSaldo = @ValorAbertura,
+											ValorFechamento = @ValorFechamento,
+											Ativo = 1,
+											DataUltimaAlteracao = GETDATE(),
+											UsuarioUltimaAlteracao = @NomeUsuarioTRAN
+									Where	DataCaixa = @DataCaixa
+								End
+							Else
+								Begin
+									Insert AbreFechaCaixa	(	DataCaixa, ValorAbertura, ValorSaldo, ValorFechamento, Ativo, DataInclusao, UsuarioIncluiu )
+																Output inserted.CodigoAFCaixa
+									
+												Values		(	@DataCaixa, @ValorAbertura, @ValorAbertura, @ValorFechamento, 1, GETDATE(), @NomeUsuarioTRAN )
+								End
 						End
-				End
+				End				
+		End
+	Else
+		Begin
+			Insert AbreFechaCaixa	(	DataCaixa, ValorAbertura, ValorSaldo, ValorFechamento, Ativo, DataInclusao, UsuarioIncluiu )
+										Output inserted.CodigoAFCaixa
+			
+						Values		(	@DataCaixa, @ValorAbertura, @ValorAbertura, @ValorFechamento, 1, GETDATE(), @NomeUsuarioTRAN )
 		End
 end
 
@@ -112,8 +122,8 @@ begin
 
 			If (@ValorAbAntigo <> @ValorAbertura)
 				Begin
-					Select @TotalEntrada = (select SUM(ValorEntrada) from Caixa where DataMovimento = @DataCaixa);
-					Select @TotalSaida = (select SUM(ValorSaida) from Caixa where DataMovimento = @DataCaixa);
+					Select @TotalEntrada = isnull((select SUM(ValorEntrada) from Caixa where DataMovimento = @DataCaixa), 0);
+					Select @TotalSaida = isnull((select SUM(ValorSaida) from Caixa where DataMovimento = @DataCaixa), 0);
 
 					select @ValorSaldo = (@ValorAbertura + @TotalEntrada) - @TotalSaida;
 
@@ -127,7 +137,6 @@ begin
 					ValorFechamento = @ValorFechamento,
 					DataUltimaAlteracao = GETDATE(),
 					UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-					--DataCaixa = @DataCaixa
 			Where	CodigoAFCaixa = @CodigoAFCaixa
 
 			select 1
@@ -143,12 +152,21 @@ end
 
 ELSE IF @Modo = 3 -- Exclusao
 begin
-	Update	AbreFechaCaixa 
-	set		Ativo = 0,
-			DataUltimaAlteracao = GETDATE(),
-			UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-	where	CodigoAFCaixa = @CodigoAFCaixa
+	If exists(select CodigoCaixa from Caixa where DataMovimento = @DataCaixa)
+		Begin
+			select 0
+		End
+	Else
+		Begin
+			Update	AbreFechaCaixa 
+			set		Ativo = 0,
+					DataUltimaAlteracao = GETDATE(),
+					UsuarioUltimaAlteracao = @NomeUsuarioTRAN
+			where	CodigoAFCaixa = @CodigoAFCaixa
 
+			select 1
+		End
+	
 	select @errorreturned = @@error     
     IF @errorreturned <> 0
     begin
@@ -172,12 +190,12 @@ End
 
 ELSE IF @Modo = 5 -- Consulta Varias Aberturas
 Begin
-	Select	CodigoAFCaixa,
-			DataCaixa,
-			ValorAbertura,
-			ValorSaldo,
-			ValorFechamento
-	From	AbreFechaCaixa
+	Select	AF.CodigoAFCaixa,
+			AF.DataCaixa,
+			AF.ValorAbertura,
+			AF.ValorSaldo,
+			AF.ValorFechamento
+	From	AbreFechaCaixa AF
 	Where	Ativo = 1
 End
 

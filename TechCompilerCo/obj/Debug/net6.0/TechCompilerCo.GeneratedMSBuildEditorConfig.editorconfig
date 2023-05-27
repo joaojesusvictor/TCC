@@ -96,6 +96,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcQ29udHJvbGVDYWl4YS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projetos/TCC/TechCompilerCo/Views/ControlarCaixa/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projetos/TCC/TechCompilerCo/Views/ControlarCaixa/EditCc.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcRWRpdENjLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -108,8 +112,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projetos/TCC/TechCompilerCo/Views/ControlarCaixa/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcTmV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projetos/TCC/TechCompilerCo/Views/ControlarCaixa/NewCc.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcTmV3Q2MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ControlarCaixa/Relatorio.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcUmVsYXRvcmlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/TCC/TechCompilerCo/Views/ControlarCaixa/Saidas.cshtml]
@@ -118,6 +130,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projetos/TCC/TechCompilerCo/Views/ControlarCaixa/_Form.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcX0Zvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/TCC/TechCompilerCo/Views/ControlarCaixa/_FormCc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJvbGFyQ2FpeGFcX0Zvcm1DYy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/TCC/TechCompilerCo/Views/Fornecedores/Edit.cshtml]

@@ -69,7 +69,7 @@
                             </td>
                         }
                         <td>
-                            @a.DataCaixa.ToString("yy-MM-yyyy")
+                            @a.DataCaixa.ToString("dd-MM-yyyy")
                         </td>
                         <td>
                             R$ @a.ValorAbertura.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
@@ -78,7 +78,7 @@
                             R$ @a.ValorSaldo.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
                         </td>
                         <td>
-                            R$ @a.ValorFechamento.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                            @a.StrValorFechamento
                         </td>
                     </tr>
                 }
