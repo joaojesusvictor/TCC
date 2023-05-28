@@ -137,21 +137,26 @@ namespace TechCompilerCo.Repositorys
             }
         }
 
-        public async Task DeleteAsync(int id, int codigoUsuario)
+        public async Task<int> DeleteAsync(int id, int codigoUsuario, DateTime data)
         {
             var p = new ParametrosTran()
             {
                 Modo = 3,
                 CodigoCaixa = id,
+                DataMovimento = data,
                 UsuarioTran = codigoUsuario
             };
+
+            int result = 0;
 
             using (var conn = new SqlConnection(_db.ConnectionString))
             {
                 conn.Open();
 
-                await conn.ExecuteAsync(_sqlTran, p);
+                result = await conn.QueryFirstOrDefaultAsync<int>(_sqlTran, p);
             }
+
+            return result;
         }
 
         #endregion
