@@ -5,32 +5,38 @@
     ViewData["Title"] = "Redefinir Senha";
 }
 
-<form action="@Url.Action("LinkRedefinirSenha", "Login")" class="form-horizontal" method="post" novalidate="novalidate">
-    <div class="row">
-        <div class="row">
-            <span class="col-md-4"></span>
+<br />
+<br />
+<br />
 
-            <div class="col-md-4">
-                <label class="form-label">Login</label>
-                <input type="text" asp-for="Login" maxlength="100" class="form-control" />
+<div class="row" style="height: 70vh">
+    <form action="@Url.Action("LinkRedefinirSenha", "Login")" class="form-horizontal" method="post" novalidate="novalidate">
+        <div class="row">
+            <div class="row">
+                <span class="col-md-4"></span>
+
+                <div class="col-md-4">
+                    <label class="form-label">Login</label>
+                    <input type="text" asp-for="Login" maxlength="100" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <span class="col-md-4"></span>
+
+                <div class="col-md-4">
+                    <label class="form-label">Email</label>
+                    <input type="email" asp-for="Email" maxlength="100" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <br />
+                    <button type="submit" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px">Salvar</button>
+                    <a href="@Url.Action("Index", "Login")" class="btn btn-sm btn-danger pull-right" style="border-radius: 8px; margin-right: 5px">Voltar</a>
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <span class="col-md-4"></span>
-
-            <div class="col-md-4">
-                <label class="form-label">Email</label>
-                <input type="email" asp-for="Email" maxlength="100" class="form-control" />
-            </div>            
-        </div>
-
-        <div class="row">
-            <div class="col-md-8">
-                <br />
-                <button type="submit" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px">Salvar</button>
-                <a href="@Url.Action("Index", "Login")" class="btn btn-sm btn-danger pull-right" style="border-radius: 8px; margin-right: 5px">Voltar</a>
-            </div>
-        </div>
-    </div>
-</form>
+    </form>
+</div>

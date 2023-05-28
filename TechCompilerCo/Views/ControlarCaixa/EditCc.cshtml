@@ -1,0 +1,35 @@
+﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
+
+@{
+    ViewData["Title"] = "Edição";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <span><b>SUA</b></span><br />
+        <span><b>MECÂNICA</b></span>
+    </div>
+
+    <div class="col-md-6" style="text-align: right; font-size: 20px">
+        <span><b>Edição Controlar Caixa</b></span>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+@using (Html.BeginForm("UpdateCc", "ControlarCaixa", new { Area = "" }, FormMethod.Post, true, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <partial name="_FormCc.cshtml" />
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin-left: 5px"><i class="fa fa-check"></i> Salvar Alterações</button>
+
+            <a href="@Url.Action("ControleCaixa", "ControlarCaixa")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Cancelar</a>
+        </div>
+    </div>
+}

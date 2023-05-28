@@ -10,11 +10,11 @@
         "projectUniqueName": "D:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
         "projectName": "TechCompilerCo",
         "projectPath": "D:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
-        "packagesPath": "C:\\Users\\Elaine\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\joao_\\.nuget\\packages\\",
         "outputPath": "D:\\Projetos\\TCC\\TechCompilerCo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Elaine\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\joao_\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -96,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -3,7 +3,7 @@
 <input asp-for="CodigoUsuario" type="hidden" />
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         @if (Model.ModoEdit)
         {
             <div class="row">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         }
-        <div class="col-md-6">
+        <div class="row">
             <div class="col-md-6">
                 <label class="form-label">Data da Venda</label>
                 <input asp-for="DataVenda" type="date" class="form-control" required />
@@ -27,39 +27,48 @@
         <div class="row">
             @if ((!Model.UsuarioAdm && !Model.ModoEdit) || Model.UsuarioAdm)
             {
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="form-label">Cliente</label>
-                    <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control" required></select>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Produto</label>
-                    <select asp-for="CodigoProduto" asp-items="@Model.ProdutosSelect" class="form-control" required></select>
+                    <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control"></select>
                 </div>
             }
             else
             {
                 <input type="hidden" asp-for="CodigoCliente" />
-                <input type="hidden" asp-for="CodigoProduto" />
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="form-label">Cliente</label>
                     <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control" disabled></select>
                 </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Produto</label>
-                    <select asp-for="CodigoProduto" asp-items="@Model.ProdutosSelect" class="form-control" disabled></select>
-                </div>
             }
-        </div>
+        </div>        
+    </div>
+    <div class="address col-md-6">
+        @if ((!Model.UsuarioAdm && !Model.ModoEdit) || Model.UsuarioAdm)
+        {
+            <div class="col-md-12">
+                <label class="form-label">Produto</label>
+                <select asp-for="CodigoProduto" asp-items="@Model.ProdutosSelect" class="form-control" required></select>
+            </div>
+        }
+        else
+        {
+            <input type="hidden" asp-for="CodigoProduto" />
+
+            <div class="col-md-12">
+                <label class="form-label">Produto</label>
+                <select asp-for="CodigoProduto" asp-items="@Model.ProdutosSelect" class="form-control" disabled></select>
+            </div>
+        }
+
+
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label class="form-label">Quantidade</label>
                 <input asp-for="Quantidade" type="number" min="0" class="form-control" required />
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label class="form-label">Preço</label>
                 <input asp-for="Valor" type="number" min="0" step=".01" class="form-control" required />
             </div>
