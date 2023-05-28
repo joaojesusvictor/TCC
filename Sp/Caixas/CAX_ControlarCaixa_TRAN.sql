@@ -186,11 +186,42 @@ end
 
 ELSE IF @Modo = 3 -- Exclusao
 begin
-	Update	Caixa 
-	set		Ativo = 0,
-			DataUltimaAlteracao = GETDATE(),
-			UsuarioUltimaAlteracao = @NomeUsuarioTRAN
-	where	CodigoCaixa = @CodigoCaixa
+	declare @ValorFechado decimal(18,2) = null,
+			@ValorExcluido decimal(18,2) = null;
+
+	Select @ValorFechado = (select ValorFechamento from AbreFechaCaixa where DataCaixa = @DataMovimento);
+
+	If @ValorFecha is not null
+		Begin
+			Select 0
+		End
+	Else
+		Begin
+			select @ValorExcluido = (select ValorEntrada from Caixa where CodigoCaixa = @CodigoCaixa)
+
+			if @ValorExcluido is not null
+				Begin
+					update	AbreFechaCaixa
+					set		ValorSaldo = ValorSaldo - @ValorExcluido
+					where	DataCaixa = @DataMovimento
+				End
+			else
+				Begin
+					select @ValorExcluido = (select ValorSaida from Caixa where CodigoCaixa = @CodigoCaixa)
+
+					update	AbreFechaCaixa
+					set		ValorSaldo = ValorSaldo + @ValorExcluido
+					where	DataCaixa = @DataMovimento
+				End
+
+			Update	Caixa 
+			set		Ativo = 0,
+					DataUltimaAlteracao = GETDATE(),
+					UsuarioUltimaAlteracao = @NomeUsuarioTRAN
+			where	CodigoCaixa = @CodigoCaixa
+
+			select 1
+		End
 
 	select @errorreturned = @@error     
     IF @errorreturned <> 0
