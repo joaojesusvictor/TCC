@@ -57,7 +57,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> New()
         {
             var comboProdutos = await _produtosRepository.ComboProdutosAsync();
-            var comboClientes = await _clientesRepository.ComboClientesAsync();
+            var comboClientes = await _clientesRepository.ComboClientesAsync(true);
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new VendasViewModel()
@@ -99,7 +99,7 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var comboProdutos = await _produtosRepository.ComboProdutosAsync();
-            var comboClientes = await _clientesRepository.ComboClientesAsync();
+            var comboClientes = await _clientesRepository.ComboClientesAsync(true);
             VendasRepository.Venda venda = await _vendasRepository.GetVendaAsync(id);
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
@@ -153,9 +153,6 @@ namespace TechCompilerCo.Controllers
 
             if (model.CodigoProduto == 0)
                 msg = "Selecione o Produto! ";
-
-            if (model.CodigoCliente == 0)
-                msg += "Selecione o Cliente! ";
 
             if (model.Quantidade == 0)
                 msg += "A Quantidade da Venda deve ser maior do que Zero! ";

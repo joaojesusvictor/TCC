@@ -1,0 +1,88 @@
+﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
+
+@{
+    ViewData["Title"] = "Controlar Caixa";
+}
+
+<div class="row">
+    <div class="row">
+        <div class="col-md-6">
+            <span><b>SUA</b></span><br />
+            <span><b>MECÂNICA</b></span>
+        </div>
+
+        <div class="col-md-6" style="text-align: right; font-size: 20px">
+            <span><b>Controlar Caixa</b></span>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row col-md-12">
+        <div class="col-md-2">
+            <a class="btn btn-sm btn-primary" href="@Url.Action("NewCc", "ControlarCaixa")"><i class="fa fa-plus-circle"></i> Novo</a>
+        </div>
+
+        <div class="col-md-10 pull-right">
+            <a href="@Url.Action("Index", "ControlarCaixa")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <table class="table col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12" id="MinhaIndex">
+            <thead>
+                <tr>
+                    @if (Model.UsuarioAdm)
+                    {
+                        <th></th>
+                    }
+                    <th>
+                        Data Caixa
+                    </th>
+                    <th>
+                        Valor Abertura
+                    </th>
+                    <th>
+                        Saldo Atual
+                    </th>
+                    <th>
+                        Valor Fechamento
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var a in Model.AFCaixas)
+                {
+                    <tr>
+                        @if (Model.UsuarioAdm)
+                        {
+                            <td>
+                                <a class="btn btn-xs btn-primary" href="@Url.Action("EditCc", "ControlarCaixa", new { id = a.CodigoAFCaixa } )"><i class="fa fa-edit"></i></a>
+
+                                <a class="btn btn-xs btn-danger" onclick="abrirModalRemoto('@Url.Action("DeletePartialCc", "ControlarCaixa", new { id = a.CodigoAFCaixa } )');"><i class="fa fa-trash"></i></a>
+                            </td>
+                        }
+                        <td>
+                            @a.DataCaixa.ToString("dd-MM-yyyy")
+                        </td>
+                        <td>
+                            R$ @a.ValorAbertura.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                        </td>
+                        <td>
+                            R$ @a.ValorSaldo.ToString("N2", new System.Globalization.CultureInfo("pt-BR"))
+                        </td>
+                        <td>
+                            @a.StrValorFechamento
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
