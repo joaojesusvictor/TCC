@@ -191,7 +191,7 @@ begin
 
 	Select @ValorFechado = (select ValorFechamento from AbreFechaCaixa where DataCaixa = @DataMovimento);
 
-	If @ValorFecha is not null
+	If @ValorFechado is not null
 		Begin
 			Select 0
 		End
