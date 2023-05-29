@@ -1,0 +1,61 @@
+﻿@model TechCompilerCo.Models.ControlarCaixaViewModel
+
+<input asp-for="CodigoUsuario" type="hidden" />
+
+<div class="row">
+    <div class="col-md-6">
+        @if (Model.ModoEdit)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Código Controle</label>
+                    <input asp-for="CodigoAFCaixa" class="form-control" readonly />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Data de Cadastro</label>
+                    <input asp-for="DataInclusao" type="date" class="form-control" readonly />
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            @if (!Model.ModoEdit)
+            {
+                <div class="col-md-6">
+                    <label class="form-label">Data Caixa</label>
+                    <input asp-for="DataCaixa" type="date" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]" class="form-control" required />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6">
+                    <label class="form-label">Data Caixa</label>
+                    <input asp-for="DataCaixa" type="date" max="3000-01-01" onfocus="this.max=new Date().toISOString().split('T')[0]" class="form-control" readonly />
+                </div>
+            }
+
+            <div class="col-md-6">
+                <label class="form-label">Valor Abertura</label>
+                <input asp-for="ValorAbertura" type="number" min="0" step=".01" class="form-control" required />
+            </div>
+        </div>
+    </div>
+
+    <div class="address col-md-6">
+        <div class="row align-items-end">
+            <div class="col-md-6">
+                <label class="form-label">Saldo Atual</label>
+                <input asp-for="ValorSaldo" type="number" min="0" step=".01" class="form-control" readonly />
+            </div>
+
+            @if (Model.ModoEdit)
+            {
+                <div class="col-md-6">
+                    <label class="form-label">Valor Fechamento</label>
+                    <input asp-for="ValorFechamento" type="number" step=".01" class="form-control" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

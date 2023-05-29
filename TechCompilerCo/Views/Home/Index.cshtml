@@ -4,7 +4,7 @@
 
 <style>
     body {
-        background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)), url("https://static.vecteezy.com/ti/vetor-gratis/p1/3855226-car-with-spanner-linear-icon-auto-workshop-thin-line-illustration-repair-service-contour-simbolo-isolado-esboco-desenho-vetor.jpg");
+        background: linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)), url("https://elaineespessote.files.wordpress.com/2023/05/img_home.jpg");
         background-size: 100px;
     }
 
@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="~/css/all.min.css" />
     <link rel="stylesheet" href="~/css/fontawesome.min.css" />
     <title>Menu - TechCompilerCo</title>
+    <link rel="icon" type="image/x-icon" href="~/favicon_suamecanica.png">
 </head>
 
 <body>
@@ -117,6 +118,13 @@
             </div>
 
             <div class="col-md-2">
+                <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "ControlarCaixa")';">
+                    <span class="tituloMenus">Controlar Caixa</span> <br />
+                    <i class="fa fa-cash-register iconMenus"></i>
+                </div>
+            </div>
+
+            <div class="col-md-2">
                 <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "GerarOs")';">
                     <span class="tituloMenus">Gerar OS</span> <br />
                     <i class="fa fa-check-square iconMenus"></i>
@@ -142,8 +150,12 @@
                     <span class="tituloMenus">Vendas</span> <br />
                     <i class="fa fa-money-bill-1-wave iconMenus"></i>
                 </div>
-            </div>
+            </div>            
+        </div>
 
+        <br />
+
+        <div class="row">
             <div class="col-md-2">
                 <div class="menus col-md-12" onclick="window.location.href='@Url.Action("Index", "AlterarSenha")';">
                     <span class="tituloMenus">Alterar Senha</span> <br />
