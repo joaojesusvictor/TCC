@@ -3755,7 +3755,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\joao_\\.nuget\\packages\\": {}
+    "C:\\Users\\Victor\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -3763,11 +3763,11 @@
       "projectUniqueName": "D:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
       "projectName": "TechCompilerCo",
       "projectPath": "D:\\Projetos\\TCC\\TechCompilerCo\\TechCompilerCo.csproj",
-      "packagesPath": "C:\\Users\\joao_\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
       "outputPath": "D:\\Projetos\\TCC\\TechCompilerCo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\joao_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3849,7 +3849,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   }
