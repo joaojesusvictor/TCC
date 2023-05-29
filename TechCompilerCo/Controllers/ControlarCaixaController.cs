@@ -263,6 +263,7 @@ namespace TechCompilerCo.Controllers
             {
                 Id = id.ToString(),
                 NomeEntidade = caixa.DataMovimento.ToString("dd-MM-yyyy"),
+                Aux1 = caixa.DataMovimento.ToString("yyyy-MM-dd"),
                 Aux2 = telaEntrada.ToString(),
                 DeleteUrl = Url.Action(nameof(Delete))
             };
@@ -285,7 +286,17 @@ namespace TechCompilerCo.Controllers
 
             int codigoUsuario = usuario.CodigoUsuario;
 
-            await _controlarCaixaRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario);
+            var excluido = await _controlarCaixaRepository.DeleteAsync(Convert.ToInt32(model.Id), codigoUsuario, Convert.ToDateTime(model.Aux1));
+
+            if(excluido == 0)
+            {
+                MostraMsgErro("Não é possível excluir, pois há Fechamento de Caixa para esta data!");
+
+                if (model.Aux2.ToLower() == "true")
+                    return RedirectToAction(nameof(Entradas));
+                else
+                    return RedirectToAction(nameof(Saidas));
+            }
 
             if (model.Aux2.ToLower() == "true")
                 MostraMsgSucesso($"A Entrada \"{model.Id}\" do Dia \"{model.NomeEntidade}\" foi excluída com sucesso!");
