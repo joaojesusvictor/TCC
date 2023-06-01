@@ -47,12 +47,24 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <label class="form-label">Cliente</label>
-                <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control"></select>
+        @if (Model.TelaEntrada)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label">Cliente</label>
+                    <select asp-for="CodigoCliente" asp-items="@Model.ClientesSelect" class="form-control"></select>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label">Fornecedor</label>
+                    <select asp-for="CodigoFornecedor" asp-items="@Model.FornecedoresSelect" class="form-control"></select>
+                </div>
+            </div>
+        }
     </div>
 
     <div class="address col-md-6">
@@ -60,12 +72,12 @@
             <div class="row">
                 <div class="col-md-6">
                     <label class="form-label">Valor Total</label>
-                    <input asp-for="ValorTotal" type="number" min="0" step=".01" class="form-control" required />
+                    <input asp-for="ValorTotal" min="0" class="form-control dinheiro" required />
                 </div>
 
                 <div class="col-md-6">
                     <label class="form-label">Desconto</label>
-                    <input asp-for="ValorDesconto" type="number" min="0" step=".01" class="form-control" required />
+                    <input asp-for="ValorDesconto" min="0" class="form-control dinheiro" required />
                 </div>
             </div>
 
@@ -74,14 +86,14 @@
                 {
                     <div class="col-md-6">
                         <label class="form-label">Valor a Receber</label>
-                        <input asp-for="ValorEntrada" type="number" step=".01" class="form-control" required />
+                        <input asp-for="ValorEntrada" class="form-control dinheiro" required />
                     </div>
                 }
                 else
                 {
                     <div class="col-md-6">
                         <label class="form-label">Valor Saida</label>
-                        <input asp-for="ValorSaida" type="number" step=".01" class="form-control" required />
+                        <input asp-for="ValorSaida" class="form-control dinheiro" required />
                     </div>
                 }
             </div>

@@ -185,6 +185,7 @@ Create Table AbreFechaCaixa(
 Create Table Caixa(
 	CodigoCaixa int identity(1,1) primary key,
 	CodigoCliente int null,
+	CodigoFornecedor int null,
 	Descricao varchar(200) not null,
 	ValorTotal decimal(18,2) not null,
 	ValorDesconto decimal(18,2) not null,

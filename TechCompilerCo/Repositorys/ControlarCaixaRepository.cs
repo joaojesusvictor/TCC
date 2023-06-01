@@ -16,7 +16,7 @@ namespace TechCompilerCo.Repositorys
     public class ControlarCaixaRepository
     {
         private readonly IDbConnection _db;
-        private string _sqlTran = "EXEC CAX_ControlarCaixa_TRAN @Modo, @CodigoCaixa, @CodigoCliente, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida, @DataMovimento, @FormaMovimento, @UsuarioTran";
+        private string _sqlTran = "EXEC CAX_ControlarCaixa_TRAN @Modo, @CodigoCaixa, @CodigoCliente, @CodigoFornecedor, @Descricao, @ValorTotal, @ValorDesconto, @ValorEntrada, @ValorSaida, @DataMovimento, @FormaMovimento, @UsuarioTran";
         private string _sqlAbreFechaTran = "EXEC CAX_AbreFechaCaixa_TRAN @Modo, @CodigoAFCaixa, @DataCaixa, @ValorAbertura, @ValorSaldo, @ValorFechamento, @UsuarioTran";
 
         public ControlarCaixaRepository()
@@ -90,6 +90,7 @@ namespace TechCompilerCo.Repositorys
             {
                 Modo = 1,
                 CodigoCliente = model.CodigoCliente,
+                CodigoFornecedor = model.CodigoFornecedor,
                 Descricao = model.Descricao,
                 ValorTotal = model.ValorTotal,
                 ValorDesconto = model.ValorDesconto,
@@ -119,6 +120,7 @@ namespace TechCompilerCo.Repositorys
                 Modo = 2,
                 CodigoCaixa = model.CodigoCaixa,
                 CodigoCliente = model.CodigoCliente,
+                CodigoFornecedor = model.CodigoFornecedor,
                 Descricao = model.Descricao,
                 ValorTotal = model.ValorTotal,
                 ValorDesconto = model.ValorDesconto,
@@ -340,6 +342,7 @@ namespace TechCompilerCo.Repositorys
         {
             public int CodigoCaixa { get; set; }
             public int CodigoCliente { get; set; }
+            public int CodigoFornecedor { get; set; }
             public string? Descricao { get; set; }
             public decimal ValorTotal { get; set; }
             public decimal ValorDesconto { get; set; }
@@ -349,6 +352,7 @@ namespace TechCompilerCo.Repositorys
             public string? FormaMovimento { get; set; }
             public DateTime DataInclusao { get; set; }
             public string? NomeCliente { get; set; }
+            public string? NomeFornecedor { get; set; }
         }
         
         public class AbreFechaCaixa
@@ -379,6 +383,7 @@ namespace TechCompilerCo.Repositorys
             public int Modo { get; set; }
             public int CodigoCaixa { get; set; }
             public int CodigoCliente { get; set; }
+            public int CodigoFornecedor { get; set; }
             public string? Descricao { get; set; }
             public decimal ValorTotal { get; set; }
             public decimal ValorDesconto { get; set; }
