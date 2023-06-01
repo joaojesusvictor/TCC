@@ -15,12 +15,14 @@ namespace TechCompilerCo.Controllers
         private ControlarCaixaRepository _controlarCaixaRepository;
         private readonly ISessao _sessao;
         private ClientesRepository _clientesRepository;
+        private FornecedoresRepository _fornecedoresRepository;
 
-        public ControlarCaixaController(ControlarCaixaRepository controlarCaixaRepository, ISessao sessao, ClientesRepository clientesRepository)
+        public ControlarCaixaController(ControlarCaixaRepository controlarCaixaRepository, ISessao sessao, ClientesRepository clientesRepository, FornecedoresRepository fornecedoresRepository)
         {
             _controlarCaixaRepository = controlarCaixaRepository;
             _sessao = sessao;
             _clientesRepository = clientesRepository;
+            _fornecedoresRepository = fornecedoresRepository;
         }
 
         #region Caixa
@@ -91,7 +93,7 @@ namespace TechCompilerCo.Controllers
                     ValorSaida = c.ValorSaida,
                     DataMovimento = c.DataMovimento,
                     FormaMovimento = c.FormaMovimento,
-                    NomeCliente = c.NomeCliente
+                    NomeFornecedor = c.NomeFornecedor
                 });
             }
 
@@ -101,11 +103,13 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> New(bool entrada = false)
         {
             var comboClientes = await _clientesRepository.ComboClientesAsync(true);
+            var comboFornecedores = await _fornecedoresRepository.ComboFornecedoresAsync(true);
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ControlarCaixaViewModel()
             {
                 ClientesSelect = comboClientes,
+                FornecedoresSelect = comboFornecedores,
                 UsuarioAdm = usuario.UsuarioAdm,
                 CodigoUsuario = usuario.CodigoUsuario,
                 TelaEntrada = entrada
@@ -184,15 +188,18 @@ namespace TechCompilerCo.Controllers
         public async Task<IActionResult> Edit(int id, bool entrada = false)
         {
             var comboClientes = await _clientesRepository.ComboClientesAsync(true);
+            var comboFornecedores = await _fornecedoresRepository.ComboFornecedoresAsync(true);
             ControlarCaixaRepository.Caixa caixa = await _controlarCaixaRepository.GetCaixaAsync(id);
             UsuarioLogadoViewModel usuario = _sessao.BuscarSessaoUsuario();
 
             var viewModel = new ControlarCaixaViewModel()
             {
                 ClientesSelect = comboClientes,
+                FornecedoresSelect = comboFornecedores,
                 ModoEdit = true,
                 CodigoCaixa = id,
                 CodigoCliente = caixa.CodigoCliente,
+                CodigoFornecedor = caixa.CodigoFornecedor,
                 Descricao = caixa.Descricao,
                 ValorTotal = caixa.ValorTotal,
                 ValorDesconto = caixa.ValorDesconto,
