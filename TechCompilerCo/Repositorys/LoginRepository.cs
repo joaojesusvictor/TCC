@@ -45,7 +45,7 @@ namespace TechCompilerCo.Repositorys
         {
             var p = new ParametrosTran()
             {
-                Modo = 4,
+                Modo = 7,
                 Login = login,
                 Email = email
             };
