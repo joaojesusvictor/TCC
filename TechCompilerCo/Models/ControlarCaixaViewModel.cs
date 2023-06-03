@@ -59,7 +59,7 @@ namespace TechCompilerCo.Models
         public decimal ValorAbertura { get; set; }
         public decimal ValorSaldo { get; set; }
         public decimal? ValorFechamento { get; set; }
-        public string StrValorFechamento => ValorFechamento == null ? "" : "R$ " + ValorFechamento?.ToString("N2");
+        public string StrValorFechamento => ValorFechamento == null ? "" : "R$ " + ValorFechamento?.ToString("N2", new System.Globalization.CultureInfo("pt-BR"));
     }
 
     public class RelatorioViewModel

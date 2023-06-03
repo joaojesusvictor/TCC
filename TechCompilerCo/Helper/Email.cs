@@ -37,6 +37,7 @@ namespace TechCompilerCo.Helper
                 {
                     smtp.Credentials = new NetworkCredential(userName, senha);
                     smtp.EnableSsl = true;
+                    smtp.Timeout = 500000;
 
                     smtp.Send(mail);
 
