@@ -65,7 +65,8 @@ Begin
 					ELSE DATEDIFF(YEAR, F.DataNascimento, GETDATE()) -1
 				END Idade,
 				'Funcionário' TipoPessoa,
-				MONTH(F.DataNascimento) MesNascimento
+				MONTH(F.DataNascimento) MesNascimento,
+				F.DataNascimento
 		from	Funcionario F left join
 				Usuario U on F.CodigoFuncionario = U.CodigoFuncionario
 		where	F.Ativo = 1
@@ -88,7 +89,8 @@ Begin
 					ELSE DATEDIFF(YEAR, DataNascimento, GETDATE()) -1
 				END Idade,
 				'Cliente' TipoPessoa,
-				MONTH(DataNascimento) MesNascimento
+				MONTH(DataNascimento) MesNascimento,
+				DataNascimento
 		from	Cliente
 		where	Ativo = 1
 		and		ISNULL(DataNascimento, '') <> ''
