@@ -31,6 +31,7 @@ namespace TechCompilerCo.Models
         public string? Email { get; set; }
         public int Idade { get; set; }
         public string? TipoPessoa { get; set; }
+        public DateTime DataNascimento { get; set; }
         public string? StrAnoMes => MesNascimento == 1 ? "Janeiro" :
                                     MesNascimento == 2 ? "Fevereiro" :
                                     MesNascimento == 3 ? "Março" :

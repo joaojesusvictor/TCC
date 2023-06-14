@@ -82,7 +82,8 @@ namespace TechCompilerCo.Controllers
             int soma;
             int resto;
             cpf = cpf.Trim();
-            cpf = cpf.Replace(".", "").Replace("-", "");
+            cpf = cpf.Replace(".", "").Replace("-", "").Replace(" ", "");
+            cpf = DeixaSoNumeros(cpf);
             if (cpf.Length != 11)
                 return false;
             tempCpf = cpf.Substring(0, 9);
@@ -120,7 +121,8 @@ namespace TechCompilerCo.Controllers
             string digito;
             string tempCnpj;
             cnpj = cnpj.Trim();
-            cnpj = cnpj.Replace(".", "").Replace("-", "").Replace("/", "");
+            cnpj = cnpj.Replace(".", "").Replace("-", "").Replace("/", "").Replace(" ", "");
+            cnpj = DeixaSoNumeros(cnpj);
             if (cnpj.Length != 14)
                 return false;
             tempCnpj = cnpj.Substring(0, 12);
