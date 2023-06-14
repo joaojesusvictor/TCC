@@ -15,9 +15,15 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row col-md-12">
     <div class="col-md-12">
-        <a id="btnImprimir" class="btn btn-sm btn-primary pull-right"><i class="fa fa-print"></i> Imprimir</a>
+        <div class="col-md-1 pull-right">
+            <a href="@Url.Action("Index", "Aniversariantes")" class="btn btn-sm btn-primary pull-right" style="border-radius: 8px"><i class="fa fa-door-open"></i> Voltar</a>
+        </div>
+
+        <div class="col-md-1 pull-right">
+            <a id="btnImprimir" class="btn btn-sm btn-primary pull-right"><i class="fa fa-print"></i> Imprimir</a>
+        </div>
     </div>
 </div>
 
@@ -34,13 +40,13 @@
                 <div style="width: 100%; display: flex;">
                     <div style="flex: 0 0 auto; width: 20%;">
                         <label style="margin-bottom: 0.5rem;">Mês</label>
-                        <input asp-for="StrAnoMes" style="display: block; width: 100%" />
+                        <input asp-for="StrAnoMes" style="display: block; width: 100%" disabled />
                     </div>
                 </div>
                 <br />
                 <br />
                 <div style="width: 100%; display: flex;">
-                    <table style="width: 900px; font: 17px Calibri; border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                    <table style="width: 100%; font: 17px Calibri; border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
                         <thead>
                             <tr>
                                 <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
@@ -51,6 +57,9 @@
                                 </th>
                                 <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
                                     Email
+                                </th>
+                                <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                    Data Nascimento
                                 </th>
                                 <th style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
                                     Idade Atual
@@ -74,6 +83,9 @@
                                         @a.Email
                                     </td>
                                     <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
+                                        @a.DataNascimento.ToString("dd-MM-yyyy")
+                                    </td>
+                                    <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
                                         @a.Idade
                                     </td>
                                     <td style="border: solid 1px #DDD; border-collapse: collapse; padding: 2px 3px; text-align: center;">
@@ -85,14 +97,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-md-12">
-            <a href="@Url.Action("Index", "Aniversariantes")" class="btn btn-sm btn-danger pull-right"><i class="fa fa-door-open"></i> Voltar</a>
         </div>
     </div>
 }

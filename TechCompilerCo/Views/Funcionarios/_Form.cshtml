@@ -1,5 +1,7 @@
 ﻿@model TechCompilerCo.Models.FuncionariosViewModel
 
+<input asp-for="CodigoUsuario" type="hidden" />
+
 <div class="row">
     <div class="col-md-6">
         @if (Model.ModoEdit)
@@ -62,7 +64,7 @@
         <div class="row align-items-end">
             <div class="col-md-6">
                 <label class="form-label">Cep</label>
-                <input asp-for="Cep" maxlength="10" class="form-control" required />
+                <input asp-for="Cep" class="form-control cep" required />
             </div>
 
             <div class="col-md-4">

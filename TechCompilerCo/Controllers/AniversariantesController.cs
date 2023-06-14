@@ -65,7 +65,8 @@ namespace TechCompilerCo.Controllers
                     Email = n.Email,
                     Idade = n.Idade,
                     TipoPessoa = n.TipoPessoa,
-                    MesNascimento = n.MesNascimento
+                    MesNascimento = n.MesNascimento,
+                    DataNascimento = n.DataNascimento
                 });
             }
 

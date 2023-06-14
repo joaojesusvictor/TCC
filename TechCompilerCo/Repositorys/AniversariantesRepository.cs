@@ -70,6 +70,7 @@ namespace TechCompilerCo.Repositorys
             public string? Email { get; set; }
             public int Idade { get; set; }
             public string? TipoPessoa { get; set; }
+            public DateTime DataNascimento { get; set; }
         }
 
         private class ParametrosTran

@@ -152,7 +152,7 @@ end
 
 ELSE IF @Modo = 3 -- Exclusao
 begin
-	If exists(select CodigoCaixa from Caixa where DataMovimento = @DataCaixa)
+	If exists(select CodigoCaixa from Caixa where DataMovimento = @DataCaixa and Ativo = 1)
 		Begin
 			select 0
 		End

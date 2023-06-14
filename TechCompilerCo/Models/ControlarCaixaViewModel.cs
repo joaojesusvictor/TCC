@@ -9,6 +9,7 @@ namespace TechCompilerCo.Models
 
         public int CodigoCaixa { get; set; }
         public int CodigoCliente { get; set; }
+        public int CodigoFornecedor { get; set; }
         public string? Descricao { get; set; }
         public decimal ValorTotal { get; set; }
         public decimal ValorDesconto { get; set; }
@@ -27,6 +28,7 @@ namespace TechCompilerCo.Models
         public bool TelaEntrada { get; set; }
 
         public IEnumerable<SelectListItem> ClientesSelect { get; set; } = new List<SelectListItem>();
+        public IEnumerable<SelectListItem> FornecedoresSelect { get; set; } = new List<SelectListItem>();
 
         public List<CaixaViewModel> Caixas { get; set; } = new List<CaixaViewModel>();
         public List<AbreFechaCaixaViewModel> AFCaixas { get; set; } = new List<AbreFechaCaixaViewModel>();
@@ -37,6 +39,7 @@ namespace TechCompilerCo.Models
     {
         public int CodigoCaixa { get; set; }
         public int CodigoCliente { get; set; }
+        public int CodigoFornecedor { get; set; }
         public string? Descricao { get; set; }
         public decimal ValorTotal { get; set; }
         public decimal ValorDesconto { get; set; }
@@ -46,6 +49,7 @@ namespace TechCompilerCo.Models
         public string? FormaMovimento { get; set; }
         public DateTime DataInclusao { get; set; }
         public string? NomeCliente { get; set; }
+        public string? NomeFornecedor { get; set; }
     }
 
     public class AbreFechaCaixaViewModel
@@ -55,7 +59,7 @@ namespace TechCompilerCo.Models
         public decimal ValorAbertura { get; set; }
         public decimal ValorSaldo { get; set; }
         public decimal? ValorFechamento { get; set; }
-        public string StrValorFechamento => ValorFechamento == null ? "" : "R$ " + ValorFechamento?.ToString("N2");
+        public string StrValorFechamento => ValorFechamento == null ? "" : "R$ " + ValorFechamento?.ToString("N2", new System.Globalization.CultureInfo("pt-BR"));
     }
 
     public class RelatorioViewModel
